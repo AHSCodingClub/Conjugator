@@ -11,6 +11,7 @@ import SwiftUI
 struct Level {
     var title: String
     var description: String
+    var colorHex: Int? = nil
     var challenges: [Challenge]
 }
 
@@ -28,19 +29,21 @@ extension Level {
         Level(
             title: "Nivel Fácil (presente)",
             description: "Algunos verbos fáciles en tiempo presente",
+            colorHex: 0x00AEEF,
             challenges: [
-                Challenge(verb: "comer", options: ["como", "comes", "come", "comemos", "coméis", "comen"]),
-                Challenge(verb: "beber", options: ["bebo", "bebes", "bebe", "bebemos", "bebéis", "beben"]),
-                Challenge(verb: "andar", options: ["ando", "andas", "anda", "andamos", "andáis", "andan"]),
+                Challenge(verb: "comer", forms: ["como", "comes", "come", "comemos", "coméis", "comen"]),
+                Challenge(verb: "beber", forms: ["bebo", "bebes", "bebe", "bebemos", "bebéis", "beben"]),
+                Challenge(verb: "andar", forms: ["ando", "andas", "anda", "andamos", "andáis", "andan"]),
             ]
         ),
 
         Level(
             title: "Go-go verbs (presente)",
             description: "Más dificles",
+            colorHex: 0x009900,
             challenges: [
-                Challenge(verb: "tener", options: ["tengo", "tienes", "tiene", "tenemos", "tenéis", "tienen"]),
-                Challenge(verb: "poner", options: ["pongo", "pones", "pone", "ponemos", "ponéis", "ponen"]),
+                Challenge(verb: "tener", forms: ["tengo", "tienes", "tiene", "tenemos", "tenéis", "tienen"]),
+                Challenge(verb: "poner", forms: ["pongo", "pones", "pone", "ponemos", "ponéis", "ponen"]),
             ]
         ),
     ]

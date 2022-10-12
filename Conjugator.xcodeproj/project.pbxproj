@@ -12,6 +12,7 @@
 		3CFBF97128F744B9007C0CAB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3CFBF97028F744B9007C0CAB /* Assets.xcassets */; };
 		3CFBF97B28F74597007C0CAB /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CFBF97A28F74597007C0CAB /* ViewModel.swift */; };
 		3CFBF97E28F747E2007C0CAB /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CFBF97D28F747E2007C0CAB /* Models.swift */; };
+		3CFBF98028F74CE5007C0CAB /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CFBF97F28F74CE5007C0CAB /* Utilities.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,6 +22,7 @@
 		3CFBF97028F744B9007C0CAB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3CFBF97A28F74597007C0CAB /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		3CFBF97D28F747E2007C0CAB /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
+		3CFBF97F28F74CE5007C0CAB /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +59,7 @@
 				3CFBF97A28F74597007C0CAB /* ViewModel.swift */,
 				3CFBF96E28F744B7007C0CAB /* ContentView.swift */,
 				3CFBF97D28F747E2007C0CAB /* Models.swift */,
+				3CFBF97F28F74CE5007C0CAB /* Utilities.swift */,
 				3CFBF97028F744B9007C0CAB /* Assets.xcassets */,
 			);
 			path = Conjugator;
@@ -134,6 +137,7 @@
 				3CFBF96F28F744B7007C0CAB /* ContentView.swift in Sources */,
 				3CFBF97B28F74597007C0CAB /* ViewModel.swift in Sources */,
 				3CFBF97E28F747E2007C0CAB /* Models.swift in Sources */,
+				3CFBF98028F74CE5007C0CAB /* Utilities.swift in Sources */,
 				3CFBF96D28F744B7007C0CAB /* ConjugatorApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
