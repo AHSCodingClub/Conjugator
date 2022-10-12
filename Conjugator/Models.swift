@@ -36,14 +36,22 @@ extension Level {
                 Challenge(verb: "andar", forms: ["ando", "andas", "anda", "andamos", "andáis", "andan"]),
             ]
         ),
-
         Level(
             title: "Go-go verbs (presente)",
-            description: "Más dificles",
+            description: "Más dificiles",
             colorHex: 0x009900,
             challenges: [
                 Challenge(verb: "tener", forms: ["tengo", "tienes", "tiene", "tenemos", "tenéis", "tienen"]),
                 Challenge(verb: "poner", forms: ["pongo", "pones", "pone", "ponemos", "ponéis", "ponen"]),
+            ]
+        ),
+        Level(
+            title: "Nivel Fácil (preterito)",
+            description: "Un poco difícil",
+            colorHex: nil,
+            challenges: [
+                Challenge(verb: "beber", forms: ["bebí", "bebiste", "bebió", "bebimos", "bebisteis", "bebieron"]),
+                Challenge(verb: "ir", forms: ["fui", "fuiste", "fue", "fuimos", "fuisteis", "fueron"]),
             ]
         ),
     ]
