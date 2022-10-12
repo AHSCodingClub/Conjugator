@@ -10,7 +10,8 @@
 		3CFBF96D28F744B7007C0CAB /* ConjugatorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CFBF96C28F744B7007C0CAB /* ConjugatorApp.swift */; };
 		3CFBF96F28F744B7007C0CAB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CFBF96E28F744B7007C0CAB /* ContentView.swift */; };
 		3CFBF97128F744B9007C0CAB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3CFBF97028F744B9007C0CAB /* Assets.xcassets */; };
-		3CFBF97428F744B9007C0CAB /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3CFBF97328F744B9007C0CAB /* Preview Assets.xcassets */; };
+		3CFBF97B28F74597007C0CAB /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CFBF97A28F74597007C0CAB /* ViewModel.swift */; };
+		3CFBF97E28F747E2007C0CAB /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CFBF97D28F747E2007C0CAB /* Models.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -18,7 +19,8 @@
 		3CFBF96C28F744B7007C0CAB /* ConjugatorApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConjugatorApp.swift; sourceTree = "<group>"; };
 		3CFBF96E28F744B7007C0CAB /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		3CFBF97028F744B9007C0CAB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		3CFBF97328F744B9007C0CAB /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		3CFBF97A28F74597007C0CAB /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
+		3CFBF97D28F747E2007C0CAB /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,19 +54,12 @@
 			isa = PBXGroup;
 			children = (
 				3CFBF96C28F744B7007C0CAB /* ConjugatorApp.swift */,
+				3CFBF97A28F74597007C0CAB /* ViewModel.swift */,
 				3CFBF96E28F744B7007C0CAB /* ContentView.swift */,
+				3CFBF97D28F747E2007C0CAB /* Models.swift */,
 				3CFBF97028F744B9007C0CAB /* Assets.xcassets */,
-				3CFBF97228F744B9007C0CAB /* Preview Content */,
 			);
 			path = Conjugator;
-			sourceTree = "<group>";
-		};
-		3CFBF97228F744B9007C0CAB /* Preview Content */ = {
-			isa = PBXGroup;
-			children = (
-				3CFBF97328F744B9007C0CAB /* Preview Assets.xcassets */,
-			);
-			path = "Preview Content";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -125,7 +120,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3CFBF97428F744B9007C0CAB /* Preview Assets.xcassets in Resources */,
 				3CFBF97128F744B9007C0CAB /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -138,6 +132,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				3CFBF96F28F744B7007C0CAB /* ContentView.swift in Sources */,
+				3CFBF97B28F74597007C0CAB /* ViewModel.swift in Sources */,
+				3CFBF97E28F747E2007C0CAB /* Models.swift in Sources */,
 				3CFBF96D28F744B7007C0CAB /* ConjugatorApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -266,7 +262,6 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"Conjugator/Preview Content\"";
 				DEVELOPMENT_TEAM = YA533DMD5J;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -295,7 +290,6 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"Conjugator/Preview Content\"";
 				DEVELOPMENT_TEAM = YA533DMD5J;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
