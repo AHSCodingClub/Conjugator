@@ -13,6 +13,10 @@
 		3CFBF97B28F74597007C0CAB /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CFBF97A28F74597007C0CAB /* ViewModel.swift */; };
 		3CFBF97E28F747E2007C0CAB /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CFBF97D28F747E2007C0CAB /* Models.swift */; };
 		3CFBF98028F74CE5007C0CAB /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CFBF97F28F74CE5007C0CAB /* Utilities.swift */; };
+		3CFBF98228F76171007C0CAB /* LevelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CFBF98128F76171007C0CAB /* LevelView.swift */; };
+		3CFBF98628F7680B007C0CAB /* Parsing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CFBF98528F7680B007C0CAB /* Parsing.swift */; };
+		3CFBF98828F769B5007C0CAB /* LevelCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CFBF98728F769B5007C0CAB /* LevelCardView.swift */; };
+		3CFBF98C28F769F6007C0CAB /* LevelViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CFBF98B28F769F6007C0CAB /* LevelViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +27,10 @@
 		3CFBF97A28F74597007C0CAB /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		3CFBF97D28F747E2007C0CAB /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		3CFBF97F28F74CE5007C0CAB /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
+		3CFBF98128F76171007C0CAB /* LevelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelView.swift; sourceTree = "<group>"; };
+		3CFBF98528F7680B007C0CAB /* Parsing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Parsing.swift; sourceTree = "<group>"; };
+		3CFBF98728F769B5007C0CAB /* LevelCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelCardView.swift; sourceTree = "<group>"; };
+		3CFBF98B28F769F6007C0CAB /* LevelViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,13 +64,33 @@
 			isa = PBXGroup;
 			children = (
 				3CFBF96C28F744B7007C0CAB /* ConjugatorApp.swift */,
-				3CFBF97A28F74597007C0CAB /* ViewModel.swift */,
-				3CFBF96E28F744B7007C0CAB /* ContentView.swift */,
+				3CFBF98928F769E8007C0CAB /* Home Page */,
+				3CFBF98A28F769EE007C0CAB /* Detail Page */,
 				3CFBF97D28F747E2007C0CAB /* Models.swift */,
+				3CFBF98528F7680B007C0CAB /* Parsing.swift */,
 				3CFBF97F28F74CE5007C0CAB /* Utilities.swift */,
 				3CFBF97028F744B9007C0CAB /* Assets.xcassets */,
 			);
 			path = Conjugator;
+			sourceTree = "<group>";
+		};
+		3CFBF98928F769E8007C0CAB /* Home Page */ = {
+			isa = PBXGroup;
+			children = (
+				3CFBF97A28F74597007C0CAB /* ViewModel.swift */,
+				3CFBF96E28F744B7007C0CAB /* ContentView.swift */,
+				3CFBF98728F769B5007C0CAB /* LevelCardView.swift */,
+			);
+			path = "Home Page";
+			sourceTree = "<group>";
+		};
+		3CFBF98A28F769EE007C0CAB /* Detail Page */ = {
+			isa = PBXGroup;
+			children = (
+				3CFBF98B28F769F6007C0CAB /* LevelViewModel.swift */,
+				3CFBF98128F76171007C0CAB /* LevelView.swift */,
+			);
+			path = "Detail Page";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -134,7 +162,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3CFBF98628F7680B007C0CAB /* Parsing.swift in Sources */,
 				3CFBF96F28F744B7007C0CAB /* ContentView.swift in Sources */,
+				3CFBF98228F76171007C0CAB /* LevelView.swift in Sources */,
+				3CFBF98C28F769F6007C0CAB /* LevelViewModel.swift in Sources */,
+				3CFBF98828F769B5007C0CAB /* LevelCardView.swift in Sources */,
 				3CFBF97B28F74597007C0CAB /* ViewModel.swift in Sources */,
 				3CFBF97E28F747E2007C0CAB /* Models.swift in Sources */,
 				3CFBF98028F74CE5007C0CAB /* Utilities.swift in Sources */,

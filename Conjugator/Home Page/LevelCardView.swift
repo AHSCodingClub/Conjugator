@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  LevelCardView.swift
 //  Conjugator
 //
 //  Created by A. Zheng (github.com/aheze) on 10/12/22.
@@ -7,29 +7,6 @@
 //
 
 import SwiftUI
-
-struct ContentView: View {
-    @StateObject var model = ViewModel()
-
-    let columns = [
-        GridItem(.adaptive(minimum: 200))
-    ]
-
-    var body: some View {
-        NavigationView {
-            ScrollView {
-                LazyVGrid(columns: columns, spacing: 16) {
-                    ForEach(model.levels, id: \.title) { level in
-                        LevelCardView(level: level)
-                    }
-                }
-                .padding()
-            }
-            .background(UIColor.secondarySystemBackground.color)
-            .navigationTitle("Conjugator")
-        }
-    }
-}
 
 struct LevelCardView: View {
     var level: Level
@@ -62,6 +39,7 @@ struct LevelCardView: View {
             }
             .padding(16)
         }
+        .foregroundColor(UIColor.label.color)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
         .background(UIColor.systemBackground.color)
         .cornerRadius(16)

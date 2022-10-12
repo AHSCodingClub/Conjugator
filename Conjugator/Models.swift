@@ -9,19 +9,19 @@
 import SwiftUI
 
 struct Level {
-    var title: String
-    var description: String
+    var title: String = ""
+    var description: String = ""
     var colorHex: Int? = nil
-    var challenges: [Challenge]
+    var challenges: [Challenge] = []
 }
 
 struct Challenge {
-    var verb: String
+    var verb: String = ""
 
     /**
      Should be of length 6 and contain forms for: **yo, tú, el, nosotros, vosotros, ellos**
      */
-    var forms: [String]
+    var forms: [String] = []
 }
 
 extension Level {
