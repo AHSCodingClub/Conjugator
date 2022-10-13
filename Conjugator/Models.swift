@@ -13,7 +13,7 @@ struct Level {
         var verb: String = ""
 
         /**
-        Should be of length 6 and contain forms for: **yo, tú, el, nosotros, vosotros, ellos**
+        Should be of length 6 and contain forms for **yo, tú, él/ella/usted, nosotros/nosotras, vosotros/vosotras, and ellos/ellas/ustedes**
         */
         var forms: [String] = []
     }
@@ -21,6 +21,7 @@ struct Level {
     var title: String = ""
     var description: String = ""
     var colorHex: Int? = nil
+    /// There should be at least two challenges
     var challenges: [Challenge] = []
 }
 
@@ -32,11 +33,14 @@ extension Level {
             colorHex: 0x00AEEF,
             challenges: [
                 Challenge(
-                    verb: "comer", options: ["como", "comes", "come", "comemos", "coméis", "comen"]),
+                    verb: "comer",
+                    options: ["como", "comes", "come", "comemos", "coméis", "comen"]),
                 Challenge(
-                    verb: "beber", options: ["bebo", "bebes", "bebe", "bebemos", "bebéis", "beben"]),
+                    verb: "beber",
+                    options: ["bebo", "bebes", "bebe", "bebemos", "bebéis", "beben"]),
                 Challenge(
-                    verb: "andar", options: ["ando", "andas", "anda", "andamos", "andáis", "andan"]),
+                    verb: "andar",
+                    options: ["ando", "andas", "anda", "andamos", "andáis", "andan"]),
             ]
         ),
         Level(

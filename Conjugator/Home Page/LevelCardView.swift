@@ -15,9 +15,7 @@ struct LevelCardView: View {
         VStack(alignment: .leading, spacing: 0) {
             HStack {
                 Text(level.title)
-
                 Spacer()
-
                 Image(systemName: "chevron.forward")
             }
             .font(.title3)
@@ -35,6 +33,7 @@ struct LevelCardView: View {
                     .font(.title3)
                     .foregroundColor(UIColor.secondaryLabel.color)
 
+                /// TODO: Decide whether this should be in Spanish
                 Text("Contains \(level.challenges.count) verbs")
             }
             .padding(16)
