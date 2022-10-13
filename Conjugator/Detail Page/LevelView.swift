@@ -22,25 +22,46 @@ struct LevelView: View {
     
     var body: some View {
         VStack {
-            let challenge = level.challenges[levelViewModel.currentLevelIndex]
-            
-            Text(challenge.verb)
-                .font(.largeTitle)
-                .frame(maxWidth: .infinity)
-            
-            VStack {
-                ForEach(challenge.forms, id: \.self) { form in
-                    Text(form)
-                        .foregroundColor(.white)
-                        .frame(maxWidth: .infinity)
-                        .padding(.horizontal, 20)
-                        .frame(height: 50)
-                        .background(Color.blue)
-                        .cornerRadius(16)
+            if level.challenges.indices.contains(levelViewModel.currentLevelIndex) {
+                let challenge = level.challenges[levelViewModel.currentLevelIndex]
+                
+                VStack(alignment: .leading) {
+                    Text("Verbo:")
+                        .font(.headline)
+                    
+                    Text(challenge.verb)
+                        .font(.largeTitle)
                 }
+                .padding(16)
+                .background(UIColor.secondarySystemBackground.color)
+                .cornerRadius(16)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                
+                /// total height = 400
+                VStack(spacing: 20) {
+                    ForEach(challenge.forms, id: \.self) { form in
+                        Button {
+                            withAnimation(.spring()) {
+                                levelViewModel.currentLevelIndex += 1
+                            }
+                            
+                        } label: {
+                            Text(form)
+                                .foregroundColor(.white)
+                                .frame(maxWidth: .infinity)
+                                .frame(height: 50)
+                                .background(Color.blue)
+                                .cornerRadius(16)
+                        }
+                    }
+                }
+                .frame(width: 150)
+                .frame(maxWidth: .infinity, alignment: .trailing)
+            } else {
+                Text("All done!''")
             }
-            .fixedSize(horizontal: true, vertical: false)
         }
+        .padding(16)
         .navigationTitle(level.title)
         .navigationBarTitleDisplayMode(.inline)
     }
