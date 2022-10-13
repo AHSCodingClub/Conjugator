@@ -30,17 +30,18 @@ Once the app processes the level files, it converts them into native Swift `stru
 ```swift
 struct Level {
     struct Challenge {
-        var verb: String
+        var verb: String = ""
 
         /**
         Should be of length 6 and contain forms for **yo, tú, él/ella/usted, nosotros/nosotras, vosotros/vosotras, and ellos/ellas/ustedes**
         */
-        var forms: [String]
+        var forms: [String] = []
     }
 
-    var title: String
-    var description: String
+    var title: String = ""
+    var description: String = ""
+    var colorHex: Int? = nil
     /// There should be at least two challenges
-    var challenges: [Challenge]
+    var challenges: [Challenge] = []
 }
 ```
