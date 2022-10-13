@@ -13,8 +13,8 @@ struct Level {
         var verb: String
 
         /**
-     Should be of length 6 and contain forms for **yo, tú, él/ella/usted, nosotros/nosotras, vosotros/vosotras, and ellos/ellas/ustedes**
-     */
+        Should be of length 6 and contain forms for **yo, tú, él/ella/usted, nosotros/nosotras, vosotros/vosotras, and ellos/ellas/ustedes**
+        */
         var forms: [String]
     }
 
