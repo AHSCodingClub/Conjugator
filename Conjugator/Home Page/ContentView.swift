@@ -20,7 +20,6 @@ struct ContentView: View {
             ScrollView {
                 LazyVGrid(columns: columns, spacing: 16) {
                     ForEach(model.levels, id: \.title) { level in
-
                         NavigationLink(destination: LevelView(model: model, level: level)) {
                             LevelCardView(level: level)
                         }
@@ -33,4 +32,3 @@ struct ContentView: View {
         }
     }
 }
-

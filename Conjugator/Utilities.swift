@@ -23,9 +23,9 @@ extension Color {
 extension UIColor {
     static var random: UIColor {
         return UIColor(
-            red: .random(in: 0 ... 1),
-            green: .random(in: 0 ... 1),
-            blue: .random(in: 0 ... 1),
+            red: .random(in: 0...1),
+            green: .random(in: 0...1),
+            blue: .random(in: 0...1),
             alpha: 1.0
         )
     }
@@ -62,9 +62,9 @@ extension UIColor {
 
         if getRed(&fRed, green: &fGreen, blue: &fBlue, alpha: &fAlpha) {
             /// could be negative
-            fRed = fRed.clamped(to: 0 ... 1)
-            fGreen = fGreen.clamped(to: 0 ... 1)
-            fBlue = fBlue.clamped(to: 0 ... 1)
+            fRed = fRed.clamped(to: 0...1)
+            fGreen = fGreen.clamped(to: 0...1)
+            fBlue = fBlue.clamped(to: 0...1)
 
             let iRed = UInt(fRed * 255.0)
             let iGreen = UInt(fGreen * 255.0)
@@ -106,7 +106,10 @@ extension UIColor {
 /// get gradient color for search bar field
 extension UIColor {
     var rgb: (r: CGFloat, g: CGFloat, b: CGFloat) {
-        var r: CGFloat = 0, g: CGFloat = 0, b: CGFloat = 0, a: CGFloat = 0
+        var r: CGFloat = 0
+        var g: CGFloat = 0
+        var b: CGFloat = 0
+        var a: CGFloat = 0
         if self.getRed(&r, green: &g, blue: &b, alpha: &a) {
             return (r: r, g: g, b: b)
         } else {
@@ -115,7 +118,10 @@ extension UIColor {
     }
 
     var hsba: (h: CGFloat, s: CGFloat, b: CGFloat, a: CGFloat) {
-        var h: CGFloat = 0, s: CGFloat = 0, b: CGFloat = 0, a: CGFloat = 0
+        var h: CGFloat = 0
+        var s: CGFloat = 0
+        var b: CGFloat = 0
+        var a: CGFloat = 0
         self.getHue(&h, saturation: &s, brightness: &b, alpha: &a)
         return (h: h, s: s, b: b, a: a)
     }
