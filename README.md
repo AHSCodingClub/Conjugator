@@ -1,6 +1,6 @@
 # Conjugator
 
-Conjugator is a game that helps students learn the different forms of Spanish verbs. It was initially proposed by a teacher at our school, then brought to life through our wonderful Coding Club.
+Conjugator is a game that helps students learn the different forms of Spanish verbs. It was initially proposed by an incredible teacher at our school (senior Shaw), then brought to life through our wonderful Coding Club.
 
 It is built in Swift and SwiftUI, targeting a minimum of iOS 15.
 
