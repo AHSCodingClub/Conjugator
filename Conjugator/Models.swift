@@ -9,20 +9,25 @@
 import SwiftUI
 
 struct Level {
-    struct Challenge {
-        var verb: String = ""
-
-        /**
-        Should be of length 6 and contain forms for **yo, tú, él/ella/usted, nosotros/nosotras, vosotros/vosotras, and ellos/ellas/ustedes**
-        */
-        var forms: [String] = []
-    }
-
     var title: String = ""
     var description: String = ""
     var colorHex: Int? = nil
     /// There should be at least two challenges
     var challenges: [Challenge] = []
+}
+
+struct Challenge {
+    var verb: String = ""
+
+    /**
+     Should be of length 6 and contain forms for **yo, tú, él/ella/usted, nosotros/nosotras, vosotros/vosotras, and ellos/ellas/ustedes**
+     */
+    var forms: [String] = []
+}
+
+enum ChallengeStatus {
+    case typing
+    case sent(Challenge)
 }
 
 extension Level {
@@ -34,15 +39,14 @@ extension Level {
             challenges: [
                 Challenge(
                     verb: "comer",
-                    options: ["como", "comes", "come", "comemos", "coméis", "comen"]),
+                    forms: ["como", "comes", "come", "comemos", "coméis", "comen"]),
                 Challenge(
                     verb: "beber",
-                    options: ["bebo", "bebes", "bebe", "bebemos", "bebéis", "beben"]),
+                    forms: ["bebo", "bebes", "bebe", "bebemos", "bebéis", "beben"]),
                 Challenge(
                     verb: "andar",
-                    options: ["ando", "andas", "anda", "andamos", "andáis", "andan"]),
-            ]
-        ),
+                    forms: ["ando", "andas", "anda", "andamos", "andáis", "andan"]),
+            ]),
         Level(
             title: "Go-go verbs (presente)",
             description: "Más dificiles",
@@ -53,8 +57,7 @@ extension Level {
                     forms: ["tengo", "tienes", "tiene", "tenemos", "tenéis", "tienen"]),
                 Challenge(
                     verb: "poner", forms: ["pongo", "pones", "pone", "ponemos", "ponéis", "ponen"]),
-            ]
-        ),
+            ]),
         Level(
             title: "Nivel Fácil (preterito)",
             description: "Un poco difícil",
@@ -62,11 +65,10 @@ extension Level {
             challenges: [
                 Challenge(
                     verb: "tener",
-                    options: ["tengo", "tienes", "tiene", "tenemos", "tenéis", "tienen"]),
+                    forms: ["tengo", "tienes", "tiene", "tenemos", "tenéis", "tienen"]),
                 Challenge(
                     verb: "poner",
-                    options: ["pongo", "pones", "pone", "ponemos", "ponéis", "ponen"]),
-            ]
-        ),
+                    forms: ["pongo", "pones", "pone", "ponemos", "ponéis", "ponen"]),
+            ]),
     ]
 }

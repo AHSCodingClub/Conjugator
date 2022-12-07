@@ -24,33 +24,7 @@ struct LevelView: View {
     var body: some View {
         ScrollView {
             VStack {
-                VStack(spacing: 10) {
-                    Image("Profile")
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                        .clipShape(Circle())
-                        .frame(width: 60, height: 60)
-                        .overlay {
-                            Circle()
-                                .stroke(
-                                    LinearGradient(
-                                        colors:
-                                        [
-                                            UIColor.secondarySystemBackground.color,
-                                            UIColor.secondarySystemBackground.toColor(.systemBackground, percentage: 0.5).color
-                                        ],
-                                        startPoint: .top,
-                                        endPoint: .bottom
-                                    ),
-                                    lineWidth: lineWidth
-                                )
-                                .shadow(color: .black.opacity(0.3), radius: 6, x: 0, y: 2)
-                                .padding(-lineWidth / 2)
-                        }
-                        
-                    Text("Conjugator")
-                        .fontWeight(.medium)
-                }
+                header
                 
                 ForEach(level.challenges.prefix(levelViewModel.currentLevelIndex + 1), id: \.verb) { challenge in
                     
@@ -93,5 +67,37 @@ struct LevelView: View {
             .padding(.horizontal, 16)
         }
         .navigationBarTitleDisplayMode(.inline) /// make the top padding smaller
+    }
+}
+
+extension LevelView {
+    var header: some View {
+        VStack(spacing: 10) {
+            Image("Profile")
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+                .clipShape(Circle())
+                .frame(width: 60, height: 60)
+                .overlay {
+                    Circle()
+                        .stroke(
+                            LinearGradient(
+                                colors:
+                                [
+                                    UIColor.secondarySystemBackground.color,
+                                    UIColor.secondarySystemBackground.toColor(.systemBackground, percentage: 0.5).color
+                                ],
+                                startPoint: .top,
+                                endPoint: .bottom
+                            ),
+                            lineWidth: lineWidth
+                        )
+                        .shadow(color: .black.opacity(0.3), radius: 6, x: 0, y: 2)
+                        .padding(-lineWidth / 2)
+                }
+                
+            Text("Conjugator")
+                .fontWeight(.medium)
+        }
     }
 }
