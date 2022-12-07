@@ -12,6 +12,7 @@ class LevelViewModel: ObservableObject {
     var level: Level
     @Published var currentLevelIndex = 0
     
+    
     init(level: Level) {
         self.level = level
     }

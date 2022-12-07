@@ -11,8 +11,9 @@ import SwiftUI
 struct LevelView: View {
     @ObservedObject var model: ViewModel
     var level: Level
-    
     @StateObject var levelViewModel: LevelViewModel
+    
+    let lineWidth = CGFloat(5)
     
     init(model: ViewModel, level: Level) {
         self.model = model
@@ -21,48 +22,76 @@ struct LevelView: View {
     }
     
     var body: some View {
-        VStack {
-            if level.challenges.indices.contains(levelViewModel.currentLevelIndex) {
-                let challenge = level.challenges[levelViewModel.currentLevelIndex]
-                
-                VStack(alignment: .leading) {
-                    Text("Verbo:")
-                        .font(.headline)
-                    
-                    Text(challenge.verb)
-                        .font(.largeTitle)
+        ScrollView {
+            VStack {
+                VStack(spacing: 10) {
+                    Image("Profile")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .clipShape(Circle())
+                        .frame(width: 60, height: 60)
+                        .overlay {
+                            Circle()
+                                .stroke(
+                                    LinearGradient(
+                                        colors:
+                                        [
+                                            UIColor.secondarySystemBackground.color,
+                                            UIColor.secondarySystemBackground.toColor(.systemBackground, percentage: 0.5).color
+                                        ],
+                                        startPoint: .top,
+                                        endPoint: .bottom
+                                    ),
+                                    lineWidth: lineWidth
+                                )
+                                .shadow(color: .black.opacity(0.3), radius: 6, x: 0, y: 2)
+                                .padding(-lineWidth / 2)
+                        }
+                        
+                    Text("Conjugator")
+                        .fontWeight(.medium)
                 }
-                .padding(16)
-                .background(UIColor.secondarySystemBackground.color)
-                .cornerRadius(16)
-                .frame(maxWidth: .infinity, alignment: .leading)
                 
-                /// total height = 400
-                VStack(spacing: 20) {
-                    ForEach(challenge.forms, id: \.self) { form in
-                        Button {
-                            withAnimation(.spring()) {
-                                levelViewModel.currentLevelIndex += 1
+                ForEach(level.challenges.prefix(levelViewModel.currentLevelIndex + 1), id: \.verb) { challenge in
+                    
+                    let challenge = level.challenges[levelViewModel.currentLevelIndex]
+                    
+                    VStack(alignment: .leading) {
+                        Text("Verbo:")
+                            .font(.headline)
+                        
+                        Text(challenge.verb)
+                            .font(.largeTitle)
+                    }
+                    .padding(16)
+                    .background(UIColor.secondarySystemBackground.color)
+                    .cornerRadius(16)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    
+                    /// total height = 400
+                    VStack(spacing: 20) {
+                        ForEach(challenge.forms, id: \.self) { form in
+                            Button {
+                                withAnimation(.spring()) {
+                                    levelViewModel.currentLevelIndex += 1
+                                }
+                                
+                            } label: {
+                                Text(form)
+                                    .foregroundColor(.white)
+                                    .frame(maxWidth: .infinity)
+                                    .frame(height: 50)
+                                    .background(Color.blue)
+                                    .cornerRadius(16)
                             }
-                            
-                        } label: {
-                            Text(form)
-                                .foregroundColor(.white)
-                                .frame(maxWidth: .infinity)
-                                .frame(height: 50)
-                                .background(Color.blue)
-                                .cornerRadius(16)
                         }
                     }
+                    .frame(width: 150)
+                    .frame(maxWidth: .infinity, alignment: .trailing)
                 }
-                .frame(width: 150)
-                .frame(maxWidth: .infinity, alignment: .trailing)
-            } else {
-                Text("All done!''")
             }
+            .padding(.horizontal, 16)
         }
-        .padding(16)
-        .navigationTitle(level.title)
-        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarTitleDisplayMode(.inline) /// make the top padding smaller
     }
 }
