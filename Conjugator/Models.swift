@@ -25,9 +25,28 @@ struct Challenge {
     var forms: [String] = []
 }
 
-enum ChallengeStatus {
-    case typing
-    case sent(Challenge)
+struct ChallengeInteraction: Identifiable {
+    let id = UUID()
+    var challenge: Challenge
+    var step = Step.typingQuestion
+
+    enum Step {
+        case typingQuestion
+        case sentQuestion
+        case choicesDisplayed
+        case choicesAnswered
+        case answerConfirmed
+    }
+
+//    struct Step: OptionSet {
+//        let rawValue: Int
+//
+//        static let typingQuestion = Step(rawValue: 1 << 0) /// 1
+//        static let sentQuestion = Step(rawValue: 1 << 1) /// 2
+//        static let choicesDisplayed = Step(rawValue: 1 << 2) /// 4
+//        static let choicesAnswered = Step(rawValue: 1 << 3) /// 8
+//        static let answerConfirmed = Step(rawValue: 1 << 4) /// 16
+//    }
 }
 
 extension Level {

@@ -11,7 +11,7 @@ import SwiftUI
 class LevelViewModel: ObservableObject {
     var level: Level
 
-    @Published var currentLevelIndex = 0
+    @Published var interactions = [ChallengeInteraction]()
 
     init(level: Level) {
         self.level = level
