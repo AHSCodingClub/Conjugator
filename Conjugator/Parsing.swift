@@ -10,6 +10,7 @@ import Foundation
 
 func getLevel(fileLines lines: [String]) -> Level {
     var level = Level()
+
     for index in lines.indices {
         let line = lines[index]
 
@@ -34,11 +35,13 @@ func getLevel(fileLines lines: [String]) -> Level {
             }
         }
     }
+    
     return level
 }
 
 func makeHex(s: String) -> Int? {
     let s = s.lowercased()
+
     switch s {
     case "red": return 0xFF0000
     case "orange": return 0xFFA500
@@ -57,16 +60,20 @@ func makeHex(s: String) -> Int? {
 func getChallenge(from line: String) -> Challenge? {
     let components = line.components(separatedBy: ":")
     guard components.count == 2 else {
-        print("Line must be in the format (verb: form1, form2, form3...). The provided line was: \(line)")
+        print(
+            "Line must be in the format (verb: form1, form2, form3...). The provided line was: \(line)"
+        )
         return nil
     }
 
-    let verb = components[0].trimmingCharacters(in: .whitespacesAndNewlines) /// remove whitespace
+    let verb = components[0].trimmingCharacters(in: .whitespacesAndNewlines)
+    /// remove whitespace
 
     var forms = components[1].components(separatedBy: ",")
 
     for index in forms.indices {
-        let form = forms[index].trimmingCharacters(in: .whitespacesAndNewlines) /// remove whitespace
+        let form = forms[index].trimmingCharacters(in: .whitespacesAndNewlines)
+        /// remove whitespace
         forms[index] = form
     }
 
