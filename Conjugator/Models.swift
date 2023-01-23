@@ -22,10 +22,10 @@ struct Challenge: Hashable {
     /**
      Should be of length 6 and contain forms for **yo, tú, él/ella/usted, nosotros/nosotras, vosotros/vosotras, and ellos/ellas/ustedes**
      */
-    var forms: [String] = []
+    var verbForms: [String] = []
 }
 
-struct ChallengeInteraction: Identifiable, Hashable, Equatable {
+struct Conversation: Identifiable, Hashable, Equatable {
     let id = UUID()
     var challenge: Challenge
     var step = Step.typingQuestion
@@ -42,7 +42,7 @@ struct ChallengeInteraction: Identifiable, Hashable, Equatable {
         hasher.combine(id) /// just check the id for equality
     }
 
-    static func == (lhs: ChallengeInteraction, rhs: ChallengeInteraction) -> Bool {
+    static func == (lhs: Conversation, rhs: Conversation) -> Bool {
         return lhs.id == rhs.id
     }
 
@@ -66,13 +66,13 @@ extension Level {
             challenges: [
                 Challenge(
                     verb: "comer",
-                    forms: ["como", "comes", "come", "comemos", "coméis", "comen"]),
+                    verbForms: ["como", "comes", "come", "comemos", "coméis", "comen"]),
                 Challenge(
                     verb: "beber",
-                    forms: ["bebo", "bebes", "bebe", "bebemos", "bebéis", "beben"]),
+                    verbForms: ["bebo", "bebes", "bebe", "bebemos", "bebéis", "beben"]),
                 Challenge(
                     verb: "andar",
-                    forms: ["ando", "andas", "anda", "andamos", "andáis", "andan"]),
+                    verbForms: ["ando", "andas", "anda", "andamos", "andáis", "andan"]),
             ]),
         Level(
             title: "Go-go verbs (presente)",
@@ -81,9 +81,9 @@ extension Level {
             challenges: [
                 Challenge(
                     verb: "tener",
-                    forms: ["tengo", "tienes", "tiene", "tenemos", "tenéis", "tienen"]),
+                    verbForms: ["tengo", "tienes", "tiene", "tenemos", "tenéis", "tienen"]),
                 Challenge(
-                    verb: "poner", forms: ["pongo", "pones", "pone", "ponemos", "ponéis", "ponen"]),
+                    verb: "poner", verbForms: ["pongo", "pones", "pone", "ponemos", "ponéis", "ponen"]),
             ]),
         Level(
             title: "Nivel Fácil (preterito)",
@@ -92,10 +92,10 @@ extension Level {
             challenges: [
                 Challenge(
                     verb: "tener",
-                    forms: ["tengo", "tienes", "tiene", "tenemos", "tenéis", "tienen"]),
+                    verbForms: ["tengo", "tienes", "tiene", "tenemos", "tenéis", "tienen"]),
                 Challenge(
                     verb: "poner",
-                    forms: ["pongo", "pones", "pone", "ponemos", "ponéis", "ponen"]),
+                    verbForms: ["pongo", "pones", "pone", "ponemos", "ponéis", "ponen"]),
             ]),
     ]
 }

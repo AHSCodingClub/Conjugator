@@ -79,7 +79,7 @@ func getChallenge(from line: String) -> Challenge? {
 
     let challenge = Challenge(
         verb: verb,
-        forms: forms
+        verbForms: forms
     )
     return challenge
 }

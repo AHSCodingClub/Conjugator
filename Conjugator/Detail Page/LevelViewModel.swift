@@ -11,7 +11,7 @@ import SwiftUI
 class LevelViewModel: ObservableObject {
     var level: Level
     var finished = false
-    @Published var interactions = [ChallengeInteraction]()
+    @Published var conversations = [Conversation]()
 
     init(level: Level) {
         self.level = level
@@ -25,31 +25,31 @@ extension LevelViewModel {
     }
 
     func loadNextChallenge() {
-        let displayedChallenges = interactions.map { $0.challenge }
+        let displayedChallenges = conversations.map { $0.challenge }
         if let nextChallenge = level.challenges.first { !displayedChallenges.contains($0) } {
-            let interaction = ChallengeInteraction(challenge: nextChallenge)
+            let conversation = Conversation(challenge: nextChallenge)
 
             withAnimation(.spring(response: 0.4, dampingFraction: 1, blendDuration: 1)) {
-                interactions.append(interaction)
+                conversations.append(conversation)
             }
 
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                guard let index = self.interactionIndex(for: interaction) else {
+                guard let index = self.interactionIndex(for: conversation) else {
                     return
                 }
 
                 withAnimation(.spring(response: 0.4, dampingFraction: 1, blendDuration: 1)) {
-                    self.interactions[index].step = .sentQuestion
+                    self.conversations[index].step = .sentQuestion
                 }
             }
 
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                guard let index = self.interactionIndex(for: interaction) else {
+                guard let index = self.interactionIndex(for: conversation) else {
                     return
                 }
 
                 withAnimation(.spring(response: 0.5, dampingFraction: 1, blendDuration: 1)) {
-                    self.interactions[index].step = .choicesDisplayed
+                    self.conversations[index].step = .choicesDisplayed
                 }
             }
 
@@ -61,9 +61,10 @@ extension LevelViewModel {
             }
         }
     }
+    
 
-    func interactionIndex(for interaction: ChallengeInteraction) -> Int? {
-        let index = interactions.firstIndex(of: interaction)
+    func interactionIndex(for interaction: Conversation) -> Int? {
+        let index = conversations.firstIndex(of: interaction)
         return index
     }
 }

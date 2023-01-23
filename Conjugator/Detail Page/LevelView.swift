@@ -38,10 +38,10 @@ struct LevelView: View {
 
 extension LevelView {
     @ViewBuilder var messages: some View {
-        ForEach(levelViewModel.interactions) { interaction in
+        ForEach(levelViewModel.conversations) { conversation in
 
             VStack {
-                switch interaction.step {
+                switch conversation.step {
                 case .typingQuestion:
                     MessagesTypingIndicator()
                         .foregroundColor(UIColor.secondaryLabel.color)
@@ -51,7 +51,7 @@ extension LevelView {
                         Text("Verbo:")
                             .font(.headline)
 
-                        Text(interaction.challenge.verb)
+                        Text(conversation.challenge.verb)
                             .font(.largeTitle)
                     }
                     .transition(.scale)
@@ -62,15 +62,15 @@ extension LevelView {
             .cornerRadius(16)
             .frame(maxWidth: .infinity, alignment: .leading)
 
-            if interaction.step == .choicesDisplayed {
-                choice(interaction: interaction)
+            if conversation.step == .choicesDisplayed {
+                choice(conversation: conversation)
             }
         }
     }
 
-    func choice(interaction: ChallengeInteraction) -> some View {
+    func choice(conversation: Conversation) -> some View {
         VStack(spacing: 20) {
-            ForEach(interaction.challenge.forms, id: \.self) { form in
+            ForEach(conversation.challenge.verbForms, id: \.self) { form in
                 Button {
 //                            withAnimation(.spring()) {
 //                                levelViewModel.currentLevelIndex += 1
