@@ -64,9 +64,9 @@
 			isa = PBXGroup;
 			children = (
 				3CFBF96C28F744B7007C0CAB /* ConjugatorApp.swift */,
+				3CFBF97D28F747E2007C0CAB /* Models.swift */,
 				3CFBF98928F769E8007C0CAB /* Home Page */,
 				3CFBF98A28F769EE007C0CAB /* Detail Page */,
-				3CFBF97D28F747E2007C0CAB /* Models.swift */,
 				3CFBF98528F7680B007C0CAB /* Parsing.swift */,
 				3CFBF97F28F74CE5007C0CAB /* Utilities.swift */,
 				3CFBF97028F744B9007C0CAB /* Assets.xcassets */,

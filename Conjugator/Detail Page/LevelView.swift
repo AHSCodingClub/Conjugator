@@ -5,78 +5,85 @@
 //  Created by A. Zheng (github.com/aheze) on 10/12/22.
 //  Copyright © 2022 A. Zheng. All rights reserved.
 //
-    
+
 import SwiftUI
 
 struct LevelView: View {
     @ObservedObject var model: ViewModel
     @StateObject var levelViewModel: LevelViewModel
-    
+
     let lineWidth = CGFloat(5)
-    
+    let headerLength = CGFloat(80)
+
     init(model: ViewModel, level: Level) {
         self.model = model
         self._levelViewModel = StateObject(wrappedValue: LevelViewModel(level: level))
     }
-    
+
     var body: some View {
         ScrollView {
             VStack {
                 header
-                
+
                 messages
             }
             .padding(.horizontal, 16)
         }
         .navigationBarTitleDisplayMode(.inline) /// make the top padding smaller
+        .onAppear {
+            levelViewModel.start()
+        }
     }
 }
 
 extension LevelView {
     @ViewBuilder var messages: some View {
-        MessagesTypingIndicator()
-            .padding()
-            .background(Color.black)
-        
         ForEach(levelViewModel.interactions) { interaction in
+
             VStack {
-                if interaction.step == .typingQuestion {}
+                switch interaction.step {
+                case .typingQuestion:
+                    MessagesTypingIndicator()
+                        .foregroundColor(UIColor.secondaryLabel.color)
+                        .transition(.scale)
+                default:
+                    VStack(alignment: .leading) {
+                        Text("Verbo:")
+                            .font(.headline)
+
+                        Text(interaction.challenge.verb)
+                            .font(.largeTitle)
+                    }
+                    .transition(.scale)
+                }
             }
-            
-//            let challenge = level.challenges[levelViewModel.currentLevelIndex]
-//
-//            VStack(alignment: .leading) {
-//                Text("Verbo:")
-//                    .font(.headline)
-//
-//                Text(challenge.verb)
-//                    .font(.largeTitle)
+            .padding(16)
+            .background(UIColor.secondarySystemBackground.color)
+            .cornerRadius(16)
+            .frame(maxWidth: .infinity, alignment: .leading)
+
+//            if interaction.step == .choicesDisplayed {
+            VStack(spacing: 20) {
+                ForEach(interaction.challenge.forms, id: \.self) { form in
+                    Button {
+//                            withAnimation(.spring()) {
+//                                levelViewModel.currentLevelIndex += 1
+//                            }
+
+                    } label: {
+                        Text(form)
+                            .foregroundColor(.white)
+                            .frame(maxWidth: .infinity)
+                            .frame(height: 50)
+                            .background(Color.blue)
+                            .cornerRadius(16)
+                    }
+                }
+            }
+            .frame(width: 150)
+            .frame(maxWidth: .infinity, alignment: .trailing)
+            .transition(.scale(scale: 0.9, anchor: .trailing))
 //            }
-//            .padding(16)
-//            .background(UIColor.secondarySystemBackground.color)
-//            .cornerRadius(16)
-//            .frame(maxWidth: .infinity, alignment: .leading)
-//
-//            /// total height = 400
-//            VStack(spacing: 20) {
-//                ForEach(challenge.forms, id: \.self) { form in
-//                    Button {
-//                        withAnimation(.spring()) {
-//                            levelViewModel.currentLevelIndex += 1
-//                        }
-//
-//                    } label: {
-//                        Text(form)
-//                            .foregroundColor(.white)
-//                            .frame(maxWidth: .infinity)
-//                            .frame(height: 50)
-//                            .background(Color.blue)
-//                            .cornerRadius(16)
-//                    }
-//                }
-//            }
-//            .frame(width: 150)
-//            .frame(maxWidth: .infinity, alignment: .trailing)
         }
     }
 }
@@ -88,7 +95,7 @@ extension LevelView {
                 .resizable()
                 .aspectRatio(contentMode: .fill)
                 .clipShape(Circle())
-                .frame(width: 60, height: 60)
+                .frame(width: headerLength, height: headerLength)
                 .overlay {
                     Circle()
                         .stroke(
@@ -106,7 +113,7 @@ extension LevelView {
                         .shadow(color: .black.opacity(0.3), radius: 6, x: 0, y: 2)
                         .padding(-lineWidth / 2)
                 }
-                
+
             Text("Conjugator")
                 .fontWeight(.medium)
         }
@@ -122,7 +129,6 @@ struct MessagesTypingIndicator: View {
         HStack(spacing: 8) {
             ForEach(0 ..< MessagesTypingIndicator.numberOfDots) { index in
                 Circle()
-                    .fill(.white)
                     .frame(width: 10, height: 10)
                     .opacity(index == highlightedIndex ? 1 : 0.5)
                     .scaleEffect(index == highlightedIndex ? 1.2 : 1)

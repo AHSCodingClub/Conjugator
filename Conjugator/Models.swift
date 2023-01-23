@@ -16,7 +16,7 @@ struct Level {
     var challenges: [Challenge] = []
 }
 
-struct Challenge {
+struct Challenge: Hashable {
     var verb: String = ""
 
     /**
@@ -25,7 +25,7 @@ struct Challenge {
     var forms: [String] = []
 }
 
-struct ChallengeInteraction: Identifiable {
+struct ChallengeInteraction: Identifiable, Hashable {
     let id = UUID()
     var challenge: Challenge
     var step = Step.typingQuestion
