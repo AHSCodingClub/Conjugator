@@ -20,6 +20,7 @@ class LevelViewModel: ObservableObject {
 
 extension LevelViewModel {
     func start() {
+        print("loading.")
         loadNextChallenge()
     }
 
@@ -33,15 +34,20 @@ extension LevelViewModel {
             }
 
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                guard let index = self.interactionIndex(for: interaction) else { return }
+                guard let index = self.interactionIndex(for: interaction) else {
+                    return
+                }
 
                 withAnimation(.spring(response: 0.4, dampingFraction: 1, blendDuration: 1)) {
                     self.interactions[index].step = .sentQuestion
                 }
             }
 
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.2) {
-                guard let index = self.interactionIndex(for: interaction) else { return }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                guard let index = self.interactionIndex(for: interaction) else {
+                    return
+                }
+
                 withAnimation(.spring(response: 0.5, dampingFraction: 1, blendDuration: 1)) {
                     self.interactions[index].step = .choicesDisplayed
                 }

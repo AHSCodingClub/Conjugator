@@ -62,29 +62,33 @@ extension LevelView {
             .cornerRadius(16)
             .frame(maxWidth: .infinity, alignment: .leading)
 
-//            if interaction.step == .choicesDisplayed {
-            VStack(spacing: 20) {
-                ForEach(interaction.challenge.forms, id: \.self) { form in
-                    Button {
+            if interaction.step == .choicesDisplayed {
+                choice(interaction: interaction)
+            }
+        }
+    }
+
+    func choice(interaction: ChallengeInteraction) -> some View {
+        VStack(spacing: 20) {
+            ForEach(interaction.challenge.forms, id: \.self) { form in
+                Button {
 //                            withAnimation(.spring()) {
 //                                levelViewModel.currentLevelIndex += 1
 //                            }
 
-                    } label: {
-                        Text(form)
-                            .foregroundColor(.white)
-                            .frame(maxWidth: .infinity)
-                            .frame(height: 50)
-                            .background(Color.blue)
-                            .cornerRadius(16)
-                    }
+                } label: {
+                    Text(form)
+                        .foregroundColor(.white)
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 50)
+                        .background(Color.blue)
+                        .cornerRadius(16)
                 }
             }
-            .frame(width: 150)
-            .frame(maxWidth: .infinity, alignment: .trailing)
-            .transition(.scale(scale: 0.9, anchor: .trailing))
-//            }
         }
+        .frame(width: 150)
+        .frame(maxWidth: .infinity, alignment: .trailing)
+        .transition(.scale(scale: 0.9, anchor: .trailing).combined(with: .opacity))
     }
 }
 

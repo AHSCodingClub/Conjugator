@@ -25,7 +25,7 @@ struct Challenge: Hashable {
     var forms: [String] = []
 }
 
-struct ChallengeInteraction: Identifiable, Hashable {
+struct ChallengeInteraction: Identifiable, Hashable, Equatable {
     let id = UUID()
     var challenge: Challenge
     var step = Step.typingQuestion
@@ -36,6 +36,14 @@ struct ChallengeInteraction: Identifiable, Hashable {
         case choicesDisplayed
         case choicesAnswered
         case answerConfirmed
+    }
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id) /// just check the id for equality
+    }
+
+    static func == (lhs: ChallengeInteraction, rhs: ChallengeInteraction) -> Bool {
+        return lhs.id == rhs.id
     }
 
 //    struct Step: OptionSet {
