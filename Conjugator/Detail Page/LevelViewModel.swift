@@ -30,13 +30,13 @@ extension LevelViewModel {
             var conversation: Conversation = {
                 switch level.mode {
                 case .randomForm:
-                    return Conversation(challenge: challenge, form: .random)
+                    return Conversation(challenge: challenge, correctForm: .random)
                 case .setForm(let form):
-                    return Conversation(challenge: challenge, form: form)
+                    return Conversation(challenge: challenge, correctForm: form)
                 }
             }()
 
-            let message = Message(content: .prompt(typing: true, header: "Verbo:", title: challenge.verb, footer: nil))
+            let message = Message(content: .prompt(typing: true, header: "Verbo:", title: challenge.verb, footer: conversation.correctForm.title))
             conversation.messages.append(message)
 
             withAnimation(.spring(response: 0.4, dampingFraction: 1, blendDuration: 1)) {
@@ -50,18 +50,13 @@ extension LevelViewModel {
                 else { return }
 
                 withAnimation(.spring(response: 0.4, dampingFraction: 1, blendDuration: 1)) {
-                    self.conversations[conversationIndex].messages[messageIndex].content = .prompt(typing: false, header: "Verbo:", title: challenge.verb, footer: nil)
+                    self.conversations[conversationIndex].messages[messageIndex].content = .prompt(typing: false, header: "Verbo:", title: challenge.verb, footer: conversation.correctForm.title)
                 }
             }
-//
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                guard
-                    let conversationIndex = self.conversations.firstIndex(where: { $0.id == conversation.id }),
-                    let messageIndex = self.conversations[conversationIndex].messages.firstIndex(where: { $0.id == message.id })
-                else { return }
 
-                let choices = challenge.verbForms.map { Choice(form: .yo, text: $0) }
-                
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                guard let conversationIndex = self.conversations.firstIndex(where: { $0.id == conversation.id }) else { return }
+
                 withAnimation(.spring(response: 0.5, dampingFraction: 1, blendDuration: 1)) {
                     let message = Message(content: .choices(choices: challenge.choices))
                     self.conversations[conversationIndex].messages.append(message)
@@ -77,8 +72,18 @@ extension LevelViewModel {
         }
     }
 
-    func submitChoice(conversation: Conversation, form: Form) {
-        guard let index = conversations.firstIndex(where: { $0.id == conversation.id }) else { return }
+    func submitChoice(conversation: Conversation, message: Message, choice: Choice) {
+        guard
+            let conversationIndex = conversations.firstIndex(where: { $0.id == conversation.id }),
+            let messageIndex = conversations[conversationIndex].messages.firstIndex(where: { $0.id == message.id })
+        else { return }
+
+        let correct = conversation.correctForm == choice.form
+
+        withAnimation(.spring(response: 0.5, dampingFraction: 1, blendDuration: 1)) {
+            self.conversations[conversationIndex].messages[messageIndex].content = .response(choice: choice, correct: correct)
+        }
+
 //        withAnimation(.spring(response: 0.5, dampingFraction: 1, blendDuration: 1)) {
 //            conversations[index].step = .choicesAnswered
 //        }

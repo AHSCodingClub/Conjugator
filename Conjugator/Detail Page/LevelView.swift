@@ -22,7 +22,7 @@ struct LevelView: View {
 
     var body: some View {
         ScrollView {
-            VStack {
+            VStack(spacing: 32) {
                 header
 
                 ForEach(levelViewModel.conversations) { conversation in
@@ -97,4 +97,3 @@ extension LevelView {
         }
     }
 }
-

@@ -45,12 +45,24 @@ struct MessageView: View {
             .cornerRadius(16)
             .frame(maxWidth: .infinity, alignment: .leading)
 
-        case let .choices(choices):
+        case .choices, .response:
+
+            let (choices, correct): ([Choice], Bool?) = {
+                switch message.content {
+                case let .choices(choices):
+                    return (choices, nil)
+                case let .response(choice, correct):
+                    return ([choice], correct)
+                default:
+                    return ([], nil)
+                }
+            }()
+
             VStack(spacing: 20) {
                 ForEach(choices) { choice in
 
                     Button {
-                        levelViewModel.submitChoice(conversation: conversation, form: choice.form)
+                        levelViewModel.submitChoice(conversation: conversation, message: message, choice: choice)
                     } label: {
                         Text(choice.text)
                             .foregroundColor(.white)
@@ -59,6 +71,20 @@ struct MessageView: View {
                             .background(Color.blue)
                             .cornerRadius(16)
                     }
+                    .overlay(alignment: .topLeading) {
+                        if let correct {
+                            Circle()
+                                .fill(UIColor.secondarySystemBackground.color)
+                                .frame(width: 40, height: 40)
+                                .overlay {
+                                    Image(systemName: correct ? "checkmark" : "xmark")
+                                        .font(.system(size: 22, weight: .heavy))
+                                        .foregroundColor(correct ? .green : .red)
+                                }
+                                .offset(x: -20, y: -20)
+                        }
+                    }
+                    .transition(.scale(scale: 0.2).combined(with: .opacity))
                 }
             }
             .frame(width: 150)

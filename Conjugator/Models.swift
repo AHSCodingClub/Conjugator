@@ -35,6 +35,23 @@ enum Form: CaseIterable {
     static var random: Form {
         return Form.allCases.randomElement() ?? .yo
     }
+
+    var title: String {
+        switch self {
+        case .yo:
+            return "Yo"
+        case .tu:
+            return "Tú"
+        case .el:
+            return "Él/Ella/Usted"
+        case .nosotros:
+            return "Nosotros"
+        case .vosotros:
+            return "Vosotros"
+        case .ellos:
+            return "Ellos"
+        }
+    }
 }
 
 struct Choice: Identifiable {
@@ -83,7 +100,7 @@ struct Challenge: Hashable {
 struct Conversation: Identifiable {
     let id = UUID()
     var challenge: Challenge
-    var form: Form
+    var correctForm: Form
     var status = Status.questionAsked
     var messages = [Message]()
 
