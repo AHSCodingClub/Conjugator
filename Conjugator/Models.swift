@@ -12,8 +12,35 @@ struct Level {
     var title: String = ""
     var description: String = ""
     var colorHex: Int? = nil
+    var mode = Mode.randomForm
+
     /// There should be at least two challenges
     var challenges: [Challenge] = []
+}
+
+enum Mode {
+    case randomForm
+    case setForm(Form)
+}
+
+/// An enumeration for possible verb forms
+enum Form: Int, CaseIterable {
+    case yo = 0
+    case tu = 1
+    case el = 2
+    case nosotros = 3
+    case vosotros = 4
+    case ellos = 5
+
+    static var random: Form {
+        return Form.allCases.randomElement() ?? .yo
+    }
+}
+
+struct Choice: Identifiable {
+    let id = UUID()
+    var form: Form
+    var text: String /// the conjugated choice
 }
 
 struct Challenge: Hashable {
@@ -25,37 +52,51 @@ struct Challenge: Hashable {
     var verbForms: [String] = []
 }
 
-struct Conversation: Identifiable, Hashable, Equatable {
+struct Conversation: Identifiable {
     let id = UUID()
     var challenge: Challenge
-    var step = Step.typingQuestion
+    var form: Form
+    var status = Status.questionAsked
+    var messages = [Message]()
 
-    enum Step {
-        case typingQuestion
-        case sentQuestion
-        case choicesDisplayed
-        case choicesAnswered
-        case answerConfirmed
+    enum Status: Equatable {
+        case questionAsked
+        case questionAnsweredCorrectly(numberOfAttempts: Int)
+        case questionAnsweredIncorrectly
     }
-
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(id) /// just check the id for equality
-    }
-
-    static func == (lhs: Conversation, rhs: Conversation) -> Bool {
-        return lhs.id == rhs.id
-    }
-
-//    struct Step: OptionSet {
-//        let rawValue: Int
-//
-//        static let typingQuestion = Step(rawValue: 1 << 0) /// 1
-//        static let sentQuestion = Step(rawValue: 1 << 1) /// 2
-//        static let choicesDisplayed = Step(rawValue: 1 << 2) /// 4
-//        static let choicesAnswered = Step(rawValue: 1 << 3) /// 8
-//        static let answerConfirmed = Step(rawValue: 1 << 4) /// 16
-//    }
 }
+
+struct Message: Identifiable {
+    let id = UUID()
+    var content: Content
+
+    enum Content {
+        case prompt(typing: Bool, header: String?, title: String, footer: String?)
+        case choices(choices: [Choice])
+        case response(choice: Choice, correct: Bool?)
+    }
+}
+
+//
+// extension Conversation: Hashable, Equatable {
+//    func hash(into hasher: inout Hasher) {
+//        hasher.combine(id) /// just check the id for equality
+//    }
+//
+//    static func == (lhs: Conversation, rhs: Conversation) -> Bool {
+//        return lhs.id == rhs.id
+//    }
+// }
+//
+// extension Message: Hashable, Equatable {
+//    func hash(into hasher: inout Hasher) {
+//        hasher.combine(id) /// just check the id for equality
+//    }
+//
+//    static func == (lhs: Message, rhs: Message) -> Bool {
+//        return lhs.id == rhs.id
+//    }
+// }
 
 extension Level {
     static let testingLevels: [Level] = [

@@ -26,32 +26,42 @@ extension LevelViewModel {
 
     func loadNextChallenge() {
         let displayedChallenges = conversations.map { $0.challenge }
-        if let nextChallenge = level.challenges.first { !displayedChallenges.contains($0) } {
-            let conversation = Conversation(challenge: nextChallenge)
+
+        if let challenge = level.challenges.first(where: { !displayedChallenges.contains($0) }) {
+            var conversation: Conversation = {
+                switch level.mode {
+                case .randomForm:
+                    return Conversation(challenge: challenge, form: .random)
+                case .setForm(let form):
+                    return Conversation(challenge: challenge, form: form)
+                }
+            }()
+
+            let message = Message(content: .prompt(typing: true, header: "Verbo:", title: challenge.verb, footer: nil))
+            conversation.messages.append(message)
 
             withAnimation(.spring(response: 0.4, dampingFraction: 1, blendDuration: 1)) {
                 conversations.append(conversation)
             }
 
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                guard let index = self.interactionIndex(for: conversation) else {
-                    return
-                }
+                guard
+                    let conversationIndex = self.conversations.firstIndex(where: { $0.id == conversation.id }),
+                    let messageIndex = self.conversations[conversationIndex].messages.firstIndex(where: { $0.id == message.id })
+                else { return }
 
                 withAnimation(.spring(response: 0.4, dampingFraction: 1, blendDuration: 1)) {
-                    self.conversations[index].step = .sentQuestion
+                    self.conversations[conversationIndex].messages[messageIndex].content = .prompt(typing: false, header: "Verbo:", title: challenge.verb, footer: nil)
                 }
             }
-
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                guard let index = self.interactionIndex(for: conversation) else {
-                    return
-                }
-
-                withAnimation(.spring(response: 0.5, dampingFraction: 1, blendDuration: 1)) {
-                    self.conversations[index].step = .choicesDisplayed
-                }
-            }
+//
+//            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+//                guard let index = self.conversationIndex(for: conversation) else { return }
+//
+//                withAnimation(.spring(response: 0.5, dampingFraction: 1, blendDuration: 1)) {
+//                    self.conversations[index].step = .choicesDisplayed
+//                }
+//            }
 
         } else {
             /// no more challenges!
@@ -61,10 +71,17 @@ extension LevelViewModel {
             }
         }
     }
-    
 
-    func interactionIndex(for interaction: Conversation) -> Int? {
-        let index = conversations.firstIndex(of: interaction)
-        return index
+    func submitChoice(conversation: Conversation, form: Form) {
+        guard let index = conversations.firstIndex(where: { $0.id == conversation.id }) else { return }
+//        withAnimation(.spring(response: 0.5, dampingFraction: 1, blendDuration: 1)) {
+//            conversations[index].step = .choicesAnswered
+//        }
+//
+//        if form == conversation.form {
+//            DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
+//
+//            }
+//        }
     }
 }
