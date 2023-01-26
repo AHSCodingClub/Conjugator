@@ -16,8 +16,7 @@ struct MessageView: View {
     var body: some View {
         switch message.content {
         case let .prompt(typing, header, title, footer):
-            
-            let _ = print("typine? \(typing)")
+
             VStack {
                 if typing {
                     MessagesTypingIndicator()

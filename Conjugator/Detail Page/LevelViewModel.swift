@@ -20,7 +20,6 @@ class LevelViewModel: ObservableObject {
 
 extension LevelViewModel {
     func start() {
-        print("loading.")
         loadNextChallenge()
     }
 
@@ -55,13 +54,19 @@ extension LevelViewModel {
                 }
             }
 //
-//            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-//                guard let index = self.conversationIndex(for: conversation) else { return }
-//
-//                withAnimation(.spring(response: 0.5, dampingFraction: 1, blendDuration: 1)) {
-//                    self.conversations[index].step = .choicesDisplayed
-//                }
-//            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                guard
+                    let conversationIndex = self.conversations.firstIndex(where: { $0.id == conversation.id }),
+                    let messageIndex = self.conversations[conversationIndex].messages.firstIndex(where: { $0.id == message.id })
+                else { return }
+
+                let choices = challenge.verbForms.map { Choice(form: .yo, text: $0) }
+                
+                withAnimation(.spring(response: 0.5, dampingFraction: 1, blendDuration: 1)) {
+                    let message = Message(content: .choices(choices: challenge.choices))
+                    self.conversations[conversationIndex].messages.append(message)
+                }
+            }
 
         } else {
             /// no more challenges!

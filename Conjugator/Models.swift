@@ -24,13 +24,13 @@ enum Mode {
 }
 
 /// An enumeration for possible verb forms
-enum Form: Int, CaseIterable {
-    case yo = 0
-    case tu = 1
-    case el = 2
-    case nosotros = 3
-    case vosotros = 4
-    case ellos = 5
+enum Form: CaseIterable {
+    case yo
+    case tu
+    case el
+    case nosotros
+    case vosotros
+    case ellos
 
     static var random: Form {
         return Form.allCases.randomElement() ?? .yo
@@ -50,6 +50,34 @@ struct Challenge: Hashable {
      Should be of length 6 and contain forms for **yo, tú, él/ella/usted, nosotros/nosotras, vosotros/vosotras, and ellos/ellas/ustedes**
      */
     var verbForms: [String] = []
+
+    var choices: [Choice] {
+        switch verbForms.count {
+        case 5:
+            let choices = [
+                Choice(form: .yo, text: verbForms[0]),
+                Choice(form: .tu, text: verbForms[1]),
+                Choice(form: .el, text: verbForms[2]),
+                Choice(form: .nosotros, text: verbForms[3]),
+                Choice(form: .ellos, text: verbForms[4]),
+            ]
+            return choices
+        case 6:
+            let choices = [
+                Choice(form: .yo, text: verbForms[0]),
+                Choice(form: .tu, text: verbForms[1]),
+                Choice(form: .el, text: verbForms[2]),
+                Choice(form: .nosotros, text: verbForms[3]),
+                Choice(form: .vosotros, text: verbForms[4]),
+                Choice(form: .ellos, text: verbForms[5]),
+            ]
+            return choices
+        default:
+            return [
+                Choice(form: .yo, text: "Error on this level. Please let your teacher know.")
+            ]
+        }
+    }
 }
 
 struct Conversation: Identifiable {
