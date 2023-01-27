@@ -13,12 +13,14 @@ struct ConversationView: View {
     var conversation: Conversation
 
     var body: some View {
-        ForEach(conversation.messages) { message in
-            MessageView(
-                levelViewModel: levelViewModel,
-                conversation: conversation,
-                message: message
-            )
+        VStack(spacing: 24) {
+            ForEach(conversation.messages) { message in
+                MessageView(
+                    levelViewModel: levelViewModel,
+                    conversation: conversation,
+                    message: message
+                )
+            }
         }
     }
 }

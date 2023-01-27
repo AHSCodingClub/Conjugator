@@ -98,9 +98,9 @@
 			children = (
 				3CFBF98B28F769F6007C0CAB /* LevelViewModel.swift */,
 				3CFBF98128F76171007C0CAB /* LevelView.swift */,
-				3CB04286298386990017C787 /* KeyboardView.swift */,
 				3CB042802982F3E60017C787 /* ConversationView.swift */,
 				3CB042842982F4620017C787 /* MessageView.swift */,
+				3CB04286298386990017C787 /* KeyboardView.swift */,
 			);
 			path = "Detail Page";
 			sourceTree = "<group>";

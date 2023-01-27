@@ -33,8 +33,10 @@ struct Conversation: Identifiable {
     let id = UUID()
     var challenge: Challenge
     var correctForm: Form
+    var showingChoices = true
     var choices: [Choice]
     var selectedChoice: Choice?
+    var strikethroughChoices = [Choice]()
     var status = Status.questionAsked
     var messages = [Message]()
 

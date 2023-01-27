@@ -86,17 +86,33 @@ struct KeyboardView: View {
             }
         }()
 
+        let strikethrough = conversation.strikethroughChoices.contains(where: { $0.id == choice.id })
+
         Button {
             levelViewModel.submitChoice(conversation: conversation, choice: choice)
         } label: {
             Text(choice.text)
                 .foregroundColor(.white)
+                .overlay {
+                    LineShape(horizontal: true)
+                        .trim(from: 0, to: strikethrough ? 1 : 0)
+                        .stroke(UIColor.red.toColor(.white, percentage: 0.25).color, lineWidth: 3)
+                        .opacity(strikethrough ? 1 : 0)
+                        .frame(height: 3)
+                        .padding(.horizontal, -10)
+                        .offset(y: 2) /// lower the strikethrough a bit
+                }
+                .opacity(conversation.showingChoices ? 1 : 0)
                 .frame(maxWidth: .infinity)
                 .frame(height: 50)
-                .background(Color.blue)
+                .background(
+                    Color.blue
+                        .brightness(strikethrough ? -0.2 : 0)
+                )
                 .cornerRadius(16)
         }
         .opacity(opacity)
         .brightness(brightness)
+        .disabled(strikethrough)
     }
 }

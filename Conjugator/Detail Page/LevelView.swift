@@ -26,8 +26,10 @@ struct LevelView: View {
                 VStack(spacing: 32) {
                     header
 
-                    ForEach(levelViewModel.conversations) { conversation in
-                        ConversationView(levelViewModel: levelViewModel, conversation: conversation)
+                    DividedVStack(spacing: 32) {
+                        ForEach(levelViewModel.conversations) { conversation in
+                            ConversationView(levelViewModel: levelViewModel, conversation: conversation)
+                        }
                     }
                 }
                 .padding(.horizontal, 16)
