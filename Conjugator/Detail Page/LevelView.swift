@@ -21,20 +21,30 @@ struct LevelView: View {
     }
 
     var body: some View {
-        ScrollView {
-            VStack(spacing: 32) {
-                header
+        VStack(spacing: 0) {
+            ScrollView {
+                VStack(spacing: 32) {
+                    header
 
-                ForEach(levelViewModel.conversations) { conversation in
-                    ConversationView(levelViewModel: levelViewModel, conversation: conversation)
+                    ForEach(levelViewModel.conversations) { conversation in
+                        ConversationView(levelViewModel: levelViewModel, conversation: conversation)
+                    }
                 }
+                .padding(.horizontal, 16)
+                .padding(.vertical, 24)
+                .rotationEffect(.degrees(180))
+                .scaleEffect(x: -1.0, y: 1.0)
             }
-            .padding(.horizontal, 16)
             .rotationEffect(.degrees(180))
             .scaleEffect(x: -1.0, y: 1.0)
+
+            Color.clear
+                .frame(height: 300)
+                .background {
+                    UIColor.secondarySystemBackground.color
+                        .ignoresSafeArea()
+                }
         }
-        .rotationEffect(.degrees(180))
-        .scaleEffect(x: -1.0, y: 1.0)
         .navigationBarTitleDisplayMode(.inline) /// make the top padding smaller
         .onAppear {
             levelViewModel.start()
