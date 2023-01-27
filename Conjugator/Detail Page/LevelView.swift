@@ -38,11 +38,16 @@ struct LevelView: View {
             .rotationEffect(.degrees(180))
             .scaleEffect(x: -1.0, y: 1.0)
 
+            Divider()
+            
             Color.clear
                 .frame(height: 300)
                 .background {
                     UIColor.secondarySystemBackground.color
                         .ignoresSafeArea()
+                }
+                .overlay {
+                    KeyboardView(levelViewModel: levelViewModel)
                 }
         }
         .navigationBarTitleDisplayMode(.inline) /// make the top padding smaller

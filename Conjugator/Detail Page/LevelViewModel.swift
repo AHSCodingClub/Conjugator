@@ -12,6 +12,7 @@ import SwiftUI
 class LevelViewModel: ObservableObject {
     var level: Level
     var finished = false
+    var keyboardMode = KeyboardMode.blank
     @Published var conversations = [Conversation]()
 
     init(level: Level) {
@@ -22,6 +23,12 @@ class LevelViewModel: ObservableObject {
 extension LevelViewModel {
     func start() {
         loadNextChallenge()
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            withAnimation {
+                self.keyboardMode = .info
+            }
+        }
     }
 
     func loadNextChallenge() {
@@ -61,6 +68,7 @@ extension LevelViewModel {
                 withAnimation(.spring(response: 0.5, dampingFraction: 1, blendDuration: 1)) {
                     let message = Message(content: .choices(choices: challenge.choices))
                     self.conversations[conversationIndex].messages.append(message)
+                    self.keyboardMode = .choices(choices: challenge.choices)
                 }
             }
 

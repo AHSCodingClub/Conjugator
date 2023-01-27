@@ -23,6 +23,12 @@ enum Mode {
     case setForm(Form)
 }
 
+enum KeyboardMode {
+    case blank
+    case info
+    case choices(choices: [Choice])
+}
+
 /// An enumeration for possible verb forms
 enum Form: CaseIterable {
     case yo

@@ -32,10 +32,12 @@ struct LevelCardView: View {
                 Text(level.description)
                     .font(.title3)
                     .foregroundColor(UIColor.secondaryLabel.color)
+                    .multilineTextAlignment(.leading)
 
                 /// TODO: Decide whether this should be in Spanish
                 Text("Contains \(level.challenges.count) verbs")
             }
+            .frame(maxWidth: .infinity, alignment: .leading)
             .padding(16)
         }
         .foregroundColor(UIColor.label.color)
