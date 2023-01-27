@@ -19,21 +19,30 @@ struct ContentView: View {
         VStack(alignment: .leading, spacing: 0) {
             VStack {
                 if let selectedLevel = model.selectedLevel {
-                    Button {
-                        withAnimation(.spring(response: 0.3, dampingFraction: 1, blendDuration: 1)) {
-                            model.selectedLevel = nil
-                        }
-                    } label: {
-                        HStack(spacing: 10) {
+                    HStack {
+                        Button {
+                            withAnimation(.spring(response: 0.3, dampingFraction: 1, blendDuration: 1)) {
+                                model.selectedLevel = nil
+                            }
+                        } label: {
                             Image(systemName: "chevron.backward")
-                                .fontWeight(.medium)
 
-                            Text("Back")
+                                .fontWeight(.medium)
+                                .padding(.trailing, 16)
+                                .padding(.vertical, 16)
+                                .contentShape(Rectangle())
+                                .font(.title3)
                         }
-                        .foregroundColor(.white)
-                        .padding(.vertical, 16)
-                        .font(.title3)
+
+                        Spacer()
                     }
+                    .frame(maxWidth: .infinity)
+                    .overlay {
+                        Text(selectedLevel.title)
+                            .font(.title3)
+                            .fontWeight(.semibold)
+                    }
+                    .foregroundColor(.white)
                 } else {
                     Text("Conjugator")
                         .foregroundColor(.white)
@@ -44,7 +53,16 @@ struct ContentView: View {
             .padding(.horizontal, 20)
             .frame(maxWidth: .infinity, alignment: .leading)
             .background {
-                Color.blue
+                let color: Color = {
+                    if let selectedLevel = model.selectedLevel, let hex = selectedLevel.colorHex {
+                        return UIColor(hex: hex).getTextColor(backgroundIsDark: false).color
+                    } else {
+                        return Color.blue
+                    }
+                }()
+
+                color
+
                     .ignoresSafeArea()
             }
 
