@@ -26,7 +26,32 @@ enum Mode {
 enum KeyboardMode {
     case blank
     case info
-    case choices(choices: [Choice])
+    case conversation(conversation: Conversation)
+}
+
+struct Conversation: Identifiable {
+    let id = UUID()
+    var challenge: Challenge
+    var correctForm: Form
+    var choices: [Choice]
+    var status = Status.questionAsked
+    var messages = [Message]()
+
+    enum Status: Equatable {
+        case questionAsked
+        case questionAnsweredCorrectly(numberOfAttempts: Int)
+        case questionAnsweredIncorrectly
+    }
+}
+
+struct Message: Identifiable {
+    let id = UUID()
+    var content: Content
+
+    enum Content {
+        case prompt(typing: Bool, header: String?, title: String, footer: String?)
+        case response(choice: Choice, correct: Bool?)
+    }
 }
 
 /// An enumeration for possible verb forms
@@ -74,7 +99,7 @@ struct Challenge: Hashable {
      */
     var verbForms: [String] = []
 
-    var choices: [Choice] {
+    func getChoices() -> [Choice] {
         switch verbForms.count {
         case 5:
             let choices = [
@@ -100,31 +125,6 @@ struct Challenge: Hashable {
                 Choice(form: .yo, text: "Error on this level. Please let your teacher know.")
             ]
         }
-    }
-}
-
-struct Conversation: Identifiable {
-    let id = UUID()
-    var challenge: Challenge
-    var correctForm: Form
-    var status = Status.questionAsked
-    var messages = [Message]()
-
-    enum Status: Equatable {
-        case questionAsked
-        case questionAnsweredCorrectly(numberOfAttempts: Int)
-        case questionAnsweredIncorrectly
-    }
-}
-
-struct Message: Identifiable {
-    let id = UUID()
-    var content: Content
-
-    enum Content {
-        case prompt(typing: Bool, header: String?, title: String, footer: String?)
-        case choices(choices: [Choice])
-        case response(choice: Choice, correct: Bool?)
     }
 }
 

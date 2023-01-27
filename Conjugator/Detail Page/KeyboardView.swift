@@ -26,16 +26,16 @@ struct KeyboardView: View {
 
                 Text(levelViewModel.level.description)
             }
-        case .choices(choices: let choices):
+        case .conversation(conversation: let conversation):
             VStack(alignment: .leading) {
                 Text("Seleccione una opción.")
                     .font(.headline.bold())
 
                 LazyVGrid(columns: columns) {
-                    ForEach(choices) { choice in
+                    ForEach(conversation.choices) { choice in
 
                         Button {
-                            //                        levelViewModel.submitChoice(conversation: conversation, message: message, choice: choice)
+                            levelViewModel.submitChoice(conversation: conversation, choice: choice)
                         } label: {
                             Text(choice.text)
                                 .foregroundColor(.white)
@@ -44,13 +44,14 @@ struct KeyboardView: View {
                                 .background(Color.blue)
                                 .cornerRadius(16)
                         }
+                        .transition(.scale)
                     }
                 }
+                .frame(maxHeight: .infinity, alignment: .top)
             }
-            .frame(maxHeight: .infinity, alignment: .top)
             .padding(.horizontal, 20)
             .padding(.vertical, 16)
         }
-        Color.clear
+
     }
 }

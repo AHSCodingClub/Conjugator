@@ -46,32 +46,15 @@ struct MessageView: View {
             .cornerRadius(16)
             .frame(maxWidth: .infinity, alignment: .leading)
 
-        case .choices, .response:
-
-            let (choices, correct): ([Choice], Bool?) = {
-                switch message.content {
-                case let .choices(choices):
-                    return (choices, nil)
-                case let .response(choice, correct):
-                    return ([choice], correct)
-                default:
-                    return ([], nil)
-                }
-            }()
+        case let .response(choice, correct):
 
             VStack(spacing: 20) {
-                ForEach(choices) { choice in
-
-                    Button {
-                        levelViewModel.submitChoice(conversation: conversation, message: message, choice: choice)
-                    } label: {
-                        Text(choice.text)
-                            .foregroundColor(.white)
-                            .frame(maxWidth: .infinity)
-                            .frame(height: 50)
-                            .background(Color.blue)
-                            .cornerRadius(16)
-                    }
+                Text(choice.text)
+                    .foregroundColor(.white)
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 50)
+                    .background(Color.blue)
+                    .cornerRadius(16)
                     .overlay(alignment: .topLeading) {
                         if let correct {
                             Circle()
@@ -87,7 +70,6 @@ struct MessageView: View {
                         }
                     }
                     .transition(.scale(scale: 0.2).combined(with: .opacity))
-                }
             }
             .frame(width: 150)
             .frame(maxWidth: .infinity, alignment: .trailing)

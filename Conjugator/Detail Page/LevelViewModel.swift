@@ -11,8 +11,8 @@ import SwiftUI
 
 class LevelViewModel: ObservableObject {
     var level: Level
-    var finished = false
-    var keyboardMode = KeyboardMode.blank
+    @Published var finished = false
+    @Published var keyboardMode = KeyboardMode.blank
     @Published var conversations = [Conversation]()
 
     init(level: Level) {
@@ -38,9 +38,9 @@ extension LevelViewModel {
             var conversation: Conversation = {
                 switch level.mode {
                 case .randomForm:
-                    return Conversation(challenge: challenge, correctForm: .random)
+                    return Conversation(challenge: challenge, correctForm: .random, choices: challenge.getChoices())
                 case .setForm(let form):
-                    return Conversation(challenge: challenge, correctForm: form)
+                    return Conversation(challenge: challenge, correctForm: form, choices: challenge.getChoices())
                 }
             }()
 
@@ -63,12 +63,13 @@ extension LevelViewModel {
             }
 
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                guard let conversationIndex = self.conversations.firstIndex(where: { $0.id == conversation.id }) else { return }
+//                guard let conversationIndex = self.conversations.firstIndex(where: { $0.id == conversation.id }) else { return }
 
+                print("set!")
                 withAnimation(.spring(response: 0.5, dampingFraction: 1, blendDuration: 1)) {
-                    let message = Message(content: .choices(choices: challenge.choices))
-                    self.conversations[conversationIndex].messages.append(message)
-                    self.keyboardMode = .choices(choices: challenge.choices)
+//                    let message = Message(content: .choices(choices: challenge.choices))
+//                    self.conversations[conversationIndex].messages.append(message)
+                    self.keyboardMode = .conversation(conversation: conversation)
                 }
             }
 
@@ -82,14 +83,14 @@ extension LevelViewModel {
         }
     }
 
-    func submitChoice(conversation: Conversation, message: Message, choice: Choice) {
+    func submitChoice(conversation: Conversation, choice: Choice) {
         guard
-            let conversationIndex = conversations.firstIndex(where: { $0.id == conversation.id }),
-            let messageIndex = conversations[conversationIndex].messages.firstIndex(where: { $0.id == message.id })
+            let conversationIndex = conversations.firstIndex(where: { $0.id == conversation.id })
         else { return }
 
+        let message = Message(content: .response(choice: choice, correct: nil))
         withAnimation(.spring(response: 0.5, dampingFraction: 1, blendDuration: 1)) {
-            self.conversations[conversationIndex].messages[messageIndex].content = .response(choice: choice, correct: nil)
+            self.conversations[conversationIndex].messages.append(message)
         }
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {

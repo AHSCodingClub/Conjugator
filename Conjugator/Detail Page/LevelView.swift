@@ -39,7 +39,7 @@ struct LevelView: View {
             .scaleEffect(x: -1.0, y: 1.0)
 
             Divider()
-            
+
             Color.clear
                 .frame(height: 300)
                 .background {
@@ -55,34 +55,6 @@ struct LevelView: View {
             levelViewModel.start()
         }
     }
-}
-
-extension LevelView {
-//    VStack {
-//        switch conversation.step {
-//        case .typingQuestion:
-//            MessagesTypingIndicator()
-//                .foregroundColor(UIColor.secondaryLabel.color)
-//                .transition(.scale)
-//        default:
-//            VStack(alignment: .leading) {
-//                Text("Verbo:")
-//                    .font(.headline)
-//
-//                Text(conversation.challenge.verb)
-//                    .font(.largeTitle)
-//            }
-//            .transition(.scale)
-//        }
-//    }
-//    .padding(16)
-//    .background(UIColor.secondarySystemBackground.color)
-//    .cornerRadius(16)
-//    .frame(maxWidth: .infinity, alignment: .leading)
-
-//    if conversation.step == .choicesDisplayed || conversation.step == .choicesAnswered {
-//        choice(conversation: conversation)
-//    }
 }
 
 extension LevelView {
