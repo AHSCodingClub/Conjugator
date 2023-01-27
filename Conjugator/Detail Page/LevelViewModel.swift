@@ -81,6 +81,11 @@ extension LevelViewModel {
             let conversationIndex = conversations.firstIndex(where: { $0.id == conversation.id })
         else { return }
 
+        withAnimation(.spring(response: 0.5, dampingFraction: 1, blendDuration: 1)) {
+            conversations[conversationIndex].selectedChoice = choice
+            keyboardMode = .conversation(conversation: conversations[conversationIndex])
+        }
+
         let message = Message(content: .response(choice: choice, correct: nil))
         withAnimation(.spring(response: 0.5, dampingFraction: 1, blendDuration: 1)) {
             self.conversations[conversationIndex].messages.append(message)
@@ -92,7 +97,7 @@ extension LevelViewModel {
                 let messageIndex = self.conversations[conversationIndex].messages.firstIndex(where: { $0.id == message.id })
             else { return }
 
-            let correct = conversation.correctForm == choice.form
+            let correct = self.conversations[conversationIndex].correctForm == choice.form
 
             withAnimation(.spring(response: 0.5, dampingFraction: 1, blendDuration: 1)) {
                 self.conversations[conversationIndex].messages[messageIndex].content = .response(choice: choice, correct: correct)

@@ -72,7 +72,20 @@ struct KeyboardView: View {
         }
     }
 
-    func choiceButton(conversation: Conversation, choice: Choice) -> some View {
+    @ViewBuilder func choiceButton(conversation: Conversation, choice: Choice) -> some View {
+        let (opacity, brightness): (CGFloat, CGFloat) = {
+            if let selectedChoice = conversation.selectedChoice {
+                if selectedChoice.id == choice.id {
+                    return (1, 0)
+                } else {
+                    return (0.9, -0.2)
+                }
+
+            } else {
+                return (1, 0)
+            }
+        }()
+
         Button {
             levelViewModel.submitChoice(conversation: conversation, choice: choice)
         } label: {
@@ -83,6 +96,7 @@ struct KeyboardView: View {
                 .background(Color.blue)
                 .cornerRadius(16)
         }
-        .transition(.scale)
+        .opacity(opacity)
+        .brightness(brightness)
     }
 }

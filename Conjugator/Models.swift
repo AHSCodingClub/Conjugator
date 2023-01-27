@@ -34,6 +34,7 @@ struct Conversation: Identifiable {
     var challenge: Challenge
     var correctForm: Form
     var choices: [Choice]
+    var selectedChoice: Choice?
     var status = Status.questionAsked
     var messages = [Message]()
 
