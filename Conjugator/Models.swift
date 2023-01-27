@@ -13,14 +13,21 @@ struct Level {
     var description: String = ""
     var colorHex: Int? = nil
     var mode = Mode.randomForm
+    var lives = Lives.fixed(3)
 
     /// There should be at least two challenges
     var challenges: [Challenge] = []
-}
 
-enum Mode {
-    case randomForm
-    case setForm(Form)
+    enum Lives {
+        case unlimited
+        case fixed(Int)
+        case suddenDeath
+    }
+
+    enum Mode {
+        case randomForm
+        case setForm(Form)
+    }
 }
 
 enum KeyboardMode {
@@ -34,7 +41,7 @@ struct Conversation: Identifiable {
     let id = UUID()
     var challenge: Challenge
     var correctForm: Form
-    var showingChoices = true
+    var showingChoices = false
     var choices: [Choice]
     var selectedChoice: Choice?
     var strikethroughChoices = [Choice]()
@@ -44,7 +51,15 @@ struct Conversation: Identifiable {
     enum Status: Equatable {
         case questionAsked
         case questionAnsweredCorrectly(numberOfAttempts: Int)
-        case questionAnsweredIncorrectly
+
+        var complete: Bool {
+            switch self {
+            case .questionAsked:
+                return false
+            case .questionAnsweredCorrectly:
+                return true
+            }
+        }
     }
 }
 
@@ -88,6 +103,12 @@ enum Form: CaseIterable {
         }
     }
 }
+
+//struct Answer: Identifiable {
+//    let id = UUID()
+//    var conversation: Conversation
+//    var choice: Choice
+//}
 
 struct Choice: Identifiable {
     let id = UUID()

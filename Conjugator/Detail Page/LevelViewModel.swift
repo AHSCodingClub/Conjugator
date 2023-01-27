@@ -11,14 +11,31 @@ import SwiftUI
 
 class LevelViewModel: ObservableObject {
     var level: Level
-    @Published var finished = false
+    @Published var outcome = Outcome.inProgress
     @Published var keyboardMode = KeyboardMode.blank
     @Published var conversations = [Conversation]()
+    @Published var incorrectChoicesCount = 0
 
     init(level: Level) {
         self.level = level
     }
+
+    enum Outcome {
+        case inProgress
+        case finishedSuccessfully
+        case failed
+    }
 }
+
+// struct Summary {
+//
+// }
+//
+// extension LevelViewModel {
+//    func getSummary() -> Summary {
+//
+//    }
+// }
 
 extension LevelViewModel {
     func start() {
@@ -62,7 +79,9 @@ extension LevelViewModel {
 
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 guard let conversationIndex = self.conversations.firstIndex(where: { $0.id == conversation.id }) else { return }
+
                 withAnimation(.spring(response: 0.3, dampingFraction: 1, blendDuration: 1)) {
+                    self.conversations[conversationIndex].showingChoices = true
                     self.keyboardMode = .conversation(conversation: self.conversations[conversationIndex])
                 }
             }
@@ -70,9 +89,8 @@ extension LevelViewModel {
         } else {
             /// no more challenges!
 
-            withAnimation(.spring(response: 0.5, dampingFraction: 1, blendDuration: 1)) {
-                finished = true
-                keyboardMode = .finished
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                finish(success: true)
             }
         }
     }
@@ -101,12 +119,35 @@ extension LevelViewModel {
             let correct = self.conversations[conversationIndex].correctForm == choice.form
 
             withAnimation(.spring(response: 0.5, dampingFraction: 1, blendDuration: 1)) {
-                if !correct {
+                let numberOfAttempts = conversation.strikethroughChoices.count + 1
+
+                self.conversations[conversationIndex].messages[messageIndex].content = .response(choice: choice, correct: correct)
+
+                if correct {
+                    self.conversations[conversationIndex].status = .questionAnsweredCorrectly(numberOfAttempts: numberOfAttempts)
+                } else {
+                    self.incorrectChoicesCount += 1
+
+                    switch self.level.lives {
+                    case .unlimited:
+                        break
+                    case .suddenDeath:
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
+                            finish(success: false)
+                        }
+
+                    case .fixed(let fixed):
+                        if self.incorrectChoicesCount >= fixed {
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
+                                finish(success: false)
+                            }
+                        }
+                    }
+
                     self.conversations[conversationIndex].selectedChoice = nil
                     self.conversations[conversationIndex].strikethroughChoices.append(choice)
                 }
 
-                self.conversations[conversationIndex].messages[messageIndex].content = .response(choice: choice, correct: correct)
                 self.keyboardMode = .conversation(conversation: self.conversations[conversationIndex])
             }
 
@@ -131,6 +172,17 @@ extension LevelViewModel {
                     }
                 }
             }
+        }
+    }
+
+    func finish(success: Bool) {
+        withAnimation(.spring(response: 0.8, dampingFraction: 1, blendDuration: 1)) {
+            if success {
+                self.outcome = .finishedSuccessfully
+            } else {
+                self.outcome = .failed
+            }
+            self.keyboardMode = .finished
         }
     }
 }
