@@ -24,10 +24,8 @@ extension LevelViewModel {
     func start() {
         loadNextChallenge()
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            withAnimation {
-                self.keyboardMode = .info
-            }
+        withAnimation {
+            self.keyboardMode = .info
         }
     }
 
@@ -51,7 +49,7 @@ extension LevelViewModel {
                 conversations.append(conversation)
             }
 
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
                 guard
                     let conversationIndex = self.conversations.firstIndex(where: { $0.id == conversation.id }),
                     let messageIndex = self.conversations[conversationIndex].messages.firstIndex(where: { $0.id == message.id })
@@ -62,13 +60,8 @@ extension LevelViewModel {
                 }
             }
 
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-//                guard let conversationIndex = self.conversations.firstIndex(where: { $0.id == conversation.id }) else { return }
-
-                print("set!")
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 withAnimation(.spring(response: 0.5, dampingFraction: 1, blendDuration: 1)) {
-//                    let message = Message(content: .choices(choices: challenge.choices))
-//                    self.conversations[conversationIndex].messages.append(message)
                     self.keyboardMode = .conversation(conversation: conversation)
                 }
             }
