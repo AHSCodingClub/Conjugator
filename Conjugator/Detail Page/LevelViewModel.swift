@@ -6,6 +6,7 @@
 //  Copyright © 2022 A. Zheng. All rights reserved.
 //
 
+import Combine
 import SwiftUI
 
 class LevelViewModel: ObservableObject {
@@ -66,6 +67,7 @@ extension LevelViewModel {
         } else {
             /// no more challenges!
 
+            print("Done!")
             withAnimation {
                 finished = true
             }
@@ -92,6 +94,17 @@ extension LevelViewModel {
 
             withAnimation(.spring(response: 0.5, dampingFraction: 1, blendDuration: 1)) {
                 self.conversations[conversationIndex].messages[messageIndex].content = .response(choice: choice, correct: correct)
+            }
+
+            if correct {
+                self.loadNextChallenge()
+            } else {
+                if true {
+                    let message = Message(content: .prompt(typing: false, header: nil, title: "¡Incorrecto!", footer: nil))
+                    withAnimation(.spring(response: 0.5, dampingFraction: 1, blendDuration: 1)) {
+                        self.conversations[conversationIndex].messages.append(message)
+                    }
+                }
             }
         }
     }

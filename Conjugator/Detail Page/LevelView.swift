@@ -30,7 +30,11 @@ struct LevelView: View {
                 }
             }
             .padding(.horizontal, 16)
+            .rotationEffect(.degrees(180))
+            .scaleEffect(x: -1.0, y: 1.0)
         }
+        .rotationEffect(.degrees(180))
+        .scaleEffect(x: -1.0, y: 1.0)
         .navigationBarTitleDisplayMode(.inline) /// make the top padding smaller
         .onAppear {
             levelViewModel.start()
