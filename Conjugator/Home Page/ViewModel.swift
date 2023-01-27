@@ -9,7 +9,8 @@
 import SwiftUI
 
 class ViewModel: ObservableObject {
-    var levels = [Level]()
+    @Published var levels = [Level]()
+    @Published var selectedLevel: Level?
 
     init() {
         self.levels = Level.testingLevels
