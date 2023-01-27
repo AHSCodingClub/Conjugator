@@ -27,6 +27,7 @@ enum KeyboardMode {
     case blank
     case info
     case conversation(conversation: Conversation)
+    case finished
 }
 
 struct Conversation: Identifiable {

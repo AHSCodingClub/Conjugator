@@ -62,8 +62,7 @@ extension LevelViewModel {
 
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 guard let conversationIndex = self.conversations.firstIndex(where: { $0.id == conversation.id }) else { return }
-                withAnimation(.spring(response: 0.5, dampingFraction: 1, blendDuration: 1)) {
-                    self.conversations[conversationIndex].showingChoices = true
+                withAnimation(.spring(response: 0.3, dampingFraction: 1, blendDuration: 1)) {
                     self.keyboardMode = .conversation(conversation: self.conversations[conversationIndex])
                 }
             }
@@ -71,9 +70,9 @@ extension LevelViewModel {
         } else {
             /// no more challenges!
 
-            print("Done!")
-            withAnimation {
+            withAnimation(.spring(response: 0.5, dampingFraction: 1, blendDuration: 1)) {
                 finished = true
+                keyboardMode = .finished
             }
         }
     }

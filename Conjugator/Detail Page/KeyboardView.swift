@@ -30,10 +30,14 @@ struct KeyboardView: View {
                 conversationView(conversation: conversation)
                     .frame(maxHeight: .infinity, alignment: .top)
                     .id(conversation.id)
-                    .transition(.offset(x: 0, y: 50).combined(with: .scale(scale: 0.95)).combined(with: .opacity))
+                    .transition(.scale(scale: 0.95).combined(with: .opacity))
             }
             .padding(.horizontal, 20)
             .padding(.vertical, 16)
+        case .finished:
+            VStack {
+                Text("Completo!")
+            }
         }
     }
 

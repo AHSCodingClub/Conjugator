@@ -41,7 +41,7 @@ struct LevelCardView: View {
             .padding(16)
         }
         .foregroundColor(UIColor.label.color)
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .background(UIColor.systemBackground.color)
         .cornerRadius(16)
     }

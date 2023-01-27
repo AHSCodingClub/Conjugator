@@ -12,6 +12,9 @@ struct LevelView: View {
     @ObservedObject var model: ViewModel
     @StateObject var levelViewModel: LevelViewModel
 
+    @Environment(\.horizontalSizeClass) var horizontalSizeClass
+    @Environment(\.verticalSizeClass) var verticalSizeClass
+
     let lineWidth = CGFloat(5)
     let headerLength = CGFloat(80)
 
@@ -21,7 +24,12 @@ struct LevelView: View {
     }
 
     var body: some View {
-        VStack(spacing: 0) {
+        let largeWidth = horizontalSizeClass == .regular || verticalSizeClass == .compact
+        let layout = largeWidth
+            ? AnyLayout(HStackLayout(alignment: .top, spacing: 0))
+            : AnyLayout(VStackLayout(spacing: 0))
+
+        layout {
             ScrollView {
                 VStack(spacing: 32) {
                     header
@@ -42,8 +50,17 @@ struct LevelView: View {
 
             Divider()
 
+            let height: CGFloat = {
+                switch levelViewModel.keyboardMode {
+                case .finished:
+                    return 150
+                default:
+                    return 300
+                }
+            }()
+
             Color.clear
-                .frame(height: 300)
+                .frame(width: largeWidth ? 300 : nil, height: largeWidth ? nil : height)
                 .background {
                     UIColor.secondarySystemBackground.color
                         .ignoresSafeArea()
