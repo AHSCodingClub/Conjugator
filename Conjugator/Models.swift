@@ -30,6 +30,15 @@ struct Level {
     }
 }
 
+struct GameSummary {
+    var accuracy: CGFloat
+    var answers: [Answer]
+
+    struct Answer: Identifiable {
+        let id = UUID()
+    }
+}
+
 enum KeyboardMode {
     case blank
     case info
@@ -104,11 +113,11 @@ enum Form: CaseIterable {
     }
 }
 
-//struct Answer: Identifiable {
+// struct Answer: Identifiable {
 //    let id = UUID()
 //    var conversation: Conversation
 //    var choice: Choice
-//}
+// }
 
 struct Choice: Identifiable {
     let id = UUID()

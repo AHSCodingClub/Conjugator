@@ -41,7 +41,8 @@ struct LevelView: View {
                     }
                 }
                 .padding(.horizontal, 16)
-                .padding(.vertical, 24)
+                .padding(.top, 36)
+                .padding(.bottom, 24)
                 .rotationEffect(.degrees(180))
                 .scaleEffect(x: -1.0, y: 1.0)
             }

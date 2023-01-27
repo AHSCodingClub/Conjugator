@@ -90,7 +90,7 @@ extension LevelViewModel {
             /// no more challenges!
 
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                finish(success: true)
+                self.finish(success: true)
             }
         }
     }
@@ -133,13 +133,13 @@ extension LevelViewModel {
                         break
                     case .suddenDeath:
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
-                            finish(success: false)
+                            self.finish(success: false)
                         }
 
                     case .fixed(let fixed):
                         if self.incorrectChoicesCount >= fixed {
                             DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
-                                finish(success: false)
+                                self.finish(success: false)
                             }
                         }
                     }
@@ -178,11 +178,11 @@ extension LevelViewModel {
     func finish(success: Bool) {
         withAnimation(.spring(response: 0.8, dampingFraction: 1, blendDuration: 1)) {
             if success {
-                self.outcome = .finishedSuccessfully
+                outcome = .finishedSuccessfully
             } else {
-                self.outcome = .failed
+                outcome = .failed
             }
-            self.keyboardMode = .finished
+            keyboardMode = .finished
         }
     }
 }
