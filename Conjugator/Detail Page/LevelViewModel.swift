@@ -78,20 +78,21 @@ extension LevelViewModel {
             let messageIndex = conversations[conversationIndex].messages.firstIndex(where: { $0.id == message.id })
         else { return }
 
-        let correct = conversation.correctForm == choice.form
-
         withAnimation(.spring(response: 0.5, dampingFraction: 1, blendDuration: 1)) {
-            self.conversations[conversationIndex].messages[messageIndex].content = .response(choice: choice, correct: correct)
+            self.conversations[conversationIndex].messages[messageIndex].content = .response(choice: choice, correct: nil)
         }
 
-//        withAnimation(.spring(response: 0.5, dampingFraction: 1, blendDuration: 1)) {
-//            conversations[index].step = .choicesAnswered
-//        }
-//
-//        if form == conversation.form {
-//            DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
-//
-//            }
-//        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+            guard
+                let conversationIndex = self.conversations.firstIndex(where: { $0.id == conversation.id }),
+                let messageIndex = self.conversations[conversationIndex].messages.firstIndex(where: { $0.id == message.id })
+            else { return }
+
+            let correct = conversation.correctForm == choice.form
+
+            withAnimation(.spring(response: 0.5, dampingFraction: 1, blendDuration: 1)) {
+                self.conversations[conversationIndex].messages[messageIndex].content = .response(choice: choice, correct: correct)
+            }
+        }
     }
 }

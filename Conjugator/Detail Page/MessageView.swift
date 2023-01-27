@@ -23,10 +23,10 @@ struct MessageView: View {
                         .foregroundColor(UIColor.secondaryLabel.color)
                         .transition(.scale)
                 } else {
-                    VStack(alignment: .leading) {
+                    VStack(alignment: .leading, spacing: 0) {
                         if let header {
                             Text(header)
-                                .font(.headline)
+                                .font(.caption)
                         }
 
                         Text(title)
@@ -34,7 +34,8 @@ struct MessageView: View {
 
                         if let footer {
                             Text(footer)
-                                .font(.caption)
+                                .font(.headline)
+                                .padding(.top, 10)
                         }
                     }
                     .transition(.scale)
@@ -81,6 +82,7 @@ struct MessageView: View {
                                         .font(.system(size: 22, weight: .heavy))
                                         .foregroundColor(correct ? .green : .red)
                                 }
+                                .transition(.scale)
                                 .offset(x: -20, y: -20)
                         }
                     }
