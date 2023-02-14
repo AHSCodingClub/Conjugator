@@ -8,6 +8,20 @@
 
 import SwiftUI
 
+struct ParsingGroup {
+    var kind: Kind
+    var lines = [Line]()
+
+    enum Kind: String {
+        case general
+        case level
+    }
+}
+
+struct Line {
+    var values: [String]
+}
+
 struct Level {
     var title: String = ""
     var description: String = ""

@@ -21,12 +21,10 @@ class ViewModel: ObservableObject {
 
     func loadLevels() async {
         guard let csv = await downloadLevelsCSV() else { return }
-        let lines = csv.components(separatedBy: .newlines)
-        
-        for line in lines {
-            print("Line: \(line)")
-        }
-        
+
+        let parsingGroups = generateParsingGroupsFromCSV(csv:  csv)
+        print("parsingGroups: \(parsingGroups)")
+
         await { @MainActor in
             self.csv = csv
         }()
@@ -45,5 +43,38 @@ class ViewModel: ObservableObject {
         }
 
         return nil
+    }
+
+    func generateParsingGroupsFromCSV(csv: String) -> [ParsingGroup] {
+        let lines = csv.components(separatedBy: .newlines)
+
+        var parsingGroups = [ParsingGroup]()
+        for line in lines {
+            let values = line
+                .components(separatedBy: "\",\"") /// separate by ","
+                .map {
+                    $0.filter { $0 != "\"" } /// remove leading and trailing "
+                }
+
+            if let value = values.first {
+                switch value.lowercased() {
+                case ParsingGroup.Kind.general.rawValue:
+                    let parsingGroup = ParsingGroup(kind: .general)
+                    parsingGroups.append(parsingGroup)
+                case ParsingGroup.Kind.level.rawValue:
+                    let parsingGroup = ParsingGroup(kind: .level)
+                    parsingGroups.append(parsingGroup)
+                default:
+                    let line = Line(values: values)
+                    if let index = parsingGroups.indices.last {
+                        parsingGroups[index].lines.append(line)
+                    }
+                }
+            } else {
+                print("Line is blank.")
+            }
+        }
+
+        return parsingGroups
     }
 }
