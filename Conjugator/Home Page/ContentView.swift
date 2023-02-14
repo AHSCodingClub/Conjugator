@@ -116,19 +116,26 @@ struct ContentView: View {
                 LevelView(model: model, level: selectedLevel)
                     .transition(.offset(x: 20).combined(with: .opacity))
             } else {
-                ScrollView {
-                    LazyVGrid(columns: columns, spacing: 16) {
-                        ForEach(model.levels, id: \.title) { level in
-                            Button {
-                                withAnimation(.spring(response: 0.3, dampingFraction: 1, blendDuration: 1)) {
-                                    model.selectedLevel = level
+                VStack {
+                    if let levels = model.levels {
+                        ScrollView {
+                            LazyVGrid(columns: columns, spacing: 16) {
+                                ForEach(levels, id: \.title) { level in
+                                    Button {
+                                        withAnimation(.spring(response: 0.3, dampingFraction: 1, blendDuration: 1)) {
+                                            model.selectedLevel = level
+                                        }
+                                    } label: {
+                                        LevelCardView(level: level)
+                                    }
                                 }
-                            } label: {
-                                LevelCardView(level: level)
                             }
+                            .padding()
                         }
+                    } else {
+                        ProgressView()
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
                     }
-                    .padding()
                 }
                 .background(UIColor.secondarySystemBackground.color)
                 .transition(.offset(x: -20).combined(with: .opacity))

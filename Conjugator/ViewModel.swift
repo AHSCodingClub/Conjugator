@@ -10,16 +10,12 @@ import SwiftUI
 
 class ViewModel: ObservableObject {
     @Published var course = Course()
-    @Published var levels = [Level]()
+    @Published var levels: [Level]?
     @Published var selectedLevel: Level?
     @AppStorage("dataSourceID") var dataSourceID = "1t-onBgRP5BSHZ26XjvmVgi6RxZmpKO7RBI3JARYE3Bs"
 
     var dataSourceURL: String {
         return "https://docs.google.com/spreadsheets/d/\(dataSourceID)/gviz/tq?tqx=out:csv"
-    }
-
-    init() {
-        self.levels = Level.testingLevels
     }
 
     func loadLevels() async {

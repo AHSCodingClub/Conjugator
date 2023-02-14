@@ -21,14 +21,15 @@ extension Course {
 
             /// key is always the first value
             if let key = values.first {
+                let key = String(key.filter { $0 != "_" })
                 switch key.lowercased() {
-                case "course_name":
+                case "coursename":
 
                     /// the course name should be the second value
                     if let value = values[safe: 1] {
                         course.name = value
                     }
-                case "announcement_title":
+                case "announcementtitle":
                     if let value = values[safe: 1] {
                         course.announcementTitle = value
                     }
