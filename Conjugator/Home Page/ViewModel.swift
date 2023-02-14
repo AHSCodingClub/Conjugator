@@ -24,10 +24,14 @@ class ViewModel: ObservableObject {
 
         let parsingGroups = generateParsingGroupsFromCSV(csv:  csv)
         print("parsingGroups: \(parsingGroups)")
+        
+        for parsingGroup in parsingGroups {
+            
+        }
 
-        await { @MainActor in
-            self.csv = csv
-        }()
+//        await { @MainActor in
+//            self.csv = csv
+//        }()
     }
 
     func downloadLevelsCSV() async -> String? {
