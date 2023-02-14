@@ -51,7 +51,7 @@ extension LevelViewModel {
 
         if let challenge = level.challenges.first(where: { !displayedChallenges.contains($0) }) {
             var conversation: Conversation = {
-                switch level.mode {
+                switch level.randomizationMode {
                 case .randomForm:
                     return Conversation(challenge: challenge, correctForm: .random, choices: challenge.getChoices())
                 case .setForm(let form):

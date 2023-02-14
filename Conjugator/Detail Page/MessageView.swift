@@ -74,8 +74,6 @@ struct MessageView: View {
             .frame(width: 150)
             .frame(maxWidth: .infinity, alignment: .trailing)
             .transition(.scale(scale: 0.9, anchor: .trailing).combined(with: .opacity))
-        case let .response(choice, correct):
-            Text("asd")
         }
     }
 }

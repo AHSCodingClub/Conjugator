@@ -12,7 +12,7 @@ struct Level {
     var title: String = ""
     var description: String = ""
     var colorHex: Int? = nil
-    var mode = Mode.randomForm
+    var randomizationMode = RandomizationMode.randomForm
     var lives = Lives.fixed(3)
 
     /// There should be at least two challenges
@@ -24,7 +24,7 @@ struct Level {
         case suddenDeath
     }
 
-    enum Mode {
+    enum RandomizationMode {
         case randomForm
         case setForm(Form)
     }

@@ -73,6 +73,7 @@ struct ContentView: View {
                 ScrollView {
                     LazyVGrid(columns: columns, spacing: 16) {
                         Text(model.csv)
+                            .font(.callout)
 
                         ForEach(model.levels, id: \.title) { level in
                             Button {

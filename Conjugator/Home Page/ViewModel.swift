@@ -21,7 +21,12 @@ class ViewModel: ObservableObject {
 
     func loadLevels() async {
         guard let csv = await downloadLevelsCSV() else { return }
-
+        let lines = csv.components(separatedBy: .newlines)
+        
+        for line in lines {
+            print("Line: \(line)")
+        }
+        
         await { @MainActor in
             self.csv = csv
         }()
