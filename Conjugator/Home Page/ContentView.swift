@@ -45,12 +45,27 @@ struct ContentView: View {
                     .foregroundColor(.white)
                 } else {
                     VStack(alignment: .leading, spacing: 2) {
-                        Text("Conjugator")
-                            .font(.title.weight(.heavy))
+                        HStack {
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text("Conjugator")
+                                    .font(.title.weight(.heavy))
 
-                        if let name = model.course.name {
-                            Text(name)
-                                .opacity(0.75)
+                                if let name = model.course.name {
+                                    Text(name)
+                                        .opacity(0.75)
+                                }
+                            }
+                            .frame(maxWidth: .infinity, alignment: .leading)
+
+                            Button {} label: {
+                                Image(systemName: "gearshape.fill")
+                                    .frame(width: 42, height: 42)
+                                    .background {
+                                        Circle()
+                                            .fill(Color.white.opacity(0.1))
+                                    }
+                            }
+//                        https://docs.google.com/spreadsheets/d/1t-onBgRP5BSHZ26XjvmVgi6RxZmpKO7RBI3JARYE3Bs/edit#gid=0
                         }
 
                         if let announcement = model.course.announcement {
