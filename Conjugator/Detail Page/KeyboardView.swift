@@ -100,7 +100,7 @@ struct KeyboardView: View {
 
                 Spacer()
 
-                switch levelViewModel.level.lives {
+                switch levelViewModel.level.livesMode {
                 case .unlimited:
                     EmptyView()
                 case .suddenDeath:

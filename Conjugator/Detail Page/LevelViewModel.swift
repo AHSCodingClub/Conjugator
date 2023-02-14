@@ -128,7 +128,7 @@ extension LevelViewModel {
                 } else {
                     self.incorrectChoicesCount += 1
 
-                    switch self.level.lives {
+                    switch self.level.livesMode {
                     case .unlimited:
                         break
                     case .suddenDeath:

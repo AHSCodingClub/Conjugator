@@ -13,12 +13,12 @@ struct Level {
     var description: String = ""
     var colorHex: Int? = nil
     var randomizationMode = RandomizationMode.randomForm
-    var lives = Lives.fixed(3)
+    var livesMode = LivesMode.fixed(3)
 
     /// There should be at least two challenges
     var challenges: [Challenge] = []
 
-    enum Lives {
+    enum LivesMode {
         case unlimited
         case fixed(Int)
         case suddenDeath
