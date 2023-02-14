@@ -103,9 +103,6 @@ struct ContentView: View {
             } else {
                 ScrollView {
                     LazyVGrid(columns: columns, spacing: 16) {
-                        Text(model.csv)
-                            .font(.callout)
-
                         ForEach(model.levels, id: \.title) { level in
                             Button {
                                 withAnimation(.spring(response: 0.3, dampingFraction: 1, blendDuration: 1)) {

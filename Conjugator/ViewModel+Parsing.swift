@@ -17,14 +17,15 @@ extension ViewModel {
             case .course:
                 course = Course.create(from: parsingGroup)
             case .level:
-                break
+                let level = Level.create(from: parsingGroup)
+                levels.append(level)
             }
         }
 
         await { @MainActor in
             withAnimation(.spring(response: 0.4, dampingFraction: 1, blendDuration: 1)) {
                 self.course = course
-//                self.levels = levels
+                self.levels = levels
             }
         }()
     }

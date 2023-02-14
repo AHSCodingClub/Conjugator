@@ -14,8 +14,6 @@ class ViewModel: ObservableObject {
     @Published var selectedLevel: Level?
     let dataSourceURL = "https://docs.google.com/spreadsheets/d/1YPjLpsEVsRzHk5dD8iAybz4ALG9uaSvOk3eqqIg1mn4/gviz/tq?tqx=out:csv"
 
-    @Published var csv = ""
-
     init() {
         self.levels = Level.testingLevels
     }
@@ -24,13 +22,8 @@ class ViewModel: ObservableObject {
         guard let csv = await downloadLevelsCSV() else { return }
 
         let parsingGroups = generateParsingGroupsFromCSV(csv: csv)
-        print("parsingGroups: \(parsingGroups)")
 
         await parse(parsingGroups: parsingGroups)
-
-//        await { @MainActor in
-//            self.csv = csv
-//        }()
     }
 
     func downloadLevelsCSV() async -> String? {
