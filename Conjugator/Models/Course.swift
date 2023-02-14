@@ -18,7 +18,6 @@ extension Course {
         var course = Course()
         for line in parsingGroup.lines {
             let values = line.values.filter { !$0.isEmpty }
-            print("values: \(values)")
 
             /// key is always the first value
             if let key = values.first {

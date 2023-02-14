@@ -12,7 +12,7 @@ class ViewModel: ObservableObject {
     @Published var course = Course()
     @Published var levels = [Level]()
     @Published var selectedLevel: Level?
-    let dataSourceURL = "https://docs.google.com/spreadsheets/d/1YPjLpsEVsRzHk5dD8iAybz4ALG9uaSvOk3eqqIg1mn4/gviz/tq?tqx=out:csv"
+    let dataSourceURL = "https://docs.google.com/spreadsheets/d/1t-onBgRP5BSHZ26XjvmVgi6RxZmpKO7RBI3JARYE3Bs/gviz/tq?tqx=out:csv"
 
     init() {
         self.levels = Level.testingLevels

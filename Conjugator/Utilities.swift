@@ -15,7 +15,7 @@ extension UIColor {
 }
 
 extension Color {
-    init(hex: UInt, alpha: CGFloat = 1) {
+    init(hex: Int, alpha: CGFloat = 1) {
         self.init(UIColor(hex: hex, alpha: alpha))
     }
 }

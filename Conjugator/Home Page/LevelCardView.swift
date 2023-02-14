@@ -14,31 +14,34 @@ struct LevelCardView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             HStack {
-                Text(level.title)
-                Spacer()
-                Image(systemName: "chevron.forward")
-            }
-            .font(.title3)
-            .padding(16)
-            .background {
-                if let colorHex = level.colorHex {
-                    UIColor(hex: colorHex).color.opacity(0.25)
-                } else {
-                    Color.black.opacity(0.25)
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(level.title)
+                        .font(.headline)
+
+                    Text(level.description)
+                        .multilineTextAlignment(.leading)
+
+                    Text("Contains \(level.challenges.count) verbs")
+                        .font(.caption)
+                        .padding(.top, 12)
                 }
-            }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.vertical, 16)
 
-            VStack(alignment: .leading, spacing: 8) {
-                Text(level.description)
-                    .font(.title3)
+                Image(systemName: "chevron.forward")
                     .foregroundColor(UIColor.secondaryLabel.color)
-                    .multilineTextAlignment(.leading)
-
-                /// TODO: Decide whether this should be in Spanish
-                Text("Contains \(level.challenges.count) verbs")
             }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(16)
+            .padding(.horizontal, 16)
+
+            let color: Color = {
+                if let colorHex = level.colorHex {
+                    return Color(hex: colorHex)
+                } else {
+                    return Color.black
+                }
+            }()
+
+            color.frame(height: 3)
         }
         .foregroundColor(UIColor.label.color)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
