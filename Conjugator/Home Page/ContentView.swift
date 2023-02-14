@@ -44,10 +44,41 @@ struct ContentView: View {
                     }
                     .foregroundColor(.white)
                 } else {
-                    Text("Conjugator")
-                        .foregroundColor(.white)
-                        .font(.largeTitle.weight(.heavy))
-                        .padding(.vertical, 24)
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("Conjugator")
+                            .font(.title.weight(.heavy))
+
+                        if let name = model.course.name {
+                            Text(name)
+                                .opacity(0.75)
+                        }
+
+                        if let announcement = model.course.announcement {
+                            HStack(spacing: 10) {
+                                VStack(alignment: .leading, spacing: 3) {
+                                    if let announcementTitle = model.course.announcementTitle {
+                                        Text(announcementTitle)
+                                            .textCase(.uppercase)
+                                            .font(.caption)
+                                    }
+
+                                    Text(announcement)
+                                        .multilineTextAlignment(.leading)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                }
+
+                                Image(systemName: "person.wave.2.fill")
+                            }
+                            .padding(.horizontal, 16)
+                            .padding(.vertical, 12)
+                            .background(Color.white.opacity(0.1))
+                            .cornerRadius(12)
+                            .padding(.top, 12)
+                        }
+                    }
+                    .foregroundColor(.white)
+                    .padding(.top, 24)
+                    .padding(.bottom, 16)
                 }
             }
             .padding(.horizontal, 20)

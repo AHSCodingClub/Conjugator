@@ -12,7 +12,7 @@ struct ParsingGroup {
     var lines = [Line]()
 
     enum Kind: String {
-        case general
+        case course
         case level
     }
 }

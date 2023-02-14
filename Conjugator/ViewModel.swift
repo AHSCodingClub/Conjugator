@@ -9,6 +9,7 @@
 import SwiftUI
 
 class ViewModel: ObservableObject {
+    @Published var course = Course()
     @Published var levels = [Level]()
     @Published var selectedLevel: Level?
     let dataSourceURL = "https://docs.google.com/spreadsheets/d/1YPjLpsEVsRzHk5dD8iAybz4ALG9uaSvOk3eqqIg1mn4/gviz/tq?tqx=out:csv"
@@ -22,12 +23,10 @@ class ViewModel: ObservableObject {
     func loadLevels() async {
         guard let csv = await downloadLevelsCSV() else { return }
 
-        let parsingGroups = generateParsingGroupsFromCSV(csv:  csv)
+        let parsingGroups = generateParsingGroupsFromCSV(csv: csv)
         print("parsingGroups: \(parsingGroups)")
-        
-        for parsingGroup in parsingGroups {
-            
-        }
+
+        await parse(parsingGroups: parsingGroups)
 
 //        await { @MainActor in
 //            self.csv = csv
@@ -62,8 +61,8 @@ class ViewModel: ObservableObject {
 
             if let value = values.first {
                 switch value.lowercased() {
-                case ParsingGroup.Kind.general.rawValue:
-                    let parsingGroup = ParsingGroup(kind: .general)
+                case ParsingGroup.Kind.course.rawValue:
+                    let parsingGroup = ParsingGroup(kind: .course)
                     parsingGroups.append(parsingGroup)
                 case ParsingGroup.Kind.level.rawValue:
                     let parsingGroup = ParsingGroup(kind: .level)

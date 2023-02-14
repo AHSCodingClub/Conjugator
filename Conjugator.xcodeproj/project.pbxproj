@@ -18,6 +18,8 @@
 		3CED0F50299B514F0015A748 /* Choice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CED0F4F299B514F0015A748 /* Choice.swift */; };
 		3CED0F52299B515B0015A748 /* Form.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CED0F51299B515B0015A748 /* Form.swift */; };
 		3CED0F54299B51670015A748 /* ParsingGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CED0F53299B51670015A748 /* ParsingGroup.swift */; };
+		3CED0F56299B51E30015A748 /* ViewModel+Parsing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CED0F55299B51E30015A748 /* ViewModel+Parsing.swift */; };
+		3CED0F58299B52870015A748 /* Course.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CED0F57299B52870015A748 /* Course.swift */; };
 		3CFBF96D28F744B7007C0CAB /* ConjugatorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CFBF96C28F744B7007C0CAB /* ConjugatorApp.swift */; };
 		3CFBF96F28F744B7007C0CAB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CFBF96E28F744B7007C0CAB /* ContentView.swift */; };
 		3CFBF97128F744B9007C0CAB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3CFBF97028F744B9007C0CAB /* Assets.xcassets */; };
@@ -41,6 +43,8 @@
 		3CED0F4F299B514F0015A748 /* Choice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Choice.swift; sourceTree = "<group>"; };
 		3CED0F51299B515B0015A748 /* Form.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Form.swift; sourceTree = "<group>"; };
 		3CED0F53299B51670015A748 /* ParsingGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParsingGroup.swift; sourceTree = "<group>"; };
+		3CED0F55299B51E30015A748 /* ViewModel+Parsing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewModel+Parsing.swift"; sourceTree = "<group>"; };
+		3CED0F57299B52870015A748 /* Course.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Course.swift; sourceTree = "<group>"; };
 		3CFBF96928F744B7007C0CAB /* Conjugator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Conjugator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3CFBF96C28F744B7007C0CAB /* ConjugatorApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConjugatorApp.swift; sourceTree = "<group>"; };
 		3CFBF96E28F744B7007C0CAB /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -68,6 +72,7 @@
 			isa = PBXGroup;
 			children = (
 				3CED0F53299B51670015A748 /* ParsingGroup.swift */,
+				3CED0F57299B52870015A748 /* Course.swift */,
 				3CED0F47299B50F50015A748 /* Level.swift */,
 				3CED0F49299B510C0015A748 /* Conversation.swift */,
 				3CED0F4D299B51430015A748 /* Message.swift */,
@@ -98,6 +103,8 @@
 			isa = PBXGroup;
 			children = (
 				3CFBF96C28F744B7007C0CAB /* ConjugatorApp.swift */,
+				3CFBF97A28F74597007C0CAB /* ViewModel.swift */,
+				3CED0F55299B51E30015A748 /* ViewModel+Parsing.swift */,
 				3CED0F46299B50DF0015A748 /* Models */,
 				3CFBF98928F769E8007C0CAB /* Home Page */,
 				3CFBF98A28F769EE007C0CAB /* Detail Page */,
@@ -112,7 +119,6 @@
 		3CFBF98928F769E8007C0CAB /* Home Page */ = {
 			isa = PBXGroup;
 			children = (
-				3CFBF97A28F74597007C0CAB /* ViewModel.swift */,
 				3CFBF96E28F744B7007C0CAB /* ContentView.swift */,
 				3CFBF98728F769B5007C0CAB /* LevelCardView.swift */,
 			);
@@ -205,6 +211,7 @@
 				3CFBF98628F7680B007C0CAB /* Parsing.swift in Sources */,
 				3CED0F4E299B51430015A748 /* Message.swift in Sources */,
 				3CED0F52299B515B0015A748 /* Form.swift in Sources */,
+				3CED0F56299B51E30015A748 /* ViewModel+Parsing.swift in Sources */,
 				3CED0F4A299B510C0015A748 /* Conversation.swift in Sources */,
 				3CB042832982F42E0017C787 /* Views.swift in Sources */,
 				3CFBF96F28F744B7007C0CAB /* ContentView.swift in Sources */,
@@ -214,6 +221,7 @@
 				3CED0F48299B50F50015A748 /* Level.swift in Sources */,
 				3CFBF97B28F74597007C0CAB /* ViewModel.swift in Sources */,
 				3CED0F50299B514F0015A748 /* Choice.swift in Sources */,
+				3CED0F58299B52870015A748 /* Course.swift in Sources */,
 				3CFBF98028F74CE5007C0CAB /* Utilities.swift in Sources */,
 				3CED0F54299B51670015A748 /* ParsingGroup.swift in Sources */,
 				3CED0F4C299B51290015A748 /* Challenge.swift in Sources */,
