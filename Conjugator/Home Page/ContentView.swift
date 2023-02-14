@@ -72,6 +72,8 @@ struct ContentView: View {
             } else {
                 ScrollView {
                     LazyVGrid(columns: columns, spacing: 16) {
+                        Text(model.csv)
+
                         ForEach(model.levels, id: \.title) { level in
                             Button {
                                 withAnimation(.spring(response: 0.3, dampingFraction: 1, blendDuration: 1)) {
@@ -89,5 +91,10 @@ struct ContentView: View {
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .onAppear {
+            Task {
+                await model.loadLevels()
+            }
+        }
     }
 }
