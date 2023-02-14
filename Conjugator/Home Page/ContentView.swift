@@ -132,6 +132,11 @@ struct ContentView: View {
                             }
                             .padding()
                         }
+                        .refreshable {
+                            Task {
+                                await model.loadLevels()
+                            }
+                        }
                     } else {
                         ProgressView()
                             .frame(maxWidth: .infinity, maxHeight: .infinity)
