@@ -16,8 +16,9 @@ class ViewModel: ObservableObject {
     @Published var selectedCourse: Course?
     @Published var selectedLevel: Level?
 
+    // MARK: - Data Persistence
     @AppStorage("dataSources") @Storage var dataSources = ["1t-onBgRP5BSHZ26XjvmVgi6RxZmpKO7RBI3JARYE3Bs"]
-    @Published var selectedDataSource = "1t-onBgRP5BSHZ26XjvmVgi6RxZmpKO7RBI3JARYE3Bs"
+    @AppStorage("selectedDataSource") var selectedDataSource = "1t-onBgRP5BSHZ26XjvmVgi6RxZmpKO7RBI3JARYE3Bs"
     
 
     func loadLevels() async {

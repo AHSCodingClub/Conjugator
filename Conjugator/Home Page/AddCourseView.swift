@@ -61,7 +61,8 @@ struct AddCourseView: View {
                     .font(.headline)
                     .fontWeight(.semibold)
 
-                CodeScannerView(codeTypes: [.qr]) { response in
+                /// `oncePerCode` prevents scanning duplicate codes.
+                CodeScannerView(codeTypes: [.qr], scanMode: .oncePerCode) { response in
 
                     switch response {
                     case .success(let success):

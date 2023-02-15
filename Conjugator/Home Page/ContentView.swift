@@ -11,7 +11,11 @@ import SwiftUI
 struct ContentView: View {
     @StateObject var model = ViewModel()
 
-    let columns = [
+    let levelColumns = [
+        GridItem(.adaptive(minimum: 200))
+    ]
+
+    let courseColumns = [
         GridItem(.adaptive(minimum: 200))
     ]
 
@@ -94,31 +98,36 @@ struct ContentView: View {
 
 extension ContentView {
     var courses: some View {
-        VStack(spacing: 6) {
+        LazyVGrid(columns: courseColumns, spacing: 6) {
             ForEach(model.courses, id: \.dataSource) { course in
-                let name = course.name ?? "Untitled Course"
 
-                Button {
-                    model.selectedDataSource = course.dataSource
-                } label: {
-                    HStack {
-                        Text(name)
-                            .frame(maxWidth: .infinity, alignment: .leading)
+                if model.showingDetails || model.selectedDataSource == course.dataSource {
+                    let name = course.name ?? "Untitled Course"
 
-                        if model.selectedDataSource == course.dataSource {
-                            Image(systemName: "checkmark")
-                                .opacity(model.showingDetails ? 1 : 0)
+                    Button {
+                        model.selectedCourse = course
+                        model.selectedDataSource = course.dataSource
+                    } label: {
+                        HStack {
+                            Text(name)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+
+                            if model.selectedDataSource == course.dataSource {
+                                Image(systemName: "checkmark")
+                                    .opacity(model.showingDetails ? 1 : 0)
+                            }
                         }
+                        .opacity(model.showingDetails ? 1 : 0.75)
+                        .padding(.horizontal, model.showingDetails ? 16 : 0)
+                        .padding(.vertical, model.showingDetails ? 12 : 0)
+                        .background(
+                            Color.white
+                                .opacity(0.1)
+                                .cornerRadius(16)
+                                .opacity(model.showingDetails ? 1 : 0)
+                        )
                     }
-                    .opacity(model.showingDetails ? 1 : 0.75)
-                    .padding(.horizontal, model.showingDetails ? 16 : 0)
-                    .padding(.vertical, model.showingDetails ? 12 : 0)
-                    .background(
-                        Color.white
-                            .opacity(0.1)
-                            .cornerRadius(16)
-                            .opacity(model.showingDetails ? 1 : 0)
-                    )
+                    .transition(.scale(scale: 0.9).combined(with: .opacity))
                 }
             }
 
@@ -206,7 +215,7 @@ extension ContentView {
             VStack {
                 if let levels = model.selectedCourse?.levels {
                     ScrollView {
-                        LazyVGrid(columns: columns, spacing: 16) {
+                        LazyVGrid(columns: levelColumns, spacing: 16) {
                             ForEach(levels, id: \.title) { level in
                                 Button {
                                     withAnimation(.spring(response: 0.3, dampingFraction: 1, blendDuration: 1)) {
