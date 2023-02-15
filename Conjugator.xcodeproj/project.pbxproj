@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3CA10A9E299C72DE00A9FDD1 /* CodeScanner in Frameworks */ = {isa = PBXBuildFile; productRef = 3CA10A9D299C72DE00A9FDD1 /* CodeScanner */; };
+		3CA10AA0299C79D000A9FDD1 /* ViewModel+AddCourse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CA10A9F299C79D000A9FDD1 /* ViewModel+AddCourse.swift */; };
 		3CB042812982F3E60017C787 /* ConversationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB042802982F3E60017C787 /* ConversationView.swift */; };
 		3CB042832982F42E0017C787 /* Views.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB042822982F42E0017C787 /* Views.swift */; };
 		3CB042852982F4620017C787 /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB042842982F4620017C787 /* MessageView.swift */; };
@@ -34,6 +35,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3CA10A9F299C79D000A9FDD1 /* ViewModel+AddCourse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewModel+AddCourse.swift"; sourceTree = "<group>"; };
 		3CB042802982F3E60017C787 /* ConversationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationView.swift; sourceTree = "<group>"; };
 		3CB042822982F42E0017C787 /* Views.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Views.swift; sourceTree = "<group>"; };
 		3CB042842982F4620017C787 /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
@@ -109,6 +111,7 @@
 				3CFBF96C28F744B7007C0CAB /* ConjugatorApp.swift */,
 				3CFBF97A28F74597007C0CAB /* ViewModel.swift */,
 				3CED0F55299B51E30015A748 /* ViewModel+Download.swift */,
+				3CA10A9F299C79D000A9FDD1 /* ViewModel+AddCourse.swift */,
 				3CED0F46299B50DF0015A748 /* Models */,
 				3CFBF98928F769E8007C0CAB /* Home Page */,
 				3CFBF98A28F769EE007C0CAB /* Detail Page */,
@@ -236,6 +239,7 @@
 				3CFBF98028F74CE5007C0CAB /* Utilities.swift in Sources */,
 				3CED0F54299B51670015A748 /* ParsingGroup.swift in Sources */,
 				3CED0F4C299B51290015A748 /* Challenge.swift in Sources */,
+				3CA10AA0299C79D000A9FDD1 /* ViewModel+AddCourse.swift in Sources */,
 				3CFBF96D28F744B7007C0CAB /* ConjugatorApp.swift in Sources */,
 				3CB042812982F3E60017C787 /* ConversationView.swift in Sources */,
 				3CED0F5A299B5F4A0015A748 /* AddCourseView.swift in Sources */,

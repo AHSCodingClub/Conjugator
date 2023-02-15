@@ -53,7 +53,6 @@ struct ContentView: View {
                                             .fill(Color.white.opacity(0.1))
                                     }
                             }
-//                        https://docs.google.com/spreadsheets/d/1t-onBgRP5BSHZ26XjvmVgi6RxZmpKO7RBI3JARYE3Bs/edit#gid=0
                         }
 
                         announcement

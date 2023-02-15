@@ -12,12 +12,13 @@ class ViewModel: ObservableObject {
     @Published var showingDetails = false
     @Published var showingAddCourseView = false
 
+    @Published var courses = [Course]()
     @Published var selectedCourse: Course?
     @Published var selectedLevel: Level?
 
     @AppStorage("dataSources") @Storage var dataSources = ["1t-onBgRP5BSHZ26XjvmVgi6RxZmpKO7RBI3JARYE3Bs"]
     @Published var selectedDataSource = "1t-onBgRP5BSHZ26XjvmVgi6RxZmpKO7RBI3JARYE3Bs"
-    @Published var courses = [Course]()
+    
 
     func loadLevels() async {
         var courses = [Course]()
