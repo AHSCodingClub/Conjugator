@@ -25,7 +25,7 @@ struct LevelCardView: View {
                         .font(.caption)
                         .padding(.top, 12)
                 }
-                .frame(maxWidth: .infinity, alignment: .leading)
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
                 .padding(.vertical, 16)
 
                 Image(systemName: "chevron.forward")
