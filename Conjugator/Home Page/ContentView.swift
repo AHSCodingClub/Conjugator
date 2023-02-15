@@ -50,7 +50,7 @@ struct ContentView: View {
                                 Text("Conjugator")
                                     .font(.title.weight(.heavy))
 
-                                if let name = model.course.name {
+                                if let name = model.course?.name {
                                     Text(name)
                                         .opacity(0.75)
                                 }
@@ -68,10 +68,10 @@ struct ContentView: View {
 //                        https://docs.google.com/spreadsheets/d/1t-onBgRP5BSHZ26XjvmVgi6RxZmpKO7RBI3JARYE3Bs/edit#gid=0
                         }
 
-                        if let announcement = model.course.announcement {
+                        if let announcement = model.course?.announcement {
                             HStack(spacing: 10) {
                                 VStack(alignment: .leading, spacing: 3) {
-                                    if let announcementTitle = model.course.announcementTitle {
+                                    if let announcementTitle = model.course?.announcementTitle {
                                         Text(announcementTitle)
                                             .textCase(.uppercase)
                                             .font(.caption)
@@ -117,7 +117,7 @@ struct ContentView: View {
                     .transition(.offset(x: 20).combined(with: .opacity))
             } else {
                 VStack {
-                    if let levels = model.levels {
+                    if let levels = model.course?.levels {
                         ScrollView {
                             LazyVGrid(columns: columns, spacing: 16) {
                                 ForEach(levels, id: \.title) { level in

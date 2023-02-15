@@ -9,8 +9,7 @@
 import SwiftUI
 
 class ViewModel: ObservableObject {
-    @Published var course = Course()
-    @Published var levels: [Level]?
+    @Published var course: Course?
     @Published var selectedLevel: Level?
 
     @AppStorage("dataSourceIDs") @Storage var dataSourceIDs = ["1t-onBgRP5BSHZ26XjvmVgi6RxZmpKO7RBI3JARYE3Bs"]
@@ -19,10 +18,15 @@ class ViewModel: ObservableObject {
     func loadLevels() async {
         let dataSourceURL = getDataSourceURL(from: selectedDataSourceID)
         guard let csv = await downloadLevelsCSV(dataSourceURL: dataSourceURL) else { return }
-
         let parsingGroups = generateParsingGroupsFromCSV(csv: csv)
 
-        await parse(parsingGroups: parsingGroups)
+        let course = await getCourse(parsingGroups: parsingGroups)
+
+        await { @MainActor in
+            withAnimation(.spring(response: 0.4, dampingFraction: 1, blendDuration: 1)) {
+                self.course = course
+            }
+        }()
     }
 
     func downloadLevelsCSV(dataSourceURL: String) async -> String? {

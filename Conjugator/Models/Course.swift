@@ -11,6 +11,7 @@ struct Course {
     var name: String?
     var announcementTitle: String?
     var announcement: String?
+    var levels = [Level]()
 }
 
 extension Course {
