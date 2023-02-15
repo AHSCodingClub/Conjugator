@@ -22,22 +22,19 @@ struct ContentView: View {
                     levelHeader(selectedLevel: selectedLevel)
                 } else {
                     VStack(alignment: .leading, spacing: 16) {
-                        HStack {
-                            VStack(alignment: .leading, spacing: 2) {
+                        HStack(alignment: .top) {
+                            VStack(alignment: .leading, spacing: model.showingDetails ? 12 : 2) {
                                 Text("Conjugator")
                                     .font(.title.weight(.heavy))
 
-                                if let name = model.selectedCourse?.name {
-                                    Text(name)
-                                        .opacity(model.showingDetails ? 1 : 0.75)
-                                        .padding(.horizontal, model.showingDetails ? 16 : 0)
-                                        .padding(.vertical, model.showingDetails ? 8 : 0)
-                                        .background(
-                                            Color.white
-                                                .opacity(0.1)
-                                                .cornerRadius(16)
-                                                .opacity(model.showingDetails ? 1 : 0)
-                                        )
+                                VStack(alignment: .leading, spacing: 8) {
+                                    if model.showingDetails {
+                                        Text("My Courses")
+                                            .font(.headline)
+                                            .fontWeight(.bold)
+                                    }
+
+                                    courses
                                 }
                             }
                             .frame(maxWidth: .infinity, alignment: .leading)
@@ -93,6 +90,57 @@ struct ContentView: View {
 }
 
 extension ContentView {
+    var courses: some View {
+        VStack(spacing: 6) {
+            ForEach(model.courses, id: \.dataSource) { course in
+                let name = course.name ?? "Untitled Course"
+
+                Button {
+                    model.selectedDataSource = course.dataSource
+                } label: {
+                    HStack {
+                        Text(name)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+
+                        if model.selectedDataSource == course.dataSource {
+                            Image(systemName: "checkmark")
+                                .opacity(model.showingDetails ? 1 : 0)
+                        }
+                    }
+                    .opacity(model.showingDetails ? 1 : 0.75)
+                    .padding(.horizontal, model.showingDetails ? 16 : 0)
+                    .padding(.vertical, model.showingDetails ? 12 : 0)
+                    .background(
+                        Color.white
+                            .opacity(0.1)
+                            .cornerRadius(16)
+                            .opacity(model.showingDetails ? 1 : 0)
+                    )
+                }
+            }
+
+            if model.showingDetails {
+                Button {
+//                    model.selectedDataSource = course.dataSource
+                } label: {
+                    HStack {
+                        Text("Add Course")
+                            .frame(maxWidth: .infinity, alignment: .leading)
+
+                        Image(systemName: "plus")
+                    }
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 12)
+                    .background(
+                        Color.white
+                            .opacity(0.1)
+                            .cornerRadius(16)
+                    )
+                }
+            }
+        }
+    }
+
     @ViewBuilder var announcement: some View {
         if !model.showingDetails, let announcement = model.selectedCourse?.announcement {
             HStack(spacing: 10) {
@@ -114,6 +162,7 @@ extension ContentView {
             .padding(.vertical, 12)
             .background(Color.white.opacity(0.1))
             .cornerRadius(12)
+            .transition(.scale(scale: 0.8, anchor: .bottom).combined(with: .opacity))
         }
     }
 }
