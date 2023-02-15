@@ -36,7 +36,7 @@ struct ContentView: View {
                                     Button {
                                         model.showingAllCoursesView = true
                                     } label: {
-                                        HStack(spacing: 6) {
+                                        HStack(spacing: 5) {
                                             Text("My Courses")
 
                                             Image(systemName: "chevron.right")
@@ -52,29 +52,29 @@ struct ContentView: View {
 
                         announcement
                     }
+                    .overlay(alignment: .topTrailing) {
+                        Button {
+                            withAnimation(.spring(response: 0.3, dampingFraction: 1, blendDuration: 1)) {
+                                model.showingDetails.toggle()
+                            }
+                        } label: {
+                            Image(systemName: "chevron.right")
+                                .fontWeight(.heavy)
+                                .rotationEffect(.degrees(model.showingDetails ? 90 : 0))
+                                .frame(width: 42, height: 42)
+                                .background {
+                                    Circle()
+                                        .fill(Color.white.opacity(0.1))
+                                }
+                        }
+                        .padding(.top, -6) /// shift the button up a bit
+                    }
                     .padding(.top, 24)
                     .padding(.bottom, 16)
                 }
             }
             .padding(.horizontal, 20)
             .frame(maxWidth: .infinity, alignment: .leading)
-            .overlay(alignment: .topTrailing) {
-                Button {
-                    withAnimation(.spring(response: 0.3, dampingFraction: 1, blendDuration: 1)) {
-                        model.showingDetails.toggle()
-                    }
-                } label: {
-                    Image(systemName: "chevron.right")
-                        .fontWeight(.heavy)
-                        .rotationEffect(.degrees(model.showingDetails ? 90 : 0))
-                        .frame(width: 42, height: 42)
-                        .background {
-                            Circle()
-                                .fill(Color.white.opacity(0.1))
-                        }
-                }
-                .padding(16)
-            }
             .foregroundColor(.white)
             .background {
                 let color: Color = {
@@ -122,8 +122,10 @@ extension ContentView {
                         backgroundShown: model.showingDetails,
                         backgroundColor: .white.opacity(0.1)
                     ) {
-                        model.selectedCourse = course
-                        model.selectedDataSource = course.dataSource
+                        withAnimation(.spring(response: 0.5, dampingFraction: 1, blendDuration: 1)) {
+                            model.selectedCourse = course
+                            model.selectedDataSource = course.dataSource
+                        }
                     }
                 }
             }
@@ -140,6 +142,7 @@ extension ContentView {
                 }
             }
         }
+        .disabled(!model.showingDetails) /// prevent tapping the course when not in detail mode
 
         if model.showingDetails {
             /// If there are courses that aren't shown, show how many are left.
@@ -244,12 +247,12 @@ extension ContentView {
                             await model.loadLevels()
                         }
                     }
-                } else if model.courses.isEmpty {
-                    Text("No Courses")
-                        .foregroundColor(UIColor.secondaryLabel.color)
+                } else if model.isLoading {
+                    ProgressView()
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                 } else {
-                    ProgressView()
+                    Text("No Courses")
+                        .foregroundColor(UIColor.secondaryLabel.color)
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
             }

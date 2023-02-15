@@ -13,6 +13,7 @@ class ViewModel: ObservableObject {
     @Published var showingDetails = false
     @Published var showingAllCoursesView = false
 
+    @Published var isLoading = true
     @Published var courses = [Course]()
     @Published var selectedCourse: Course?
     @Published var selectedLevel: Level?
@@ -33,6 +34,7 @@ class ViewModel: ObservableObject {
 
         await { @MainActor in
             withAnimation(.spring(response: 0.4, dampingFraction: 1, blendDuration: 1)) {
+                isLoading = false
                 if courses.isEmpty {
                     showingDetails = true
                 } else {
