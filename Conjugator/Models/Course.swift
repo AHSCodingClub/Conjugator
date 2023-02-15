@@ -8,6 +8,7 @@
 import Foundation
 
 struct Course {
+    var dataSource: String
     var name: String?
     var announcementTitle: String?
     var announcement: String?
@@ -15,8 +16,8 @@ struct Course {
 }
 
 extension Course {
-    static func create(from parsingGroup: ParsingGroup) -> Course {
-        var course = Course()
+    static func create(dataSource: String, parsingGroup: ParsingGroup) -> Course {
+        var course = Course(dataSource: dataSource)
         for line in parsingGroup.lines {
             let values = line.values.filter { !$0.isEmpty }
 

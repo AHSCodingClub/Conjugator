@@ -19,46 +19,37 @@ struct ContentView: View {
         VStack(alignment: .leading, spacing: 0) {
             VStack {
                 if let selectedLevel = model.selectedLevel {
-                    HStack {
-                        Button {
-                            withAnimation(.spring(response: 0.3, dampingFraction: 1, blendDuration: 1)) {
-                                model.selectedLevel = nil
-                            }
-                        } label: {
-                            Image(systemName: "chevron.backward")
-
-                                .fontWeight(.medium)
-                                .padding(.trailing, 16)
-                                .padding(.vertical, 16)
-                                .contentShape(Rectangle())
-                                .font(.title3)
-                        }
-
-                        Spacer()
-                    }
-                    .frame(maxWidth: .infinity)
-                    .overlay {
-                        Text(selectedLevel.title)
-                            .font(.title3)
-                            .fontWeight(.semibold)
-                    }
-                    .foregroundColor(.white)
+                    levelHeader(selectedLevel: selectedLevel)
                 } else {
-                    VStack(alignment: .leading, spacing: 2) {
+                    VStack(alignment: .leading, spacing: 16) {
                         HStack {
                             VStack(alignment: .leading, spacing: 2) {
                                 Text("Conjugator")
                                     .font(.title.weight(.heavy))
 
-                                if let name = model.course?.name {
+                                if let name = model.selectedCourse?.name {
                                     Text(name)
-                                        .opacity(0.75)
+                                        .opacity(model.showingDetails ? 1 : 0.75)
+                                        .padding(.horizontal, model.showingDetails ? 16 : 0)
+                                        .padding(.vertical, model.showingDetails ? 8 : 0)
+                                        .background(
+                                            Color.white
+                                                .opacity(0.1)
+                                                .cornerRadius(16)
+                                                .opacity(model.showingDetails ? 1 : 0)
+                                        )
                                 }
                             }
                             .frame(maxWidth: .infinity, alignment: .leading)
 
-                            Button {} label: {
-                                Image(systemName: "gearshape.fill")
+                            Button {
+                                withAnimation(.spring(response: 0.3, dampingFraction: 1, blendDuration: 1)) {
+                                    model.showingDetails.toggle()
+                                }
+                            } label: {
+                                Image(systemName: "chevron.right")
+                                    .fontWeight(.heavy)
+                                    .rotationEffect(.degrees(model.showingDetails ? 90 : 0))
                                     .frame(width: 42, height: 42)
                                     .background {
                                         Circle()
@@ -68,28 +59,7 @@ struct ContentView: View {
 //                        https://docs.google.com/spreadsheets/d/1t-onBgRP5BSHZ26XjvmVgi6RxZmpKO7RBI3JARYE3Bs/edit#gid=0
                         }
 
-                        if let announcement = model.course?.announcement {
-                            HStack(spacing: 10) {
-                                VStack(alignment: .leading, spacing: 3) {
-                                    if let announcementTitle = model.course?.announcementTitle {
-                                        Text(announcementTitle)
-                                            .textCase(.uppercase)
-                                            .font(.caption)
-                                    }
-
-                                    Text(announcement)
-                                        .multilineTextAlignment(.leading)
-                                        .frame(maxWidth: .infinity, alignment: .leading)
-                                }
-
-                                Image(systemName: "person.wave.2.fill")
-                            }
-                            .padding(.horizontal, 16)
-                            .padding(.vertical, 12)
-                            .background(Color.white.opacity(0.1))
-                            .cornerRadius(12)
-                            .padding(.top, 12)
-                        }
+                        announcement
                     }
                     .foregroundColor(.white)
                     .padding(.top, 24)
@@ -108,49 +78,107 @@ struct ContentView: View {
                 }()
 
                 color
-
                     .ignoresSafeArea()
             }
 
-            if let selectedLevel = model.selectedLevel {
-                LevelView(model: model, level: selectedLevel)
-                    .transition(.offset(x: 20).combined(with: .opacity))
-            } else {
-                VStack {
-                    if let levels = model.course?.levels {
-                        ScrollView {
-                            LazyVGrid(columns: columns, spacing: 16) {
-                                ForEach(levels, id: \.title) { level in
-                                    Button {
-                                        withAnimation(.spring(response: 0.3, dampingFraction: 1, blendDuration: 1)) {
-                                            model.selectedLevel = level
-                                        }
-                                    } label: {
-                                        LevelCardView(level: level)
-                                    }
-                                }
-                            }
-                            .padding()
-                        }
-                        .refreshable {
-                            Task {
-                                await model.loadLevels()
-                            }
-                        }
-                    } else {
-                        ProgressView()
-                            .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    }
-                }
-                .background(UIColor.secondarySystemBackground.color)
-                .transition(.offset(x: -20).combined(with: .opacity))
-            }
+            content
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .onAppear {
             Task {
                 await model.loadLevels()
             }
+        }
+    }
+}
+
+extension ContentView {
+    @ViewBuilder var announcement: some View {
+        if !model.showingDetails, let announcement = model.selectedCourse?.announcement {
+            HStack(spacing: 10) {
+                VStack(alignment: .leading, spacing: 3) {
+                    if let announcementTitle = model.selectedCourse?.announcementTitle {
+                        Text(announcementTitle)
+                            .textCase(.uppercase)
+                            .font(.caption)
+                    }
+
+                    Text(announcement)
+                        .multilineTextAlignment(.leading)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                }
+
+                Image(systemName: "person.wave.2.fill")
+            }
+            .padding(.horizontal, 16)
+            .padding(.vertical, 12)
+            .background(Color.white.opacity(0.1))
+            .cornerRadius(12)
+        }
+    }
+}
+
+extension ContentView {
+    func levelHeader(selectedLevel: Level) -> some View {
+        HStack {
+            Button {
+                withAnimation(.spring(response: 0.3, dampingFraction: 1, blendDuration: 1)) {
+                    model.selectedLevel = nil
+                }
+            } label: {
+                Image(systemName: "chevron.backward")
+
+                    .fontWeight(.medium)
+                    .padding(.trailing, 16)
+                    .padding(.vertical, 16)
+                    .contentShape(Rectangle())
+                    .font(.title3)
+            }
+
+            Spacer()
+        }
+        .frame(maxWidth: .infinity)
+        .overlay {
+            Text(selectedLevel.title)
+                .font(.title3)
+                .fontWeight(.semibold)
+        }
+        .foregroundColor(.white)
+    }
+
+    @ViewBuilder var content: some View {
+        if let selectedLevel = model.selectedLevel {
+            LevelView(model: model, level: selectedLevel)
+                .transition(.offset(x: 20).combined(with: .opacity))
+        } else {
+            VStack {
+                if let levels = model.selectedCourse?.levels {
+                    ScrollView {
+                        LazyVGrid(columns: columns, spacing: 16) {
+                            ForEach(levels, id: \.title) { level in
+                                Button {
+                                    withAnimation(.spring(response: 0.3, dampingFraction: 1, blendDuration: 1)) {
+                                        model.selectedLevel = level
+                                    }
+                                } label: {
+                                    LevelCardView(level: level)
+                                }
+                            }
+                        }
+                        .padding()
+                    }
+                    .refreshable {
+                        Task {
+                            await model.loadLevels()
+                        }
+                    }
+                } else {
+                    ProgressView()
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                }
+            }
+            .background(UIColor.secondarySystemBackground.color)
+            .transition(.offset(x: -20).combined(with: .opacity))
         }
     }
 }
