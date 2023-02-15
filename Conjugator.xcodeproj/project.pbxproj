@@ -10,6 +10,7 @@
 		3CA10A9E299C72DE00A9FDD1 /* CodeScanner in Frameworks */ = {isa = PBXBuildFile; productRef = 3CA10A9D299C72DE00A9FDD1 /* CodeScanner */; };
 		3CA10AA0299C79D000A9FDD1 /* ViewModel+AddCourse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CA10A9F299C79D000A9FDD1 /* ViewModel+AddCourse.swift */; };
 		3CA10AA2299C81FD00A9FDD1 /* AllCoursesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CA10AA1299C81FD00A9FDD1 /* AllCoursesView.swift */; };
+		3CA10AA4299C8B5600A9FDD1 /* ViewModel+DeleteCourse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CA10AA3299C8B5600A9FDD1 /* ViewModel+DeleteCourse.swift */; };
 		3CB042812982F3E60017C787 /* ConversationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB042802982F3E60017C787 /* ConversationView.swift */; };
 		3CB042832982F42E0017C787 /* Views.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB042822982F42E0017C787 /* Views.swift */; };
 		3CB042852982F4620017C787 /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB042842982F4620017C787 /* MessageView.swift */; };
@@ -38,6 +39,7 @@
 /* Begin PBXFileReference section */
 		3CA10A9F299C79D000A9FDD1 /* ViewModel+AddCourse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewModel+AddCourse.swift"; sourceTree = "<group>"; };
 		3CA10AA1299C81FD00A9FDD1 /* AllCoursesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllCoursesView.swift; sourceTree = "<group>"; };
+		3CA10AA3299C8B5600A9FDD1 /* ViewModel+DeleteCourse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewModel+DeleteCourse.swift"; sourceTree = "<group>"; };
 		3CB042802982F3E60017C787 /* ConversationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationView.swift; sourceTree = "<group>"; };
 		3CB042822982F42E0017C787 /* Views.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Views.swift; sourceTree = "<group>"; };
 		3CB042842982F4620017C787 /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
@@ -114,6 +116,7 @@
 				3CFBF97A28F74597007C0CAB /* ViewModel.swift */,
 				3CED0F55299B51E30015A748 /* ViewModel+Download.swift */,
 				3CA10A9F299C79D000A9FDD1 /* ViewModel+AddCourse.swift */,
+				3CA10AA3299C8B5600A9FDD1 /* ViewModel+DeleteCourse.swift */,
 				3CED0F46299B50DF0015A748 /* Models */,
 				3CFBF98928F769E8007C0CAB /* Home Page */,
 				3CFBF98A28F769EE007C0CAB /* Detail Page */,
@@ -236,6 +239,7 @@
 				3CFBF98C28F769F6007C0CAB /* LevelViewModel.swift in Sources */,
 				3CFBF98828F769B5007C0CAB /* LevelCardView.swift in Sources */,
 				3CED0F48299B50F50015A748 /* Level.swift in Sources */,
+				3CA10AA4299C8B5600A9FDD1 /* ViewModel+DeleteCourse.swift in Sources */,
 				3CFBF97B28F74597007C0CAB /* ViewModel.swift in Sources */,
 				3CED0F50299B514F0015A748 /* Choice.swift in Sources */,
 				3CED0F58299B52870015A748 /* Course.swift in Sources */,

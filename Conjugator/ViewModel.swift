@@ -9,7 +9,7 @@
 import SwiftUI
 
 class ViewModel: ObservableObject {
-    let maximumCoursesToDisplay = 1
+    let maximumCoursesToDisplay = 6
     @Published var showingDetails = false
     @Published var showingAllCoursesView = false
 
@@ -18,9 +18,9 @@ class ViewModel: ObservableObject {
     @Published var selectedLevel: Level?
 
     // MARK: - Data Persistence
+
     @AppStorage("dataSources") @Storage var dataSources = ["1t-onBgRP5BSHZ26XjvmVgi6RxZmpKO7RBI3JARYE3Bs"]
     @AppStorage("selectedDataSource") var selectedDataSource = "1t-onBgRP5BSHZ26XjvmVgi6RxZmpKO7RBI3JARYE3Bs"
-    
 
     func loadLevels() async {
         var courses = [Course]()
@@ -31,12 +31,15 @@ class ViewModel: ObservableObject {
             }
         }
 
-        let selectedCourse = courses.first(where: { $0.dataSource == self.selectedDataSource })
-
         await { @MainActor in
             withAnimation(.spring(response: 0.4, dampingFraction: 1, blendDuration: 1)) {
-                self.courses = courses
-                self.selectedCourse = selectedCourse
+                if courses.isEmpty {
+                    showingDetails = true
+                } else {
+                    let selectedCourse = courses.first(where: { $0.dataSource == self.selectedDataSource }) ?? courses.first
+                    self.courses = courses
+                    self.selectedCourse = selectedCourse
+                }
             }
         }()
     }

@@ -40,6 +40,7 @@ struct RowView: View {
 struct AllCoursesView: View {
     @ObservedObject var model: ViewModel
     @State var showingAddCourseView = false
+    @State var courseToDelete: Course?
 
     let courseColumns = [
         GridItem(.adaptive(minimum: 200))
@@ -55,32 +56,48 @@ struct AllCoursesView: View {
                             if model.showingDetails || model.selectedDataSource == course.dataSource {
                                 let name = course.name ?? "Untitled Course"
 
-                                RowView(
-                                    title: name,
-                                    image: "checkmark",
-                                    imageShown: model.selectedDataSource == course.dataSource,
-                                    backgroundShown: true,
-                                    backgroundColor: UIColor.secondarySystemBackground.color
-                                ) {
-                                    model.selectedCourse = course
-                                    model.selectedDataSource = course.dataSource
+                                HStack {
+                                    RowView(
+                                        title: name,
+                                        image: "checkmark",
+                                        imageShown: model.selectedDataSource == course.dataSource,
+                                        backgroundShown: true,
+                                        backgroundColor: UIColor.secondarySystemBackground.color
+                                    ) {
+                                        model.selectedCourse = course
+                                        model.selectedDataSource = course.dataSource
+                                    }
+
+                                    Button {
+                                        courseToDelete = course
+                                    } label: {
+                                        Image(systemName: "trash")
+                                            .frame(width: 30)
+                                            .contentShape(Rectangle())
+                                    }
                                 }
                             }
                         }
 
-                        RowView(
-                            title: "Add Course",
-                            image: "plus",
-                            imageShown: true,
-                            backgroundShown: true,
-                            backgroundColor: UIColor.secondarySystemBackground.color
-                        ) {
-                            withAnimation {
-                                showingAddCourseView.toggle()
+                        HStack {
+                            RowView(
+                                title: "Add Course",
+                                image: "plus",
+                                imageShown: true,
+                                backgroundShown: true,
+                                backgroundColor: UIColor.secondarySystemBackground.color
+                            ) {
+                                withAnimation {
+                                    showingAddCourseView.toggle()
+                                }
                             }
+
+                            Color.clear
+                                .frame(width: 30)
                         }
                     }
                 }
+                .foregroundColor(UIColor.label.color)
                 .frame(maxWidth: .infinity)
                 .padding(.horizontal, 16)
                 .padding(.bottom, 16)
@@ -92,21 +109,22 @@ struct AllCoursesView: View {
         .sheet(isPresented: $showingAddCourseView) {
             AddCourseView(model: model)
         }
-//        .alert(
-//            "Error Adding Course",
-//            isPresented: Binding {
-//                error != nil
-//            } set: { _ in
-//                error = nil
-//            }
-//        ) {
-//            Button("OK") {}
-//        } message: {
-//            if let error {
-//                Text("Error: \(error). Please contact your teacher.")
-//            } else {
-//                Text("Unknown Error. Please contact your teacher.")
-//            }
-//        }
+        .alert(
+            "Delete Course?",
+            isPresented: Binding {
+                courseToDelete != nil
+            } set: { _ in
+                courseToDelete = nil
+            }
+        ) {
+            Button("Delete", role: .destructive) {
+                if let courseToDelete {
+                    model.deleteCourse(course: courseToDelete)
+                }
+            }
+            Button("Cancel", role: .cancel) {}
+        } message: {
+            Text("If you delete this course, you'll need to ask your teacher for the invite link again.")
+        }
     }
 }

@@ -5,8 +5,8 @@
 //  Created by Zheng on 2/14/23.
 //
 
-import SwiftUI
 import Combine
+import SwiftUI
 
 extension ViewModel {
     func addCourse(inputString: String, error: Binding<String?>, dismiss: @escaping (() -> Void)) async {
@@ -31,12 +31,13 @@ extension ViewModel {
             if self.courses.contains(where: { $0.dataSource == course.dataSource }) {
                 error.wrappedValue = "You already have this course (\(course.name ?? "Untitled Course"))"
             } else {
-                self.courses.append(course)
-                self.dataSources.append(dataSource)
-                self.selectedCourse = course
-                self.selectedDataSource = dataSource
-                dismiss()
-                
+                await { @MainActor in
+                    self.courses.append(course)
+                    self.dataSources.append(dataSource)
+                    self.selectedCourse = course
+                    self.selectedDataSource = dataSource
+                    dismiss()
+                }()
             }
         } else {
             error.wrappedValue = "The input URL was invalid"

@@ -33,18 +33,13 @@ struct ContentView: View {
 
                             VStack(alignment: .leading, spacing: 8) {
                                 if model.showingDetails {
-                                    HStack(spacing: 10) {
-                                        Text("My Courses")
+                                    Button {
+                                        model.showingAllCoursesView = true
+                                    } label: {
+                                        HStack(spacing: 6) {
+                                            Text("My Courses")
 
-                                        Circle()
-                                            .fill(.white)
-                                            .opacity(0.5)
-                                            .frame(width: 3, height: 3)
-
-                                        Button {
-                                            model.showingAllCoursesView = true
-                                        } label: {
-                                            Text("Manage")
+                                            Image(systemName: "chevron.right")
                                         }
                                         .fontWeight(.bold)
                                     }
@@ -249,6 +244,10 @@ extension ContentView {
                             await model.loadLevels()
                         }
                     }
+                } else if model.courses.isEmpty {
+                    Text("No Courses")
+                        .foregroundColor(UIColor.secondaryLabel.color)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
                 } else {
                     ProgressView()
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
