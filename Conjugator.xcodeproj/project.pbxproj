@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		3CA10A9E299C72DE00A9FDD1 /* CodeScanner in Frameworks */ = {isa = PBXBuildFile; productRef = 3CA10A9D299C72DE00A9FDD1 /* CodeScanner */; };
 		3CA10AA0299C79D000A9FDD1 /* ViewModel+AddCourse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CA10A9F299C79D000A9FDD1 /* ViewModel+AddCourse.swift */; };
+		3CA10AA2299C81FD00A9FDD1 /* AllCoursesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CA10AA1299C81FD00A9FDD1 /* AllCoursesView.swift */; };
 		3CB042812982F3E60017C787 /* ConversationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB042802982F3E60017C787 /* ConversationView.swift */; };
 		3CB042832982F42E0017C787 /* Views.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB042822982F42E0017C787 /* Views.swift */; };
 		3CB042852982F4620017C787 /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB042842982F4620017C787 /* MessageView.swift */; };
@@ -36,6 +37,7 @@
 
 /* Begin PBXFileReference section */
 		3CA10A9F299C79D000A9FDD1 /* ViewModel+AddCourse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewModel+AddCourse.swift"; sourceTree = "<group>"; };
+		3CA10AA1299C81FD00A9FDD1 /* AllCoursesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllCoursesView.swift; sourceTree = "<group>"; };
 		3CB042802982F3E60017C787 /* ConversationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationView.swift; sourceTree = "<group>"; };
 		3CB042822982F42E0017C787 /* Views.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Views.swift; sourceTree = "<group>"; };
 		3CB042842982F4620017C787 /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
@@ -128,6 +130,7 @@
 			children = (
 				3CFBF96E28F744B7007C0CAB /* ContentView.swift */,
 				3CED0F59299B5F4A0015A748 /* AddCourseView.swift */,
+				3CA10AA1299C81FD00A9FDD1 /* AllCoursesView.swift */,
 				3CFBF98728F769B5007C0CAB /* LevelCardView.swift */,
 			);
 			path = "Home Page";
@@ -243,6 +246,7 @@
 				3CFBF96D28F744B7007C0CAB /* ConjugatorApp.swift in Sources */,
 				3CB042812982F3E60017C787 /* ConversationView.swift in Sources */,
 				3CED0F5A299B5F4A0015A748 /* AddCourseView.swift in Sources */,
+				3CA10AA2299C81FD00A9FDD1 /* AllCoursesView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

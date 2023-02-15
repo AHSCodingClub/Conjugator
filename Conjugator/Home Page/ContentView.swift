@@ -26,48 +26,72 @@ struct ContentView: View {
                     levelHeader(selectedLevel: selectedLevel)
                 } else {
                     VStack(alignment: .leading, spacing: 16) {
-                        HStack(alignment: .top) {
-                            VStack(alignment: .leading, spacing: model.showingDetails ? 12 : 2) {
-                                Text("Conjugator")
-                                    .font(.title.weight(.heavy))
+                        VStack(alignment: .leading, spacing: model.showingDetails ? 12 : 2) {
+                            Text("Conjugator")
+                                .font(.title.weight(.heavy))
 
-                                VStack(alignment: .leading, spacing: 8) {
-                                    if model.showingDetails {
+                            VStack(alignment: .leading, spacing: 8) {
+                                if model.showingDetails {
+                                    HStack(spacing: 10) {
                                         Text("My Courses")
-                                            .font(.headline)
-                                            .fontWeight(.bold)
-                                    }
 
-                                    courses
-                                }
-                            }
-                            .frame(maxWidth: .infinity, alignment: .leading)
-
-                            Button {
-                                withAnimation(.spring(response: 0.3, dampingFraction: 1, blendDuration: 1)) {
-                                    model.showingDetails.toggle()
-                                }
-                            } label: {
-                                Image(systemName: "chevron.right")
-                                    .fontWeight(.heavy)
-                                    .rotationEffect(.degrees(model.showingDetails ? 90 : 0))
-                                    .frame(width: 42, height: 42)
-                                    .background {
                                         Circle()
-                                            .fill(Color.white.opacity(0.1))
+                                            .fill(.white)
+                                            .opacity(0.5)
+                                            .frame(width: 3, height: 3)
+
+                                        Button {
+                                            model.showingAllCoursesView = true
+                                        } label: {
+                                            /// If there are courses that aren't shown, display how many are left.
+                                            if model.courses.count > model.maximumCoursesToDisplay {
+                                                let numberOfCoursesLeft = model.courses.count - model.maximumCoursesToDisplay
+
+                                                if numberOfCoursesLeft == 1 {
+                                                    Text("\(numberOfCoursesLeft) more course")
+                                                } else {
+                                                    Text("\(numberOfCoursesLeft) more courses")
+                                                }
+
+                                            } else {
+                                                Text("Manage")
+                                            }
+                                        }
+                                        .fontWeight(.bold)
                                     }
+                                }
+
+                                courses
                             }
                         }
+                        .frame(maxWidth: .infinity, alignment: .leading)
 
                         announcement
                     }
-                    .foregroundColor(.white)
                     .padding(.top, 24)
                     .padding(.bottom, 16)
                 }
             }
             .padding(.horizontal, 20)
             .frame(maxWidth: .infinity, alignment: .leading)
+            .overlay(alignment: .topTrailing) {
+                Button {
+                    withAnimation(.spring(response: 0.3, dampingFraction: 1, blendDuration: 1)) {
+                        model.showingDetails.toggle()
+                    }
+                } label: {
+                    Image(systemName: "chevron.right")
+                        .fontWeight(.heavy)
+                        .rotationEffect(.degrees(model.showingDetails ? 90 : 0))
+                        .frame(width: 42, height: 42)
+                        .background {
+                            Circle()
+                                .fill(Color.white.opacity(0.1))
+                        }
+                }
+                .padding(16)
+            }
+            .foregroundColor(.white)
             .background {
                 let color: Color = {
                     if let selectedLevel = model.selectedLevel, let hex = selectedLevel.colorHex {
@@ -99,55 +123,33 @@ struct ContentView: View {
 extension ContentView {
     var courses: some View {
         LazyVGrid(columns: courseColumns, spacing: 6) {
-            ForEach(model.courses, id: \.dataSource) { course in
+            ForEach(model.courses.prefix(model.maximumCoursesToDisplay), id: \.dataSource) { course in
 
                 if model.showingDetails || model.selectedDataSource == course.dataSource {
                     let name = course.name ?? "Untitled Course"
 
-                    Button {
+                    RowView(
+                        title: name,
+                        image: "checkmark",
+                        imageShown: model.showingDetails && (model.selectedDataSource == course.dataSource),
+                        backgroundShown: model.showingDetails,
+                        backgroundColor: .white.opacity(0.1)
+                    ) {
                         model.selectedCourse = course
                         model.selectedDataSource = course.dataSource
-                    } label: {
-                        HStack {
-                            Text(name)
-                                .frame(maxWidth: .infinity, alignment: .leading)
-
-                            if model.selectedDataSource == course.dataSource {
-                                Image(systemName: "checkmark")
-                                    .opacity(model.showingDetails ? 1 : 0)
-                            }
-                        }
-                        .opacity(model.showingDetails ? 1 : 0.75)
-                        .padding(.horizontal, model.showingDetails ? 16 : 0)
-                        .padding(.vertical, model.showingDetails ? 12 : 0)
-                        .background(
-                            Color.white
-                                .opacity(0.1)
-                                .cornerRadius(16)
-                                .opacity(model.showingDetails ? 1 : 0)
-                        )
                     }
-                    .transition(.scale(scale: 0.9).combined(with: .opacity))
                 }
             }
 
             if model.showingDetails {
-                Button {
+                RowView(
+                    title: "Add Course",
+                    image: "plus",
+                    imageShown: true,
+                    backgroundShown: true,
+                    backgroundColor: .white.opacity(0.1)
+                ) {
                     model.showingAddCourseView = true
-                } label: {
-                    HStack {
-                        Text("Add Course")
-                            .frame(maxWidth: .infinity, alignment: .leading)
-
-                        Image(systemName: "plus")
-                    }
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 12)
-                    .background(
-                        Color.white
-                            .opacity(0.1)
-                            .cornerRadius(16)
-                    )
                 }
             }
         }
