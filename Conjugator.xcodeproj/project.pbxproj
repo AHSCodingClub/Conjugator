@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3CA10A9E299C72DE00A9FDD1 /* CodeScanner in Frameworks */ = {isa = PBXBuildFile; productRef = 3CA10A9D299C72DE00A9FDD1 /* CodeScanner */; };
 		3CB042812982F3E60017C787 /* ConversationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB042802982F3E60017C787 /* ConversationView.swift */; };
 		3CB042832982F42E0017C787 /* Views.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB042822982F42E0017C787 /* Views.swift */; };
 		3CB042852982F4620017C787 /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB042842982F4620017C787 /* MessageView.swift */; };
@@ -20,7 +21,7 @@
 		3CED0F54299B51670015A748 /* ParsingGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CED0F53299B51670015A748 /* ParsingGroup.swift */; };
 		3CED0F56299B51E30015A748 /* ViewModel+Download.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CED0F55299B51E30015A748 /* ViewModel+Download.swift */; };
 		3CED0F58299B52870015A748 /* Course.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CED0F57299B52870015A748 /* Course.swift */; };
-		3CED0F5A299B5F4A0015A748 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CED0F59299B5F4A0015A748 /* SettingsView.swift */; };
+		3CED0F5A299B5F4A0015A748 /* AddCourseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CED0F59299B5F4A0015A748 /* AddCourseView.swift */; };
 		3CFBF96D28F744B7007C0CAB /* ConjugatorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CFBF96C28F744B7007C0CAB /* ConjugatorApp.swift */; };
 		3CFBF96F28F744B7007C0CAB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CFBF96E28F744B7007C0CAB /* ContentView.swift */; };
 		3CFBF97128F744B9007C0CAB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3CFBF97028F744B9007C0CAB /* Assets.xcassets */; };
@@ -46,7 +47,7 @@
 		3CED0F53299B51670015A748 /* ParsingGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParsingGroup.swift; sourceTree = "<group>"; };
 		3CED0F55299B51E30015A748 /* ViewModel+Download.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewModel+Download.swift"; sourceTree = "<group>"; };
 		3CED0F57299B52870015A748 /* Course.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Course.swift; sourceTree = "<group>"; };
-		3CED0F59299B5F4A0015A748 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		3CED0F59299B5F4A0015A748 /* AddCourseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCourseView.swift; sourceTree = "<group>"; };
 		3CFBF96928F744B7007C0CAB /* Conjugator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Conjugator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3CFBF96C28F744B7007C0CAB /* ConjugatorApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConjugatorApp.swift; sourceTree = "<group>"; };
 		3CFBF96E28F744B7007C0CAB /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -64,6 +65,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3CA10A9E299C72DE00A9FDD1 /* CodeScanner in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -122,7 +124,7 @@
 			isa = PBXGroup;
 			children = (
 				3CFBF96E28F744B7007C0CAB /* ContentView.swift */,
-				3CED0F59299B5F4A0015A748 /* SettingsView.swift */,
+				3CED0F59299B5F4A0015A748 /* AddCourseView.swift */,
 				3CFBF98728F769B5007C0CAB /* LevelCardView.swift */,
 			);
 			path = "Home Page";
@@ -156,6 +158,9 @@
 			dependencies = (
 			);
 			name = Conjugator;
+			packageProductDependencies = (
+				3CA10A9D299C72DE00A9FDD1 /* CodeScanner */,
+			);
 			productName = Conjugator;
 			productReference = 3CFBF96928F744B7007C0CAB /* Conjugator.app */;
 			productType = "com.apple.product-type.application";
@@ -184,6 +189,9 @@
 				Base,
 			);
 			mainGroup = 3CFBF96028F744B7007C0CAB;
+			packageReferences = (
+				3CA10A9C299C72DE00A9FDD1 /* XCRemoteSwiftPackageReference "CodeScanner" */,
+			);
 			productRefGroup = 3CFBF96A28F744B7007C0CAB /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -230,7 +238,7 @@
 				3CED0F4C299B51290015A748 /* Challenge.swift in Sources */,
 				3CFBF96D28F744B7007C0CAB /* ConjugatorApp.swift in Sources */,
 				3CB042812982F3E60017C787 /* ConversationView.swift in Sources */,
-				3CED0F5A299B5F4A0015A748 /* SettingsView.swift in Sources */,
+				3CED0F5A299B5F4A0015A748 /* AddCourseView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -361,6 +369,7 @@
 				DEVELOPMENT_TEAM = ADNA9MACRX;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Use your camera to scan a course QR code.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -389,6 +398,7 @@
 				DEVELOPMENT_TEAM = ADNA9MACRX;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Use your camera to scan a course QR code.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -429,6 +439,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		3CA10A9C299C72DE00A9FDD1 /* XCRemoteSwiftPackageReference "CodeScanner" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/twostraws/CodeScanner";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		3CA10A9D299C72DE00A9FDD1 /* CodeScanner */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3CA10A9C299C72DE00A9FDD1 /* XCRemoteSwiftPackageReference "CodeScanner" */;
+			productName = CodeScanner;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 3CFBF96128F744B7007C0CAB /* Project object */;
 }

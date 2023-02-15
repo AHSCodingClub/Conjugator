@@ -133,3 +133,46 @@ struct DividedVStackLayout: _VariadicView_UnaryViewRoot {
         }
     }
 }
+
+struct ToolbarCloseButtonModifier: ViewModifier {
+    @Environment(\.presentationMode) var presentationMode
+
+    func body(content: Self.Content) -> some View {
+        content
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    ToolbarCloseButton {
+                        withAnimation {
+                            presentationMode.wrappedValue.dismiss()
+                        }
+                    }
+                }
+            }
+    }
+}
+
+struct ToolbarCloseButton: View {
+    var action: (() -> Void)?
+    var body: some View {
+        Button {
+            action?()
+        } label: {
+            Circle()
+                .fill(UIColor.quaternarySystemFill.color)
+                .frame(width: 32)
+                .overlay(
+                    Image(systemName: "xmark")
+                        .font(
+                            .system(size: 12, weight: .semibold, design: .rounded)
+                        )
+                        .foregroundColor(UIColor.secondaryLabel.color)
+                )
+        }
+    }
+}
+
+extension View {
+    func toolbarCloseButton() -> some View {
+        self.modifier(ToolbarCloseButtonModifier())
+    }
+}

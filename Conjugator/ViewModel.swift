@@ -10,6 +10,7 @@ import SwiftUI
 
 class ViewModel: ObservableObject {
     @Published var showingDetails = false
+    @Published var showingAddCourseView = false
 
     @Published var selectedCourse: Course?
     @Published var selectedLevel: Level?

@@ -75,12 +75,16 @@ struct ContentView: View {
                 }()
 
                 color
+                    .brightness(-0.2)
                     .ignoresSafeArea()
             }
 
             content
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .sheet(isPresented: $model.showingAddCourseView) {
+            AddCourseView(model: model)
+        }
         .onAppear {
             Task {
                 await model.loadLevels()
@@ -121,7 +125,7 @@ extension ContentView {
 
             if model.showingDetails {
                 Button {
-//                    model.selectedDataSource = course.dataSource
+                    model.showingAddCourseView = true
                 } label: {
                     HStack {
                         Text("Add Course")
