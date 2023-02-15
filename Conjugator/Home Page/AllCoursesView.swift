@@ -39,6 +39,7 @@ struct RowView: View {
 
 struct AllCoursesView: View {
     @ObservedObject var model: ViewModel
+    @State var showingAddCourseView = false
 
     let courseColumns = [
         GridItem(.adaptive(minimum: 200))
@@ -46,65 +47,50 @@ struct AllCoursesView: View {
 
     var body: some View {
         NavigationStack {
-            VStack(alignment: .leading, spacing: 5) {
-                LazyVGrid(columns: courseColumns, spacing: 6) {
-                    ForEach(model.courses, id: \.dataSource) { course in
+            ScrollView {
+                VStack(alignment: .leading, spacing: 16) {
+                    LazyVGrid(columns: courseColumns, spacing: 6) {
+                        ForEach(model.courses, id: \.dataSource) { course in
 
-                        let name = course.name ?? "Untitled Course"
+                            if model.showingDetails || model.selectedDataSource == course.dataSource {
+                                let name = course.name ?? "Untitled Course"
 
-                        Button {
-                            model.selectedCourse = course
-                            model.selectedDataSource = course.dataSource
-                        } label: {
-                            HStack {
-                                Text(name)
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-
-                                if model.selectedDataSource == course.dataSource {
-                                    Image(systemName: "checkmark")
-                                        .opacity(model.showingDetails ? 1 : 0)
+                                RowView(
+                                    title: name,
+                                    image: "checkmark",
+                                    imageShown: model.selectedDataSource == course.dataSource,
+                                    backgroundShown: true,
+                                    backgroundColor: UIColor.secondarySystemBackground.color
+                                ) {
+                                    model.selectedCourse = course
+                                    model.selectedDataSource = course.dataSource
                                 }
                             }
-                            .opacity(model.showingDetails ? 1 : 0.75)
-                            .padding(.horizontal, model.showingDetails ? 16 : 0)
-                            .padding(.vertical, model.showingDetails ? 12 : 0)
-                            .background(
-                                Color.white
-                                    .opacity(0.1)
-                                    .cornerRadius(16)
-                                    .opacity(model.showingDetails ? 1 : 0)
-                            )
                         }
-                        .transition(.scale(scale: 0.9).combined(with: .opacity))
-                    }
 
-                    if model.showingDetails {
-                        Button {
-                            model.showingAddCourseView = true
-                        } label: {
-                            HStack {
-                                Text("Add Course")
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-
-                                Image(systemName: "plus")
+                        RowView(
+                            title: "Add Course",
+                            image: "plus",
+                            imageShown: true,
+                            backgroundShown: true,
+                            backgroundColor: UIColor.secondarySystemBackground.color
+                        ) {
+                            withAnimation {
+                                showingAddCourseView.toggle()
                             }
-                            .padding(.horizontal, 16)
-                            .padding(.vertical, 12)
-                            .background(
-                                Color.white
-                                    .opacity(0.1)
-                                    .cornerRadius(16)
-                            )
                         }
-                        .transition(.scale(scale: 0.9).combined(with: .opacity))
                     }
                 }
+                .frame(maxWidth: .infinity)
+                .padding(.horizontal, 16)
+                .padding(.bottom, 16)
             }
-            .padding(.horizontal, 16)
-            .padding(.bottom, 16)
             .navigationTitle("All Courses")
             .navigationBarTitleDisplayMode(.inline)
             .toolbarCloseButton()
+        }
+        .sheet(isPresented: $showingAddCourseView) {
+            AddCourseView(model: model)
         }
 //        .alert(
 //            "Error Adding Course",

@@ -11,7 +11,6 @@ import SwiftUI
 class ViewModel: ObservableObject {
     let maximumCoursesToDisplay = 1
     @Published var showingDetails = false
-    @Published var showingAddCourseView = false
     @Published var showingAllCoursesView = false
 
     @Published var courses = [Course]()

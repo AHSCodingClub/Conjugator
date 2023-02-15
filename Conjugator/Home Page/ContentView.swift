@@ -10,6 +10,7 @@ import SwiftUI
 
 struct ContentView: View {
     @StateObject var model = ViewModel()
+    @State var showingAddCourseView = false
 
     let levelColumns = [
         GridItem(.adaptive(minimum: 200))
@@ -43,19 +44,7 @@ struct ContentView: View {
                                         Button {
                                             model.showingAllCoursesView = true
                                         } label: {
-                                            /// If there are courses that aren't shown, display how many are left.
-                                            if model.courses.count > model.maximumCoursesToDisplay {
-                                                let numberOfCoursesLeft = model.courses.count - model.maximumCoursesToDisplay
-
-                                                if numberOfCoursesLeft == 1 {
-                                                    Text("\(numberOfCoursesLeft) more course")
-                                                } else {
-                                                    Text("\(numberOfCoursesLeft) more courses")
-                                                }
-
-                                            } else {
-                                                Text("Manage")
-                                            }
+                                            Text("Manage")
                                         }
                                         .fontWeight(.bold)
                                     }
@@ -109,8 +98,11 @@ struct ContentView: View {
             content
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-        .sheet(isPresented: $model.showingAddCourseView) {
+        .sheet(isPresented: $showingAddCourseView) {
             AddCourseView(model: model)
+        }
+        .sheet(isPresented: $model.showingAllCoursesView) {
+            AllCoursesView(model: model)
         }
         .onAppear {
             Task {
@@ -121,7 +113,7 @@ struct ContentView: View {
 }
 
 extension ContentView {
-    var courses: some View {
+    @ViewBuilder var courses: some View {
         LazyVGrid(columns: courseColumns, spacing: 6) {
             ForEach(model.courses.prefix(model.maximumCoursesToDisplay), id: \.dataSource) { course in
 
@@ -149,7 +141,29 @@ extension ContentView {
                     backgroundShown: true,
                     backgroundColor: .white.opacity(0.1)
                 ) {
-                    model.showingAddCourseView = true
+                    showingAddCourseView = true
+                }
+            }
+        }
+
+        if model.showingDetails {
+            /// If there are courses that aren't shown, show how many are left.
+            if model.courses.count > model.maximumCoursesToDisplay {
+                let numberOfCoursesLeft = model.courses.count - model.maximumCoursesToDisplay
+
+                Button {
+                    model.showingAllCoursesView = true
+                } label: {
+                    HStack(spacing: 6) {
+                        if numberOfCoursesLeft == 1 {
+                            Text("\(numberOfCoursesLeft) more course")
+                        } else {
+                            Text("\(numberOfCoursesLeft) more courses")
+                        }
+
+                        Image(systemName: "chevron.forward")
+                    }
+                    .font(.caption)
                 }
             }
         }

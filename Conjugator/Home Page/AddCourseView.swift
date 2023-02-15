@@ -9,7 +9,9 @@ import CodeScanner
 import SwiftUI
 
 struct AddCourseView: View {
+    @Environment(\.presentationMode) var presentationMode
     @ObservedObject var model: ViewModel
+    
     @State var text = ""
     @State var error: String?
 
@@ -19,7 +21,7 @@ struct AddCourseView: View {
                 Text("Enter Course URL")
                     .font(.headline)
                     .fontWeight(.semibold)
-
+                
                 HStack(spacing: 0) {
                     TextField("https://docs.google.com/spreadsheets/d/1t-onBgRP5BSHZ26XjvmVgi6RxZmpKO7RBI3JARYE3Bs", text: $text)
                         .frame(maxWidth: .infinity, alignment: .leading)
@@ -28,18 +30,26 @@ struct AddCourseView: View {
                         .background(UIColor.secondarySystemBackground.color)
                         .onSubmit {
                             Task {
-                                await model.addCourse(inputString: text, error: $error)
+                                await model.addCourse(inputString: text, error: $error) {
+                                    withAnimation {
+                                        presentationMode.wrappedValue.dismiss()
+                                    }
+                                }
                             }
                         }
-
+                    
                     Button {
                         Task {
-                            await model.addCourse(inputString: text, error: $error)
+                            await model.addCourse(inputString: text, error: $error) {
+                                withAnimation {
+                                    presentationMode.wrappedValue.dismiss()
+                                }
+                            }
                         }
                     } label: {
                         HStack {
                             Text("Next")
-
+                            
                             Image(systemName: "arrow.right")
                         }
                         .foregroundColor(.white)
@@ -53,21 +63,25 @@ struct AddCourseView: View {
                 }
                 .cornerRadius(16)
                 .fixedSize(horizontal: false, vertical: true)
-
+                
                 Divider()
                     .frame(height: 32)
-
+                
                 Text("Or Scan QR Code")
                     .font(.headline)
                     .fontWeight(.semibold)
-
+                
                 /// `oncePerCode` prevents scanning duplicate codes.
                 CodeScannerView(codeTypes: [.qr], scanMode: .oncePerCode) { response in
-
+                    
                     switch response {
                     case .success(let success):
                         Task {
-                            await model.addCourse(inputString: success.string, error: $error)
+                            await model.addCourse(inputString: success.string, error: $error) {
+                                withAnimation {
+                                    presentationMode.wrappedValue.dismiss()
+                                }
+                            }
                         }
                     case .failure(let failure):
                         error = failure.localizedDescription
@@ -81,7 +95,6 @@ struct AddCourseView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbarCloseButton()
         }
-
         .alert(
             "Error Adding Course",
             isPresented: Binding {
