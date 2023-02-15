@@ -12,21 +12,20 @@ class ViewModel: ObservableObject {
     @Published var course = Course()
     @Published var levels: [Level]?
     @Published var selectedLevel: Level?
-    @AppStorage("dataSourceID") var dataSourceID = "1t-onBgRP5BSHZ26XjvmVgi6RxZmpKO7RBI3JARYE3Bs"
 
-    var dataSourceURL: String {
-        return "https://docs.google.com/spreadsheets/d/\(dataSourceID)/gviz/tq?tqx=out:csv"
-    }
+    @AppStorage("dataSourceIDs") @Storage var dataSourceIDs = ["1t-onBgRP5BSHZ26XjvmVgi6RxZmpKO7RBI3JARYE3Bs"]
+    @Published var selectedDataSourceID = "1t-onBgRP5BSHZ26XjvmVgi6RxZmpKO7RBI3JARYE3Bs"
 
     func loadLevels() async {
-        guard let csv = await downloadLevelsCSV() else { return }
+        let dataSourceURL = getDataSourceURL(from: selectedDataSourceID)
+        guard let csv = await downloadLevelsCSV(dataSourceURL: dataSourceURL) else { return }
 
         let parsingGroups = generateParsingGroupsFromCSV(csv: csv)
 
         await parse(parsingGroups: parsingGroups)
     }
 
-    func downloadLevelsCSV() async -> String? {
+    func downloadLevelsCSV(dataSourceURL: String) async -> String? {
         guard let url = URL(string: dataSourceURL) else { return nil }
 
         do {
@@ -72,5 +71,9 @@ class ViewModel: ObservableObject {
         }
 
         return parsingGroups
+    }
+
+    func getDataSourceURL(from dataSourceID: String) -> String {
+        return "https://docs.google.com/spreadsheets/d/\(dataSourceID)/gviz/tq?tqx=out:csv"
     }
 }
