@@ -69,6 +69,8 @@ extension LevelViewModel {
                 self.startDate = Date()
                 self.timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [weak self] _ in
                     guard let self else { return }
+                    guard self.outcome == .inProgress else { return }
+                    
                     if self.timeElapsed > Double(seconds) {
                         self.timer?.invalidate()
                         self.timer = nil

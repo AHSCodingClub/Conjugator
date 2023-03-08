@@ -42,8 +42,14 @@ struct KeyboardView: View {
             .padding(.vertical, 16)
         case .finished:
             VStack(alignment: .leading, spacing: 10) {
-                Text("Completo!")
-                    .font(.title3.weight(.medium))
+                
+                if levelViewModel.outcome == .failed {
+                    Text("Better Luck Next Time!")
+                        .font(.title3.weight(.medium))
+                } else {
+                    Text("Completo!")
+                        .font(.title3.weight(.medium))
+                }
 
                 Button {} label: {
                     HStack {
@@ -124,7 +130,6 @@ struct KeyboardView: View {
             .foregroundColor(.blue)
 
             progressBar(color: .blue, topProgress: completePercent, bottomProgress: startedPercent)
-                .foregroundColor(.purple)
         }
     }
 
@@ -134,19 +139,22 @@ struct KeyboardView: View {
             Text("No time limit")
         case .stopwatch:
             Text("Stopwatch")
-        case .timer:
+        case .timer(let seconds):
 
             VStack(alignment: .leading, spacing: 8) {
+                let timeRemainingString = levelViewModel.timeRemainingString ?? "Loading..."
+
                 HStack {
-                    if let timeRemainingString = levelViewModel.timeRemainingString {
-                        Text("Time Remaining: \(timeRemainingString)")
-                    }
+                    Text("Time Remaining: \(timeRemainingString)")
 
                     Spacer()
                 }
-                .foregroundColor(.blue)
+                .foregroundColor(.purple)
 
-                progressBar(color: .purple, topProgress: 0.5, bottomProgress: 0)
+                let progress = levelViewModel.timeElapsed / Double(seconds)
+
+                progressBar(color: .purple, topProgress: progress, bottomProgress: 0)
+                    .animation(.spring(), value: progress)
             }
         }
     }
