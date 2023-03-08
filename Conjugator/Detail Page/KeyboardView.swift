@@ -42,7 +42,6 @@ struct KeyboardView: View {
             .padding(.vertical, 16)
         case .finished:
             VStack(alignment: .leading, spacing: 10) {
-                
                 if levelViewModel.outcome == .failed {
                     Text("Better Luck Next Time!")
                         .font(.title3.weight(.medium))
@@ -136,9 +135,19 @@ struct KeyboardView: View {
     @ViewBuilder func timeView(conversation: Conversation) -> some View {
         switch levelViewModel.level.timeMode {
         case .none:
-            Text("No time limit")
+            EmptyView()
         case .stopwatch:
-            Text("Stopwatch")
+            VStack(alignment: .leading, spacing: 8) {
+                let progress = levelViewModel.timeElapsed
+
+                HStack {
+                    let timeElapsed = "\(String(format: "%.2f", progress))s"
+                    Text("Time Elapsed: \(timeElapsed)")
+
+                    Spacer()
+                }
+                .foregroundColor(.green)
+            }
         case .timer(let seconds):
 
             VStack(alignment: .leading, spacing: 8) {

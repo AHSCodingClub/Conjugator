@@ -11,7 +11,7 @@ struct Level {
     var title: String = ""
     var description: String = ""
     var colorHex: Int? = nil
-    var timeMode = TimeMode.timer(10)
+    var timeMode = TimeMode.stopwatch
     var randomizationMode = RandomizationMode.randomForm
     var livesMode = LivesMode.fixed(3)
 

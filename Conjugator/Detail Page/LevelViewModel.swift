@@ -54,14 +54,23 @@ extension LevelViewModel {
             self.keyboardMode = .info
         }
 
-        print("start??")
         loadNextChallenge()
 
         switch level.timeMode {
         case .none:
             break
         case .stopwatch:
-            break
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                self.startDate = Date()
+                self.timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [weak self] _ in
+                    guard let self else { return }
+
+                    /// Make sure the game hasn't finished
+                    guard self.outcome == .inProgress else { return }
+                    
+                    self.objectWillChange.send()
+                }
+            }
         case .timer(let seconds):
 
             /// start timer a little later
@@ -69,8 +78,10 @@ extension LevelViewModel {
                 self.startDate = Date()
                 self.timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [weak self] _ in
                     guard let self else { return }
+
+                    /// Make sure the game hasn't finished
                     guard self.outcome == .inProgress else { return }
-                    
+
                     if self.timeElapsed > Double(seconds) {
                         self.timer?.invalidate()
                         self.timer = nil
