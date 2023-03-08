@@ -60,8 +60,23 @@ extension Level {
                     }
                 case "randomization_mode":
                     break
-                case "lives_mode":
-                    break
+                case "lives":
+                    if let value = values[safe: 1] {
+                        if value.isNumber {
+                            var valueInt = Int(value) ?? 3
+                            if valueInt < 0 || valueInt > 10 {
+                                valueInt = 3
+                            }
+                            
+                            if valueInt == 0 {
+                                level.livesMode = .suddenDeath
+                            } else {
+                                level.livesMode = .fixed(valueInt)
+                            }
+                        } else if value == "-" {
+                            level.livesMode = .unlimited
+                        }
+                    }
                 case "word":
                     if let verb = values[safe: 1] {
                         let verbForms = Array(values.dropFirst(2)) /// remove the "Word" label and the first value (which is the verb)
