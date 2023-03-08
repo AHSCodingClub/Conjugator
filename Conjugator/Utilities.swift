@@ -189,6 +189,12 @@ extension Collection {
     }
 }
 
+extension String {
+    var isNumber: Bool {
+        return !isEmpty && rangeOfCharacter(from: CharacterSet.decimalDigits.inverted) == nil
+    }
+}
+
 /// From https://gist.github.com/IanKeen/4d29b48519dca125b21675eeb7623d60
 import SwiftUI
 @propertyWrapper
