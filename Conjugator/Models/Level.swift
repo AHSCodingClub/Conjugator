@@ -63,7 +63,11 @@ extension Level {
                 case "lives":
                     if let value = values[safe: 1] {
                         if value.isNumber {
-                            let valueInt = Int(value) ?? 3
+                            var valueInt = Int(value) ?? 3
+                            if valueInt < 0 || valueInt > 10 {
+                                valueInt = 3
+                            }
+                            
                             if valueInt == 0 {
                                 level.livesMode = .suddenDeath
                             } else {
