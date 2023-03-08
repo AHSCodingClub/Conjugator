@@ -21,7 +21,7 @@ struct LevelCardView: View {
                     Text(level.description)
                         .multilineTextAlignment(.leading)
 
-                    Text("Contains \(level.challenges.count) verbs")
+                    Text("Contains \(level.challenges.count) verb\(level.challenges.count != 1 ? "s" : "")")
                         .font(.caption)
                         .padding(.top, 12)
                 }
