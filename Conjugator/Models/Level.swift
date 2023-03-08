@@ -65,6 +65,23 @@ extension Level {
                             }
                         }
                     }
+                case "time":
+                    if let value = values[safe: 1] {
+                        if value.isNumber {
+                            if let seconds = Int(value) {
+                                level.timeMode = .timer(seconds)
+                            } else {
+                                level.timeMode = .none
+                            }
+                        } else {
+                            switch value {
+                            case "stopwatch":
+                                level.timeMode = .stopwatch
+                            default:
+                                level.timeMode = .none
+                            }
+                        }
+                    }
                 case "randomization_mode":
                     break
                 case "lives":
@@ -74,7 +91,7 @@ extension Level {
                             if valueInt < 0 || valueInt > 10 {
                                 valueInt = 3
                             }
-                            
+
                             if valueInt == 0 {
                                 level.livesMode = .suddenDeath
                             } else {
@@ -177,3 +194,20 @@ extension Level {
             ]),
     ]
 }
+
+//if let value = values[safe: 1] {
+//    if value.isNumber {
+//        if let seconds = Int(value) {
+//            level.timeMode = .timer(seconds)
+//        } else {
+//            level.timeMode = .none
+//        }
+//    } else {
+//        switch value {
+//        case "stopwatch":
+//            level.timeMode = .stopwatch
+//        default:
+//            level.timeMode = .none
+//        }
+//    }
+//}
