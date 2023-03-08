@@ -11,11 +11,18 @@ struct Level {
     var title: String = ""
     var description: String = ""
     var colorHex: Int? = nil
+    var timeMode = TimeMode.timer(10)
     var randomizationMode = RandomizationMode.randomForm
     var livesMode = LivesMode.fixed(3)
 
     /// There should be at least two challenges
     var challenges: [Challenge] = []
+
+    enum TimeMode {
+        case none
+        case stopwatch
+        case timer(Int) /// stores the time limit
+    }
 
     enum RandomizationMode {
         case randomForm

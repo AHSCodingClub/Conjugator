@@ -16,6 +16,17 @@ class LevelViewModel: ObservableObject {
     @Published var conversations = [Conversation]()
     @Published var incorrectChoicesCount = 0
 
+    @Published var timeRemainingString: String?
+    var startDate: Date?
+    var timer: Timer?
+    var timeElapsed: Double {
+        if let startDate {
+            return Date().timeIntervalSince(startDate)
+        } else {
+            return 0
+        }
+    }
+
     init(level: Level) {
         self.level = level
     }
@@ -43,7 +54,32 @@ extension LevelViewModel {
             self.keyboardMode = .info
         }
 
+        print("start??")
         loadNextChallenge()
+
+        switch level.timeMode {
+        case .none:
+            break
+        case .stopwatch:
+            break
+        case .timer(let seconds):
+
+            /// start timer a little later
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                self.startDate = Date()
+                self.timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [weak self] _ in
+                    guard let self else { return }
+                    if self.timeElapsed > Double(seconds) {
+                        self.timer?.invalidate()
+                        self.timer = nil
+                        self.finish(success: false)
+                    } else {
+                        let remaining = Double(seconds) - self.timeElapsed
+                        self.timeRemainingString = "\(String(format: "%.2f", remaining))s"
+                    }
+                }
+            }
+        }
     }
 
     func loadNextChallenge() {

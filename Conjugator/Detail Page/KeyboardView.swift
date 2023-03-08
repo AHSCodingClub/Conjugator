@@ -32,7 +32,11 @@ struct KeyboardView: View {
                     .id(conversation.id)
                     .transition(.scale(scale: 0.95).combined(with: .opacity))
 
-                progressView(conversation: conversation)
+                VStack(alignment: .leading, spacing: 14) {
+                    progressView(conversation: conversation)
+
+                    timeView(conversation: conversation)
+                }
             }
             .padding(.horizontal, 20)
             .padding(.vertical, 16)
@@ -119,25 +123,55 @@ struct KeyboardView: View {
             }
             .foregroundColor(.blue)
 
-            GeometryReader { geometry in
-                ZStack(alignment: .leading) {
-                    RoundedRectangle(cornerRadius: 2)
-                        .fill(Color.blue)
-                        .opacity(0.1)
-
-                    RoundedRectangle(cornerRadius: 2)
-                        .fill(Color.blue)
-                        .opacity(0.3)
-                        .frame(width: startedPercent * geometry.size.width)
-
-                    RoundedRectangle(cornerRadius: 2)
-                        .fill(Color.blue)
-                        .frame(width: completePercent * geometry.size.width)
-                }
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-            }
-            .frame(height: 4)
+            progressBar(color: .blue, topProgress: completePercent, bottomProgress: startedPercent)
+                .foregroundColor(.purple)
         }
+    }
+
+    @ViewBuilder func timeView(conversation: Conversation) -> some View {
+        switch levelViewModel.level.timeMode {
+        case .none:
+            Text("No time limit")
+        case .stopwatch:
+            Text("Stopwatch")
+        case .timer:
+
+            VStack(alignment: .leading, spacing: 8) {
+                HStack {
+                    if let timeRemainingString = levelViewModel.timeRemainingString {
+                        Text("Time Remaining: \(timeRemainingString)")
+                    }
+
+                    Spacer()
+                }
+                .foregroundColor(.blue)
+
+                progressBar(color: .purple, topProgress: 0.5, bottomProgress: 0)
+            }
+        }
+    }
+
+    func progressBar(color: Color, topProgress: Double, bottomProgress: Double) -> some View {
+        GeometryReader { geometry in
+            ZStack(alignment: .leading) {
+                RoundedRectangle(cornerRadius: 2)
+                    .fill(color)
+                    .opacity(0.1)
+
+                if let bottomProgress {
+                    RoundedRectangle(cornerRadius: 2)
+                        .fill(color)
+                        .opacity(0.3)
+                        .frame(width: bottomProgress * geometry.size.width)
+                }
+
+                RoundedRectangle(cornerRadius: 2)
+                    .fill(color)
+                    .frame(width: topProgress * geometry.size.width)
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+        }
+        .frame(height: 4)
     }
 
     @ViewBuilder func conversationView(conversation: Conversation) -> some View {

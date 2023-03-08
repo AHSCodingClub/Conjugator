@@ -56,7 +56,7 @@ struct LevelView: View {
                 case .finished:
                     return 150
                 default:
-                    return 300
+                    return 340
                 }
             }()
 
