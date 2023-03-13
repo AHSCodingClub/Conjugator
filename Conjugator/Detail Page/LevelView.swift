@@ -30,28 +30,40 @@ struct LevelView: View {
             : AnyLayout(VStackLayout(spacing: 0))
 
         layout {
-            ScrollView {
-                VStack(spacing: 32) {
-                    header
+            if !levelViewModel.showingLevelReview {
+                ScrollView {
+                    VStack(spacing: 32) {
+                        header
 
-                    DividedVStack(spacing: 32) {
-                        ForEach(levelViewModel.conversations) { conversation in
-                            ConversationView(levelViewModel: levelViewModel, conversation: conversation)
+                        DividedVStack(spacing: 32) {
+                            ForEach(levelViewModel.conversations) { conversation in
+                                ConversationView(levelViewModel: levelViewModel, conversation: conversation)
+                            }
                         }
                     }
+                    .padding(.horizontal, 16)
+                    .padding(.top, 36)
+                    .padding(.bottom, 24)
+                    .rotationEffect(.degrees(180))
+                    .scaleEffect(x: -1.0, y: 1.0)
                 }
-                .padding(.horizontal, 16)
-                .padding(.top, 36)
-                .padding(.bottom, 24)
                 .rotationEffect(.degrees(180))
                 .scaleEffect(x: -1.0, y: 1.0)
+
+                Divider()
             }
-            .rotationEffect(.degrees(180))
-            .scaleEffect(x: -1.0, y: 1.0)
 
-            Divider()
-
-            let height: CGFloat = {
+            let width: CGFloat? = {
+                if levelViewModel.showingLevelReview {
+                    return nil
+                }
+                return 300
+            }()
+            
+            let height: CGFloat? = {
+                if levelViewModel.showingLevelReview {
+                    return nil
+                }
                 switch levelViewModel.keyboardMode {
                 case .finished:
                     return 150
@@ -61,7 +73,7 @@ struct LevelView: View {
             }()
 
             Color.clear
-                .frame(width: largeWidth ? 300 : nil, height: largeWidth ? nil : height)
+                .frame(width: largeWidth ? width : nil, height: largeWidth ? nil : height)
                 .background {
                     UIColor.secondarySystemBackground.color
                         .ignoresSafeArea()

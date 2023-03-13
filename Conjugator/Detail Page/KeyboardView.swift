@@ -41,49 +41,7 @@ struct KeyboardView: View {
             .padding(.horizontal, 20)
             .padding(.vertical, 16)
         case .finished:
-            VStack(alignment: .leading, spacing: 10) {
-                if levelViewModel.outcome == .failed {
-                    Text("Better Luck Next Time!")
-                        .font(.title3.weight(.medium))
-                } else {
-                    Text("Completo!")
-                        .font(.title3.weight(.medium))
-                }
-
-                Button {} label: {
-                    HStack {
-                        if levelViewModel.outcome == .failed {
-                            Text("Game Over")
-                        } else {
-                            Text("Level Review")
-                        }
-
-                        Spacer()
-
-                        Image(systemName: "chevron.forward")
-                    }
-                    .foregroundColor(.white)
-                    .font(.title.weight(.semibold))
-                    .frame(maxWidth: .infinity)
-                    .padding(.horizontal, 20)
-                    .padding(.vertical, 12)
-                    .background {
-                        let colors: [Color] = {
-                            if levelViewModel.outcome == .failed {
-                                return [.red, .pink]
-                            } else {
-                                return [.blue, .green]
-                            }
-                        }()
-
-                        LinearGradient(colors: colors, startPoint: .topLeading, endPoint: .bottomTrailing)
-                    }
-                    .cornerRadius(12)
-                    .shadow(color: .blue.opacity(0.25), radius: 12, x: 0, y: 4)
-                }
-            }
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-            .padding(20)
+            GameReviewView(levelViewModel: levelViewModel)
         }
     }
 

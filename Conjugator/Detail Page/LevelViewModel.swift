@@ -15,6 +15,7 @@ class LevelViewModel: ObservableObject {
     @Published var keyboardMode = KeyboardMode.blank
     @Published var conversations = [Conversation]()
     @Published var incorrectChoicesCount = 0
+    @Published var showingLevelReview = false
 
     @Published var timeRemainingString: String?
     var startDate: Date?
@@ -67,7 +68,7 @@ extension LevelViewModel {
 
                     /// Make sure the game hasn't finished
                     guard self.outcome == .inProgress else { return }
-                    
+
                     self.objectWillChange.send()
                 }
             }

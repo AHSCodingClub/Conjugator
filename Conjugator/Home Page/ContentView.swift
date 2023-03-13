@@ -65,6 +65,7 @@ struct ContentView: View {
                                 Image(systemName: "ellipsis")
                                     .opacity(model.showingDetails ? 0 : 1)
                             }
+                            .fontWeight(.medium)
                             .rotationEffect(.degrees(model.showingDetails ? 90 : 0))
                             .frame(width: 42, height: 42)
                             .background {
