@@ -18,6 +18,15 @@ struct Conversation: Identifiable {
     var status = Status.questionAsked
     var messages = [Message]()
 
+    var correctChoice: Choice {
+        if let choice = choices.first(where: { $0.form == correctForm }) {
+            return choice
+        } else {
+            print("Error getting choice")
+            return .init(form: .yo, text: "Error")
+        }
+    }
+
     enum Status: Equatable {
         case questionAsked
         case questionAnsweredCorrectly(numberOfAttempts: Int)

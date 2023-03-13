@@ -39,16 +39,6 @@ class LevelViewModel: ObservableObject {
     }
 }
 
-// struct Summary {
-//
-// }
-//
-// extension LevelViewModel {
-//    func getSummary() -> Summary {
-//
-//    }
-// }
-
 extension LevelViewModel {
     func start() {
         withAnimation {
@@ -182,6 +172,7 @@ extension LevelViewModel {
                     case .unlimited:
                         break
                     case .suddenDeath:
+
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
                             self.finish(success: false)
                         }
