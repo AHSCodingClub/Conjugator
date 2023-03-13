@@ -58,14 +58,19 @@ struct ContentView: View {
                                 model.showingDetails.toggle()
                             }
                         } label: {
-                            Image(systemName: "chevron.right")
-                                .fontWeight(.heavy)
-                                .rotationEffect(.degrees(model.showingDetails ? 90 : 0))
-                                .frame(width: 42, height: 42)
-                                .background {
-                                    Circle()
-                                        .fill(Color.white.opacity(0.1))
-                                }
+                            ZStack {
+                                Image(systemName: "xmark")
+                                    .opacity(model.showingDetails ? 1 : 0)
+
+                                Image(systemName: "ellipsis")
+                                    .opacity(model.showingDetails ? 0 : 1)
+                            }
+                            .rotationEffect(.degrees(model.showingDetails ? 90 : 0))
+                            .frame(width: 42, height: 42)
+                            .background {
+                                Circle()
+                                    .fill(Color.white.opacity(0.1))
+                            }
                         }
                         .padding(.top, -6) /// shift the button up a bit
                     }
