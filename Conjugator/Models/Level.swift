@@ -12,7 +12,6 @@ struct Level {
     var description: String = ""
     var colorHex: Int? = nil
     var timeMode = TimeMode.timer(10)
-    var randomizationMode = RandomizationMode.randomForm
     var livesMode = LivesMode.fixed(3)
 
     /// There should be at least two challenges
@@ -30,20 +29,26 @@ struct Level {
             case .stopwatch:
                 return "Stopwatch"
             case .timer(let seconds):
-                return "Timer (\(seconds)s)"
+                return "\(seconds)s Time Limit"
             }
         }
-    }
-
-    enum RandomizationMode {
-        case randomForm
-        case setForm(Form)
     }
 
     enum LivesMode {
         case unlimited
         case fixed(Int)
         case suddenDeath
+
+        var title: String {
+            switch self {
+            case .unlimited:
+                return "Unlimited Lives"
+            case .fixed(let lives):
+                return "\(lives) Lives"
+            case .suddenDeath:
+                return "Sudden Death"
+            }
+        }
     }
 }
 

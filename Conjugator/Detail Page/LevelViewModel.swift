@@ -38,7 +38,12 @@ class LevelViewModel: ObservableObject {
     enum Outcome {
         case inProgress
         case finishedSuccessfully
-        case failed
+        case failed(FailureReason)
+
+        enum FailureReason {
+            case outOfTime
+            case tooManyMistakes
+        }
     }
 }
 
@@ -60,7 +65,7 @@ extension LevelViewModel {
                     guard let self else { return }
 
                     /// Make sure the game hasn't finished
-                    guard self.outcome == .inProgress else { return }
+                    guard case .inProgress = self.outcome else { return }
 
                     let timeElapsed = self.timeElapsed ?? 0
                     self.timeString = "\(String(format: "%.2f", timeElapsed))s"
@@ -75,14 +80,14 @@ extension LevelViewModel {
                     guard let self else { return }
 
                     /// Make sure the game hasn't finished
-                    guard self.outcome == .inProgress else { return }
+                    guard case .inProgress = self.outcome else { return }
 
                     let timeElapsed = self.timeElapsed ?? 0
 
                     if timeElapsed > Double(seconds) {
                         self.timer?.invalidate()
                         self.timer = nil
-                        self.finish(success: false)
+                        self.finish(outcome: .failed(.outOfTime))
                     } else {
                         let remaining = Double(seconds) - timeElapsed
                         self.timeString = "\(String(format: "%.2f", remaining))s"
@@ -96,14 +101,7 @@ extension LevelViewModel {
         let displayedChallenges = conversations.map { $0.challenge }
 
         if let challenge = level.challenges.first(where: { !displayedChallenges.contains($0) }) {
-            var conversation: Conversation = {
-                switch level.randomizationMode {
-                case .randomForm:
-                    return Conversation(challenge: challenge, correctForm: .random, choices: challenge.getChoices())
-                case .setForm(let form):
-                    return Conversation(challenge: challenge, correctForm: form, choices: challenge.getChoices())
-                }
-            }()
+            var conversation = Conversation(challenge: challenge, correctForm: .random, choices: challenge.getChoices())
 
             let message = Message(content: .prompt(typing: true, header: "Verbo:", title: challenge.verb, footer: conversation.correctForm.title))
             conversation.messages.append(message)
@@ -136,7 +134,7 @@ extension LevelViewModel {
             /// no more challenges!
 
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                self.finish(success: true)
+                self.finish(outcome: .finishedSuccessfully)
             }
         }
     }
@@ -178,15 +176,13 @@ extension LevelViewModel {
                     case .unlimited:
                         break
                     case .suddenDeath:
-
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
-                            self.finish(success: false)
+                            self.finish(outcome: .failed(.tooManyMistakes))
                         }
-
                     case .fixed(let fixed):
                         if self.incorrectChoicesCount >= fixed {
                             DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
-                                self.finish(success: false)
+                                self.finish(outcome: .failed(.tooManyMistakes))
                             }
                         }
                     }
@@ -222,14 +218,10 @@ extension LevelViewModel {
         }
     }
 
-    func finish(success: Bool) {
+    func finish(outcome: Outcome) {
         finalTimeElapsed = timeElapsed
         withAnimation(.spring(response: 0.8, dampingFraction: 1, blendDuration: 1)) {
-            if success {
-                outcome = .finishedSuccessfully
-            } else {
-                outcome = .failed
-            }
+            self.outcome = outcome
             keyboardMode = .finished
         }
     }

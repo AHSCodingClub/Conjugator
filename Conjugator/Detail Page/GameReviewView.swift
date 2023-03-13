@@ -11,23 +11,44 @@ import SwiftUI
 struct GameReviewView: View {
     @ObservedObject var levelViewModel: LevelViewModel
 
-    var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 8) {
-                if levelViewModel.outcome == .failed {
-                    Text("Better Luck Next Time!")
-                        .font(.title3.weight(.medium))
-                } else {
-                    Text("Completo!")
-                        .font(.title3.weight(.medium))
-                }
+    @Environment(\.horizontalSizeClass) var horizontalSizeClass
+    @Environment(\.verticalSizeClass) var verticalSizeClass
 
-                VStack(spacing: 12) {
+    var body: some View {
+        let largeWidth = horizontalSizeClass == .regular || verticalSizeClass == .compact
+        let layout = largeWidth
+            ? AnyLayout(HStackLayout(alignment: .top, spacing: 12))
+            : AnyLayout(VStackLayout(alignment: .leading, spacing: 8))
+
+        ScrollView {
+            layout {
+                VStack(alignment: .leading, spacing: 8) {
+                    VStack {
+                        switch levelViewModel.outcome {
+                        case .finishedSuccessfully:
+                            Text("Completo!")
+                        case .failed(let failureReason):
+                            switch failureReason {
+                            case .outOfTime:
+                                Text("You Lost on Time :(")
+                            case .tooManyMistakes:
+                                Text("Better Luck Next Time")
+                            }
+                        case .inProgress:
+                            Text("Error, game shouldn't still be in progress")
+                        }
+                    }
+                    .font(.title3.weight(.medium))
+
                     button
 
                     if levelViewModel.showingLevelReview {
-                        review
+                        LevelSummaryView(levelViewModel: levelViewModel)
                     }
+                }
+
+                if levelViewModel.showingLevelReview {
+                    review
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
@@ -37,8 +58,6 @@ struct GameReviewView: View {
 
     var review: some View {
         VStack(alignment: .leading, spacing: 10) {
-            LevelConfigurationView(levelViewModel: levelViewModel)
-            
             ForEach(levelViewModel.conversations) { conversation in
 
                 conversationView(conversation: conversation)
@@ -102,10 +121,17 @@ struct GameReviewView: View {
             }
         } label: {
             HStack {
-                if levelViewModel.outcome == .failed {
+                if case .failed = levelViewModel.outcome {
                     Text("Game Over")
                 } else {
-                    Text("Level Review")
+                    let timeElapsed: String = {
+                        if let finalTimeElapsed = levelViewModel.finalTimeElapsed {
+                            return String(format: "%.2f", finalTimeElapsed)
+                        }
+                        return ""
+                    }()
+
+                    Text("Finished in \(timeElapsed)s!")
                 }
 
                 Spacer()
@@ -120,7 +146,7 @@ struct GameReviewView: View {
             .padding(.vertical, 12)
             .background {
                 let colors: [Color] = {
-                    if levelViewModel.outcome == .failed {
+                    if case .failed = levelViewModel.outcome {
                         return [.red, .pink]
                     } else {
                         return [.blue, .green]
