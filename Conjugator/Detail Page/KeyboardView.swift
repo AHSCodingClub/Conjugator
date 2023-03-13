@@ -76,7 +76,14 @@ struct KeyboardView: View {
                     EmptyView()
                 case .suddenDeath:
                     Text("Sudden Death")
-                        .foregroundColor(.red)
+                        .foregroundColor(.white)
+                        .font(.caption)
+                        .textCase(.uppercase)
+                        .fontWeight(.medium)
+                        .padding(.horizontal, 6)
+                        .padding(.vertical, 4)
+                        .background(Color.red)
+                        .cornerRadius(6)
                 case .fixed(let fixed):
                     let livesLeft = fixed - levelViewModel.incorrectChoicesCount
 
