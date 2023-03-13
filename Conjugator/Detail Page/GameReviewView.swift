@@ -17,12 +17,12 @@ struct GameReviewView: View {
     var body: some View {
         let largeWidth = horizontalSizeClass == .regular || verticalSizeClass == .compact
         let layout = largeWidth
-            ? AnyLayout(HStackLayout(alignment: .top, spacing: 12))
+            ? AnyLayout(HStackLayout(alignment: .top, spacing: 10))
             : AnyLayout(VStackLayout(alignment: .leading, spacing: 8))
 
         ScrollView {
             layout {
-                VStack(alignment: .leading, spacing: 8) {
+                VStack(alignment: .leading, spacing: 10) {
                     VStack {
                         switch levelViewModel.outcome {
                         case .finishedSuccessfully:
@@ -58,9 +58,30 @@ struct GameReviewView: View {
 
     var review: some View {
         VStack(alignment: .leading, spacing: 10) {
+            separator(title: "Answered Verbs")
+
             ForEach(levelViewModel.conversations) { conversation in
 
                 conversationView(conversation: conversation)
+            }
+
+            separator(title: "Unanswered Verbs")
+
+            let remainingChallenges: [Challenge] = {
+                let answeredIndex = levelViewModel.conversations.lastIndex(where: { $0.status == .questionAnsweredCorrectly }) ?? 0
+
+                let remainingChallenges = levelViewModel.level.challenges.dropFirst(answeredIndex + 1)
+                return Array(remainingChallenges)
+
+            }()
+
+            ForEach(remainingChallenges, id: \.self) { challenge in
+                Text(challenge.verb)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.vertical, 12)
+                    .padding(.horizontal, 16)
+                    .background(UIColor.systemBackground.color)
+                    .cornerRadius(12)
             }
         }
     }
@@ -112,6 +133,25 @@ struct GameReviewView: View {
         }
         .background(UIColor.systemBackground.color)
         .cornerRadius(12)
+    }
+
+    func separator(title: String) -> some View {
+        HStack(spacing: 16) {
+            VStack {
+                Divider()
+            }
+
+            Text(title)
+                .lineLimit(1)
+                .foregroundColor(UIColor.secondaryLabel.color)
+                .font(.caption)
+                .layoutPriority(1)
+
+            VStack {
+                Divider()
+            }
+        }
+        .padding(.vertical, 12)
     }
 
     var button: some View {

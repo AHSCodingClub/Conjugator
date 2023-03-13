@@ -33,6 +33,10 @@ struct LevelSummaryView: View {
                 .opacity(0.03)
         )
         .cornerRadius(12)
+        .overlay {
+            RoundedRectangle(cornerRadius: 12)
+                .strokeBorder(UIColor.secondaryLabel.color, lineWidth: 1)
+        }
     }
 }
 

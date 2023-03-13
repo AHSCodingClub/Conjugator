@@ -163,12 +163,10 @@ extension LevelViewModel {
             let correct = self.conversations[conversationIndex].correctForm == choice.form
 
             withAnimation(.spring(response: 0.5, dampingFraction: 1, blendDuration: 1)) {
-                let numberOfAttempts = conversation.strikethroughChoices.count + 1
-
                 self.conversations[conversationIndex].messages[messageIndex].content = .response(choice: choice, correct: correct)
 
                 if correct {
-                    self.conversations[conversationIndex].status = .questionAnsweredCorrectly(numberOfAttempts: numberOfAttempts)
+                    self.conversations[conversationIndex].status = .questionAnsweredCorrectly
                 } else {
                     self.incorrectChoicesCount += 1
 
@@ -220,9 +218,12 @@ extension LevelViewModel {
 
     func finish(outcome: Outcome) {
         finalTimeElapsed = timeElapsed
+        
         withAnimation(.spring(response: 0.8, dampingFraction: 1, blendDuration: 1)) {
             self.outcome = outcome
-            keyboardMode = .finished
+        }
+        withAnimation(.spring(response: 0.2, dampingFraction: 1, blendDuration: 1)) {
+            self.keyboardMode = .finished
         }
     }
 }

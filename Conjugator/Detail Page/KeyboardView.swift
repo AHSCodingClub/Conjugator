@@ -58,7 +58,7 @@ struct KeyboardView: View {
         }()
 
         let completeCount: Int = {
-            let completeCount = levelViewModel.conversations.filter { $0.status.complete }.count
+            let completeCount = levelViewModel.conversations.filter { $0.status == .questionAnsweredCorrectly }.count
             return completeCount
         }()
 

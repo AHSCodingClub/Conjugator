@@ -29,15 +29,6 @@ struct Conversation: Identifiable {
 
     enum Status: Equatable {
         case questionAsked
-        case questionAnsweredCorrectly(numberOfAttempts: Int)
-
-        var complete: Bool {
-            switch self {
-            case .questionAsked:
-                return false
-            case .questionAnsweredCorrectly:
-                return true
-            }
-        }
+        case questionAnsweredCorrectly
     }
 }
