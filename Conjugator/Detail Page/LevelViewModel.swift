@@ -29,6 +29,8 @@ class LevelViewModel: ObservableObject {
         }
     }
 
+    var finalTimeElapsed: Double?
+
     init(level: Level) {
         self.level = level
     }
@@ -221,6 +223,7 @@ extension LevelViewModel {
     }
 
     func finish(success: Bool) {
+        finalTimeElapsed = timeElapsed
         withAnimation(.spring(response: 0.8, dampingFraction: 1, blendDuration: 1)) {
             if success {
                 outcome = .finishedSuccessfully

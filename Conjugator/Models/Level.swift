@@ -22,6 +22,17 @@ struct Level {
         case none
         case stopwatch
         case timer(Int) /// stores the time limit
+
+        var title: String {
+            switch self {
+            case .none:
+                return "No Time Limit"
+            case .stopwatch:
+                return "Stopwatch"
+            case .timer(let seconds):
+                return "Timer (\(seconds)s)"
+            }
+        }
     }
 
     enum RandomizationMode {
@@ -195,7 +206,7 @@ extension Level {
     ]
 }
 
-//if let value = values[safe: 1] {
+// if let value = values[safe: 1] {
 //    if value.isNumber {
 //        if let seconds = Int(value) {
 //            level.timeMode = .timer(seconds)
@@ -210,4 +221,4 @@ extension Level {
 //            level.timeMode = .none
 //        }
 //    }
-//}
+// }

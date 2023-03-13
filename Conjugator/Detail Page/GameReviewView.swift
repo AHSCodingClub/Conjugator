@@ -37,6 +37,8 @@ struct GameReviewView: View {
 
     var review: some View {
         VStack(alignment: .leading, spacing: 10) {
+            LevelConfigurationView(levelViewModel: levelViewModel)
+            
             ForEach(levelViewModel.conversations) { conversation in
 
                 conversationView(conversation: conversation)
