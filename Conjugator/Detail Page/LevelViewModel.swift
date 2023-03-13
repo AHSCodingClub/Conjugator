@@ -17,14 +17,15 @@ class LevelViewModel: ObservableObject {
     @Published var incorrectChoicesCount = 0
     @Published var showingLevelReview = false
 
-    @Published var timeRemainingString: String?
+    @Published var timeString: String?
+
     var startDate: Date?
     var timer: Timer?
-    var timeElapsed: Double {
+    var timeElapsed: Double? {
         if let startDate {
             return Date().timeIntervalSince(startDate)
         } else {
-            return 0
+            return nil
         }
     }
 
@@ -59,7 +60,8 @@ extension LevelViewModel {
                     /// Make sure the game hasn't finished
                     guard self.outcome == .inProgress else { return }
 
-                    self.objectWillChange.send()
+                    let timeElapsed = self.timeElapsed ?? 0
+                    self.timeString = "\(String(format: "%.2f", timeElapsed))s"
                 }
             }
         case .timer(let seconds):
@@ -73,13 +75,15 @@ extension LevelViewModel {
                     /// Make sure the game hasn't finished
                     guard self.outcome == .inProgress else { return }
 
-                    if self.timeElapsed > Double(seconds) {
+                    let timeElapsed = self.timeElapsed ?? 0
+
+                    if timeElapsed > Double(seconds) {
                         self.timer?.invalidate()
                         self.timer = nil
                         self.finish(success: false)
                     } else {
-                        let remaining = Double(seconds) - self.timeElapsed
-                        self.timeRemainingString = "\(String(format: "%.2f", remaining))s"
+                        let remaining = Double(seconds) - timeElapsed
+                        self.timeString = "\(String(format: "%.2f", remaining))s"
                     }
                 }
             }

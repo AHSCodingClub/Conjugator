@@ -37,6 +37,10 @@ struct KeyboardView: View {
 
                     timeView(conversation: conversation)
                 }
+                .animation( /// fade in and out the time elapsed / time remaining string
+                    .spring(response: 0.3, dampingFraction: 1, blendDuration: 1),
+                    value: levelViewModel.timeString == nil
+                )
             }
             .padding(.horizontal, 20)
             .padding(.vertical, 16)
@@ -96,33 +100,36 @@ struct KeyboardView: View {
             EmptyView()
         case .stopwatch:
             VStack(alignment: .leading, spacing: 8) {
-                let progress = levelViewModel.timeElapsed
+                let timeString = levelViewModel.timeString ?? ""
 
                 HStack {
-                    let timeElapsed = "\(String(format: "%.2f", progress))s"
-                    Text("Time Elapsed: \(timeElapsed)")
+                    Text("Time Elapsed: \(timeString)")
 
                     Spacer()
                 }
                 .foregroundColor(.green)
+                .brightness(-0.1)
             }
+            .opacity(levelViewModel.timeString == nil ? 0 : 1)
         case .timer(let seconds):
 
             VStack(alignment: .leading, spacing: 8) {
-                let timeRemainingString = levelViewModel.timeRemainingString ?? "Loading..."
+                let timeString = levelViewModel.timeString ?? ""
+                let timeElapsed = levelViewModel.timeElapsed ?? 0
 
                 HStack {
-                    Text("Time Remaining: \(timeRemainingString)")
+                    Text("Time Remaining: \(timeString)")
 
                     Spacer()
                 }
                 .foregroundColor(.purple)
 
-                let progress = levelViewModel.timeElapsed / Double(seconds)
+                let progress = timeElapsed / Double(seconds)
 
                 progressBar(color: .purple, topProgress: progress, bottomProgress: 0)
                     .animation(.spring(), value: progress)
             }
+            .opacity(levelViewModel.timeString == nil ? 0 : 1)
         }
     }
 

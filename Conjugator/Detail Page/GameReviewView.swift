@@ -48,7 +48,7 @@ struct GameReviewView: View {
         let containsIncorrect = !conversation.strikethroughChoices.isEmpty
 
         VStack(alignment: .leading, spacing: 0) {
-            HStack(alignment: .top) {
+            HStack(alignment: containsIncorrect ? .top : .bottom) {
                 VStack(alignment: .leading, spacing: 4) {
                     Text(conversation.challenge.verb)
                         .font(.title3)
@@ -67,6 +67,7 @@ struct GameReviewView: View {
                 } else {
                     Text(conversation.correctChoice.text)
                         .foregroundColor(.green)
+                        .brightness(-0.1)
                 }
             }
             .padding(.vertical, 12)
@@ -82,6 +83,7 @@ struct GameReviewView: View {
 
                     Text(conversation.correctChoice.text)
                         .foregroundColor(.green)
+                        .brightness(-0.1)
                 }
                 .padding(.vertical, 12)
                 .padding(.horizontal, 16)
