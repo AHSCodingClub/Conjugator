@@ -38,7 +38,7 @@ struct Challenge: Hashable {
             return choices
         default:
             return [
-                Choice(form: .yo, text: "Error on this level. Please let your teacher know.")
+                Choice(form: .yo, text: "ERROR")
             ]
         }
     }

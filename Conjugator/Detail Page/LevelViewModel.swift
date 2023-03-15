@@ -101,7 +101,18 @@ extension LevelViewModel {
         let displayedChallenges = conversations.map { $0.challenge }
 
         if let challenge = level.challenges.first(where: { !displayedChallenges.contains($0) }) {
-            var conversation = Conversation(challenge: challenge, correctForm: .random, choices: challenge.getChoices())
+            let correctForm = Form.random(includeVosotros: challenge.verbForms.count == 6)
+
+            let choices: [Choice] = {
+                switch level.gridMode {
+                case .randomGrid:
+                    return challenge.getChoices().shuffled()
+                case .fixedGrid:
+                    return challenge.getChoices()
+                }
+            }()
+
+            var conversation = Conversation(challenge: challenge, correctForm: correctForm, choices: choices)
 
             let message = Message(content: .prompt(typing: true, header: "Verbo:", title: challenge.verb, footer: conversation.correctForm.title))
             conversation.messages.append(message)
@@ -218,7 +229,7 @@ extension LevelViewModel {
 
     func finish(outcome: Outcome) {
         finalTimeElapsed = timeElapsed
-        
+
         withAnimation(.spring(response: 0.8, dampingFraction: 1, blendDuration: 1)) {
             self.outcome = outcome
         }

@@ -12,6 +12,7 @@ struct Level {
     var description: String = ""
     var colorHex: Int? = nil
     var timeMode = TimeMode.timer(10)
+    var gridMode = GridMode.randomGrid
     var livesMode = LivesMode.fixed(3)
 
     /// There should be at least two challenges
@@ -32,6 +33,11 @@ struct Level {
                 return "\(seconds)s Time Limit"
             }
         }
+    }
+    
+    enum GridMode {
+        case fixedGrid
+        case randomGrid
     }
 
     enum LivesMode {

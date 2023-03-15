@@ -16,8 +16,16 @@ enum Form: CaseIterable {
     case vosotros
     case ellos
 
-    static var random: Form {
-        return Form.allCases.randomElement() ?? .yo
+    static func random(includeVosotros: Bool) -> Form {
+        let allCases: [Form] = {
+            if includeVosotros {
+                return Form.allCases
+            } else {
+                return Form.allCases.filter { $0 != .vosotros }
+            }
+        }()
+
+        return allCases.randomElement() ?? .yo
     }
 
     var title: String {

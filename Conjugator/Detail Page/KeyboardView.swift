@@ -173,9 +173,11 @@ struct KeyboardView: View {
                     choiceButton(conversation: conversation, choice: conversation.choices[2])
                 }
                 VStack {
+                    choiceButton(conversation: conversation, choice: conversation.choices[3])
+                    if levelViewModel.level.gridMode == .fixedGrid {
+                        Spacer()
+                    }
                     choiceButton(conversation: conversation, choice: conversation.choices[4])
-                    Spacer()
-                    choiceButton(conversation: conversation, choice: conversation.choices[5])
                 }
             }
             .fixedSize(horizontal: false, vertical: true)
