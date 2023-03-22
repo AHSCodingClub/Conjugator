@@ -47,64 +47,16 @@ struct AllCoursesView: View {
     ]
 
     var body: some View {
-        NavigationStack {
-            ScrollView {
-                VStack(alignment: .leading, spacing: 16) {
-                    LazyVGrid(columns: courseColumns, spacing: 6) {
-                        ForEach(model.courses, id: \.dataSource) { course in
-
-                            if model.showingDetails || model.selectedDataSource == course.dataSource {
-                                let name = course.name ?? "Untitled Course"
-
-                                HStack {
-                                    RowView(
-                                        title: name,
-                                        image: "checkmark",
-                                        imageShown: model.selectedDataSource == course.dataSource,
-                                        backgroundShown: true,
-                                        backgroundColor: UIColor.secondarySystemBackground.color
-                                    ) {
-                                        model.selectedCourse = course
-                                        model.selectedDataSource = course.dataSource
-                                    }
-
-                                    Button {
-                                        courseToDelete = course
-                                    } label: {
-                                        Image(systemName: "trash")
-                                            .frame(width: 30)
-                                            .contentShape(Rectangle())
-                                    }
-                                }
-                            }
-                        }
-
-                        HStack {
-                            RowView(
-                                title: "Add Course",
-                                image: "plus",
-                                imageShown: true,
-                                backgroundShown: true,
-                                backgroundColor: UIColor.secondarySystemBackground.color
-                            ) {
-                                withAnimation {
-                                    showingAddCourseView.toggle()
-                                }
-                            }
-
-                            Color.clear
-                                .frame(width: 30)
-                        }
-                    }
+        VStack {
+            if #available(iOS 16, *) {
+                NavigationStack {
+                    content
                 }
-                .foregroundColor(UIColor.label.color)
-                .frame(maxWidth: .infinity)
-                .padding(.horizontal, 16)
-                .padding(.bottom, 16)
+            } else {
+                NavigationView {
+                    content
+                }
             }
-            .navigationTitle("All Courses")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbarCloseButton()
         }
         .sheet(isPresented: $showingAddCourseView) {
             AddCourseView(model: model)
@@ -126,5 +78,65 @@ struct AllCoursesView: View {
         } message: {
             Text("If you delete this course, you'll need to ask your teacher for the invite link again.")
         }
+    }
+
+    var content: some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: 16) {
+                LazyVGrid(columns: courseColumns, spacing: 6) {
+                    ForEach(model.courses, id: \.dataSource) { course in
+
+                        if model.showingDetails || model.selectedDataSource == course.dataSource {
+                            let name = course.name ?? "Untitled Course"
+
+                            HStack {
+                                RowView(
+                                    title: name,
+                                    image: "checkmark",
+                                    imageShown: model.selectedDataSource == course.dataSource,
+                                    backgroundShown: true,
+                                    backgroundColor: UIColor.secondarySystemBackground.color
+                                ) {
+                                    model.selectedCourse = course
+                                    model.selectedDataSource = course.dataSource
+                                }
+
+                                Button {
+                                    courseToDelete = course
+                                } label: {
+                                    Image(systemName: "trash")
+                                        .frame(width: 30)
+                                        .contentShape(Rectangle())
+                                }
+                            }
+                        }
+                    }
+
+                    HStack {
+                        RowView(
+                            title: "Add Course",
+                            image: "plus",
+                            imageShown: true,
+                            backgroundShown: true,
+                            backgroundColor: UIColor.secondarySystemBackground.color
+                        ) {
+                            withAnimation {
+                                showingAddCourseView.toggle()
+                            }
+                        }
+
+                        Color.clear
+                            .frame(width: 30)
+                    }
+                }
+            }
+            .foregroundColor(UIColor.label.color)
+            .frame(maxWidth: .infinity)
+            .padding(.horizontal, 16)
+            .padding(.bottom, 16)
+        }
+        .navigationTitle("All Courses")
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbarCloseButton()
     }
 }

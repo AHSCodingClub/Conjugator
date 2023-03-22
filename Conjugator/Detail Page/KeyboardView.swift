@@ -77,9 +77,8 @@ struct KeyboardView: View {
                 case .suddenDeath:
                     Text("Sudden Death")
                         .foregroundColor(.white)
-                        .font(.caption)
+                        .font(.caption.weight(.medium))
                         .textCase(.uppercase)
-                        .fontWeight(.medium)
                         .padding(.horizontal, 6)
                         .padding(.vertical, 4)
                         .background(Color.red)

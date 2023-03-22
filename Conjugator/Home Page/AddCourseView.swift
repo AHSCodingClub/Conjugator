@@ -16,7 +16,7 @@ struct AddCourseView: View {
     @State var error: String?
 
     var body: some View {
-        NavigationStack {
+        NavigationView {
             VStack(alignment: .leading, spacing: 5) {
                 Text("Enter Course URL")
                     .font(.headline)

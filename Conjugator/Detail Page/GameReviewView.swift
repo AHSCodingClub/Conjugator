@@ -15,44 +15,56 @@ struct GameReviewView: View {
     @Environment(\.verticalSizeClass) var verticalSizeClass
 
     var body: some View {
-        let largeWidth = horizontalSizeClass == .regular || verticalSizeClass == .compact
-        let layout = largeWidth
-            ? AnyLayout(HStackLayout(alignment: .top, spacing: 10))
-            : AnyLayout(VStackLayout(alignment: .leading, spacing: 8))
-
         ScrollView {
-            layout {
-                VStack(alignment: .leading, spacing: 10) {
-                    VStack {
-                        switch levelViewModel.outcome {
-                        case .finishedSuccessfully:
-                            Text("Completo!")
-                        case .failed(let failureReason):
-                            switch failureReason {
-                            case .outOfTime:
-                                Text("You Lost on Time :(")
-                            case .tooManyMistakes:
-                                Text("Better Luck Next Time")
-                            }
-                        case .inProgress:
-                            Text("Error, game shouldn't still be in progress")
-                        }
-                    }
-                    .font(.title3.weight(.medium))
+            if #available(iOS 16, *) {
+                let largeWidth = horizontalSizeClass == .regular || verticalSizeClass == .compact
+                let layout = largeWidth
+                    ? AnyLayout(HStackLayout(alignment: .top, spacing: 10))
+                    : AnyLayout(VStackLayout(alignment: .leading, spacing: 8))
 
-                    button
-
-                    if levelViewModel.showingLevelReview {
-                        LevelSummaryView(levelViewModel: levelViewModel)
-                    }
+                layout {
+                    content
                 }
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+                .padding(20)
+            } else {
+                VStack(alignment: .leading, spacing: 8) {
+                    content
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+                .padding(20)
+            }
+        }
+    }
 
-                if levelViewModel.showingLevelReview {
-                    review
+    @ViewBuilder var content: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            VStack {
+                switch levelViewModel.outcome {
+                case .finishedSuccessfully:
+                    Text("Completo!")
+                case .failed(let failureReason):
+                    switch failureReason {
+                    case .outOfTime:
+                        Text("You Lost on Time :(")
+                    case .tooManyMistakes:
+                        Text("Better Luck Next Time")
+                    }
+                case .inProgress:
+                    Text("Error, game shouldn't still be in progress")
                 }
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-            .padding(20)
+            .font(.title3.weight(.medium))
+
+            button
+
+            if levelViewModel.showingLevelReview {
+                LevelSummaryView(levelViewModel: levelViewModel)
+            }
+        }
+
+        if levelViewModel.showingLevelReview {
+            review
         }
     }
 

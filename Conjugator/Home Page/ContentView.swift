@@ -26,7 +26,7 @@ struct ContentView: View {
                 if let selectedLevel = model.selectedLevel {
                     levelHeader(selectedLevel: selectedLevel)
                 } else {
-                    toolbar
+                    homeNavigationBar
                 }
             }
             .padding(.horizontal, 20)
@@ -64,7 +64,7 @@ struct ContentView: View {
 }
 
 extension ContentView {
-    var toolbar: some View {
+    var homeNavigationBar: some View {
         VStack(alignment: .leading, spacing: 16) {
             VStack(alignment: .leading, spacing: model.showingDetails ? 12 : 2) {
                 Text("Conjugator")
@@ -80,11 +80,18 @@ extension ContentView {
 
                                 Image(systemName: "chevron.right")
                             }
-                            .fontWeight(.bold)
+                            .font(.body.weight(.bold))
                         }
                     }
 
                     courses
+
+                    if model.showingUsernameField {
+                        TextField("Enter Your Name", text: $model.username)
+                            .foregroundColor(UIColor.label.color)
+                            .textFieldStyle(.roundedBorder)
+                            .textInputAutocapitalization(.words)
+                    }
                 }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
@@ -92,61 +99,65 @@ extension ContentView {
             announcement
         }
         .overlay(alignment: .topTrailing) {
-            HStack {
-                Button {
-                    withAnimation(.spring(response: 0.3, dampingFraction: 1, blendDuration: 1)) {
-                        model.showingUsernameField.toggle()
-                    }
-                } label: {
-                    ZStack {
-                        if model.username.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-                            Image(systemName: "person.fill")
-                        } else {
-                            let initials: [String] = model.username.components(separatedBy: " ")
-                                .compactMap { name in
-                                    if let first = name.first {
-                                        return String(first)
-                                    }
-                                    return nil
-                                }
-                            
-                            let text = initials.joined()
-                            Text(text)
-                        }
-                    }
-                    .fontWeight(.medium)
-                    .frame(width: 42, height: 42)
-                    .background {
-                        Circle()
-                            .fill(Color.white.opacity(0.1))
-                    }
-                }
-
-                Button {
-                    withAnimation(.spring(response: 0.3, dampingFraction: 1, blendDuration: 1)) {
-                        model.showingDetails.toggle()
-                    }
-                } label: {
-                    ZStack {
-                        Image(systemName: "xmark")
-                            .opacity(model.showingDetails ? 1 : 0)
-
-                        Image(systemName: "ellipsis")
-                            .opacity(model.showingDetails ? 0 : 1)
-                    }
-                    .fontWeight(.medium)
-                    .rotationEffect(.degrees(model.showingDetails ? 90 : 0))
-                    .frame(width: 42, height: 42)
-                    .background {
-                        Circle()
-                            .fill(Color.white.opacity(0.1))
-                    }
-                }
-            }
-            .padding(.top, -6) /// shift the button up a bit
+            toolbar
         }
         .padding(.top, 24)
         .padding(.bottom, 16)
+    }
+
+    var toolbar: some View {
+        HStack {
+            Button {
+                withAnimation(.spring(response: 0.3, dampingFraction: 1, blendDuration: 1)) {
+                    model.showingUsernameField.toggle()
+                }
+            } label: {
+                ZStack {
+                    if model.username.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                        Image(systemName: "person.fill")
+                    } else {
+                        let initials: [String] = model.username.components(separatedBy: " ")
+                            .compactMap { name in
+                                if let first = name.first {
+                                    return String(first)
+                                }
+                                return nil
+                            }
+
+                        let text = initials.joined()
+                        Text(text)
+                    }
+                }
+                .font(.body.weight(.medium))
+                .frame(width: 42, height: 42)
+                .background {
+                    Circle()
+                        .fill(Color.white.opacity(0.1))
+                }
+            }
+
+            Button {
+                withAnimation(.spring(response: 0.3, dampingFraction: 1, blendDuration: 1)) {
+                    model.showingDetails.toggle()
+                }
+            } label: {
+                ZStack {
+                    Image(systemName: "xmark")
+                        .opacity(model.showingDetails ? 1 : 0)
+
+                    Image(systemName: "ellipsis")
+                        .opacity(model.showingDetails ? 0 : 1)
+                }
+                .font(.body.weight(.medium))
+                .rotationEffect(.degrees(model.showingDetails ? 90 : 0))
+                .frame(width: 42, height: 42)
+                .background {
+                    Circle()
+                        .fill(Color.white.opacity(0.1))
+                }
+            }
+        }
+        .padding(.top, -6) /// shift the button up a bit
     }
 }
 
@@ -245,8 +256,7 @@ extension ContentView {
                 }
             } label: {
                 Image(systemName: "chevron.backward")
-
-                    .fontWeight(.medium)
+                    .font(.body.weight(.medium))
                     .padding(.trailing, 16)
                     .padding(.vertical, 16)
                     .contentShape(Rectangle())

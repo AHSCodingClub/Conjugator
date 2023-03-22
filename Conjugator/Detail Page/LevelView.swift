@@ -24,68 +24,86 @@ struct LevelView: View {
     }
 
     var body: some View {
-        let largeWidth = horizontalSizeClass == .regular || verticalSizeClass == .compact
-        let layout = largeWidth
-            ? AnyLayout(HStackLayout(alignment: .top, spacing: 0))
-            : AnyLayout(VStackLayout(spacing: 0))
+        if #available(iOS 16, *) {
+            let largeWidth = horizontalSizeClass == .regular || verticalSizeClass == .compact
+            let layout = largeWidth
+                ? AnyLayout(HStackLayout(alignment: .top, spacing: 0))
+                : AnyLayout(VStackLayout(spacing: 0))
 
-        layout {
-            if !levelViewModel.showingLevelReview {
-                ScrollView {
-                    VStack(spacing: 32) {
-                        header
+            layout {
+                content(largeWidth: largeWidth)
+            }
+            .navigationBarTitleDisplayMode(.inline) /// make the top padding smaller
+            .onAppear {
+                levelViewModel.start()
+            }
+        } else {
+            VStack(spacing: 0) {
+                content(largeWidth: false)
+            }
+            .navigationBarTitleDisplayMode(.inline) /// make the top padding smaller
+            .onAppear {
+                levelViewModel.start()
+            }
+        }
+//        .navigationBarTitleDisplayMode(.inline) /// make the top padding smaller
+//        .onAppear {
+//            levelViewModel.start()
+//        }
+    }
 
-                        DividedVStack(spacing: 32) {
-                            ForEach(levelViewModel.conversations) { conversation in
-                                ConversationView(levelViewModel: levelViewModel, conversation: conversation)
-                            }
+    @ViewBuilder func content(largeWidth: Bool) -> some View {
+        if !levelViewModel.showingLevelReview {
+            ScrollView {
+                VStack(spacing: 32) {
+                    header
+
+                    DividedVStack(spacing: 32) {
+                        ForEach(levelViewModel.conversations) { conversation in
+                            ConversationView(levelViewModel: levelViewModel, conversation: conversation)
                         }
                     }
-                    .padding(.horizontal, 16)
-                    .padding(.top, 36)
-                    .padding(.bottom, 24)
-                    .rotationEffect(.degrees(180))
-                    .scaleEffect(x: -1.0, y: 1.0)
                 }
+                .padding(.horizontal, 16)
+                .padding(.top, 36)
+                .padding(.bottom, 24)
                 .rotationEffect(.degrees(180))
                 .scaleEffect(x: -1.0, y: 1.0)
-
-                Divider()
             }
+            .rotationEffect(.degrees(180))
+            .scaleEffect(x: -1.0, y: 1.0)
 
-            let width: CGFloat? = {
-                if levelViewModel.showingLevelReview {
-                    return nil
-                }
-                return 300
-            }()
-            
-            let height: CGFloat? = {
-                if levelViewModel.showingLevelReview {
-                    return nil
-                }
-                switch levelViewModel.keyboardMode {
-                case .finished:
-                    return 150
-                default:
-                    return 340
-                }
-            }()
+            Divider()
+        }
 
-            Color.clear
-                .frame(width: largeWidth ? width : nil, height: largeWidth ? nil : height)
-                .background {
-                    UIColor.secondarySystemBackground.color
-                        .ignoresSafeArea()
-                }
-                .overlay {
-                    KeyboardView(levelViewModel: levelViewModel)
-                }
-        }
-        .navigationBarTitleDisplayMode(.inline) /// make the top padding smaller
-        .onAppear {
-            levelViewModel.start()
-        }
+        let width: CGFloat? = {
+            if levelViewModel.showingLevelReview {
+                return nil
+            }
+            return 300
+        }()
+
+        let height: CGFloat? = {
+            if levelViewModel.showingLevelReview {
+                return nil
+            }
+            switch levelViewModel.keyboardMode {
+            case .finished:
+                return 150
+            default:
+                return 340
+            }
+        }()
+
+        Color.clear
+            .frame(width: largeWidth ? width : nil, height: largeWidth ? nil : height)
+            .background {
+                UIColor.secondarySystemBackground.color
+                    .ignoresSafeArea()
+            }
+            .overlay {
+                KeyboardView(levelViewModel: levelViewModel)
+            }
     }
 }
 
