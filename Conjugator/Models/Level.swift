@@ -34,7 +34,7 @@ struct Level {
             }
         }
     }
-    
+
     enum GridMode {
         case fixedGrid
         case randomGrid
@@ -61,6 +61,8 @@ struct Level {
 extension Level {
     static func create(from parsingGroup: ParsingGroup) -> Level {
         var level = Level()
+
+        print("Lines: \(parsingGroup.lines.count)")
         for line in parsingGroup.lines {
             let values = line.values.filter { !$0.isEmpty }
 
@@ -72,6 +74,7 @@ extension Level {
                     /// the level title should be the second value
                     if let value = values[safe: 1] {
                         level.title = value
+                        print("Getting level.. \(value)")
                     }
                 case "description":
                     if let value = values[safe: 1] {
@@ -127,9 +130,7 @@ extension Level {
                     if let verb = values[safe: 1] {
                         let verbForms = Array(values.dropFirst(2)) /// remove the "Word" label and the first value (which is the verb)
 
-                        let challenge = Challenge(
-                            verb: verb,
-                            verbForms: verbForms)
+                        let challenge = Challenge(verb: verb, verbForms: verbForms)
                         level.challenges.append(challenge)
                     }
 

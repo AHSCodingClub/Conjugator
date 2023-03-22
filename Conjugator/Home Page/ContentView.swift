@@ -26,57 +26,7 @@ struct ContentView: View {
                 if let selectedLevel = model.selectedLevel {
                     levelHeader(selectedLevel: selectedLevel)
                 } else {
-                    VStack(alignment: .leading, spacing: 16) {
-                        VStack(alignment: .leading, spacing: model.showingDetails ? 12 : 2) {
-                            Text("Conjugator")
-                                .font(.title.weight(.heavy))
-
-                            VStack(alignment: .leading, spacing: 8) {
-                                if model.showingDetails {
-                                    Button {
-                                        model.showingAllCoursesView = true
-                                    } label: {
-                                        HStack(spacing: 5) {
-                                            Text("My Courses")
-
-                                            Image(systemName: "chevron.right")
-                                        }
-                                        .fontWeight(.bold)
-                                    }
-                                }
-
-                                courses
-                            }
-                        }
-                        .frame(maxWidth: .infinity, alignment: .leading)
-
-                        announcement
-                    }
-                    .overlay(alignment: .topTrailing) {
-                        Button {
-                            withAnimation(.spring(response: 0.3, dampingFraction: 1, blendDuration: 1)) {
-                                model.showingDetails.toggle()
-                            }
-                        } label: {
-                            ZStack {
-                                Image(systemName: "xmark")
-                                    .opacity(model.showingDetails ? 1 : 0)
-
-                                Image(systemName: "ellipsis")
-                                    .opacity(model.showingDetails ? 0 : 1)
-                            }
-                            .fontWeight(.medium)
-                            .rotationEffect(.degrees(model.showingDetails ? 90 : 0))
-                            .frame(width: 42, height: 42)
-                            .background {
-                                Circle()
-                                    .fill(Color.white.opacity(0.1))
-                            }
-                        }
-                        .padding(.top, -6) /// shift the button up a bit
-                    }
-                    .padding(.top, 24)
-                    .padding(.bottom, 16)
+                    toolbar
                 }
             }
             .padding(.horizontal, 20)
@@ -110,6 +60,93 @@ struct ContentView: View {
                 await model.loadLevels()
             }
         }
+    }
+}
+
+extension ContentView {
+    var toolbar: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            VStack(alignment: .leading, spacing: model.showingDetails ? 12 : 2) {
+                Text("Conjugator")
+                    .font(.title.weight(.heavy))
+
+                VStack(alignment: .leading, spacing: 8) {
+                    if model.showingDetails {
+                        Button {
+                            model.showingAllCoursesView = true
+                        } label: {
+                            HStack(spacing: 5) {
+                                Text("My Courses")
+
+                                Image(systemName: "chevron.right")
+                            }
+                            .fontWeight(.bold)
+                        }
+                    }
+
+                    courses
+                }
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+
+            announcement
+        }
+        .overlay(alignment: .topTrailing) {
+            HStack {
+                Button {
+                    withAnimation(.spring(response: 0.3, dampingFraction: 1, blendDuration: 1)) {
+                        model.showingUsernameField.toggle()
+                    }
+                } label: {
+                    ZStack {
+                        if model.username.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                            Image(systemName: "person.fill")
+                        } else {
+                            let initials: [String] = model.username.components(separatedBy: " ")
+                                .compactMap { name in
+                                    if let first = name.first {
+                                        return String(first)
+                                    }
+                                    return nil
+                                }
+                            
+                            let text = initials.joined()
+                            Text(text)
+                        }
+                    }
+                    .fontWeight(.medium)
+                    .frame(width: 42, height: 42)
+                    .background {
+                        Circle()
+                            .fill(Color.white.opacity(0.1))
+                    }
+                }
+
+                Button {
+                    withAnimation(.spring(response: 0.3, dampingFraction: 1, blendDuration: 1)) {
+                        model.showingDetails.toggle()
+                    }
+                } label: {
+                    ZStack {
+                        Image(systemName: "xmark")
+                            .opacity(model.showingDetails ? 1 : 0)
+
+                        Image(systemName: "ellipsis")
+                            .opacity(model.showingDetails ? 0 : 1)
+                    }
+                    .fontWeight(.medium)
+                    .rotationEffect(.degrees(model.showingDetails ? 90 : 0))
+                    .frame(width: 42, height: 42)
+                    .background {
+                        Circle()
+                            .fill(Color.white.opacity(0.1))
+                    }
+                }
+            }
+            .padding(.top, -6) /// shift the button up a bit
+        }
+        .padding(.top, 24)
+        .padding(.bottom, 16)
     }
 }
 

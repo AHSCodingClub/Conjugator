@@ -12,6 +12,7 @@ class ViewModel: ObservableObject {
     let maximumCoursesToDisplay = 6
     @Published var showingDetails = false
     @Published var showingAllCoursesView = false
+    @Published var showingUsernameField = false
 
     @Published var isLoading = true
     @Published var courses = [Course]()
@@ -22,6 +23,7 @@ class ViewModel: ObservableObject {
 
     @AppStorage("dataSources") @Storage var dataSources = ["1t-onBgRP5BSHZ26XjvmVgi6RxZmpKO7RBI3JARYE3Bs"]
     @AppStorage("selectedDataSource") var selectedDataSource = "1t-onBgRP5BSHZ26XjvmVgi6RxZmpKO7RBI3JARYE3Bs"
+    @AppStorage("username") var username = ""
 
     func loadLevels() async {
         var courses = [Course]()

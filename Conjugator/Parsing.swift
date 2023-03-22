@@ -8,37 +8,6 @@
 
 import Foundation
 
-func getLevel(fileLines lines: [String]) -> Level {
-    var level = Level()
-
-    for index in lines.indices {
-        let line = lines[index]
-
-        switch index {
-        case 0: level.title = line
-        case 1: level.description = line
-        case 2:
-            if let hex = makeHex(s: line) {
-                level.colorHex = hex
-            } else if line.count == 6 {
-                if let integer = Int(line, radix: 16) {
-                    level.colorHex = integer
-                }
-            } else {
-                if let challenge = getChallenge(from: line) {
-                    level.challenges.append(challenge)
-                }
-            }
-        default:
-            if let challenge = getChallenge(from: line) {
-                level.challenges.append(challenge)
-            }
-        }
-    }
-    
-    return level
-}
-
 func makeHex(s: String) -> Int? {
     let s = s.lowercased()
 
