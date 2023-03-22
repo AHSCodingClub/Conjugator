@@ -9,6 +9,7 @@
 import SwiftUI
 
 struct KeyboardView: View {
+    @ObservedObject var model: ViewModel
     @ObservedObject var levelViewModel: LevelViewModel
 
     var body: some View {
@@ -45,7 +46,7 @@ struct KeyboardView: View {
             .padding(.horizontal, 20)
             .padding(.vertical, 16)
         case .finished:
-            GameReviewView(levelViewModel: levelViewModel)
+            GameReviewView(model: model, levelViewModel: levelViewModel)
         }
     }
 

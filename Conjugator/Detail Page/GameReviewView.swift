@@ -9,6 +9,7 @@
 import SwiftUI
 
 struct GameReviewView: View {
+    @ObservedObject var model: ViewModel
     @ObservedObject var levelViewModel: LevelViewModel
 
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
@@ -59,7 +60,7 @@ struct GameReviewView: View {
             button
 
             if levelViewModel.showingLevelReview {
-                LevelSummaryView(levelViewModel: levelViewModel)
+                LevelSummaryView(model: model, levelViewModel: levelViewModel)
             }
         }
 
@@ -77,8 +78,6 @@ struct GameReviewView: View {
                 conversationView(conversation: conversation)
             }
 
-            separator(title: "Unanswered Verbs")
-
             let remainingChallenges: [Challenge] = {
                 let answeredIndex = levelViewModel.conversations.lastIndex(where: { $0.status == .questionAnsweredCorrectly }) ?? 0
 
@@ -87,13 +86,18 @@ struct GameReviewView: View {
 
             }()
 
-            ForEach(remainingChallenges, id: \.self) { challenge in
-                Text(challenge.verb)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.vertical, 12)
-                    .padding(.horizontal, 16)
-                    .background(UIColor.systemBackground.color)
-                    .cornerRadius(12)
+            
+            if !remainingChallenges.isEmpty {
+                separator(title: "Unanswered Verbs")
+                
+                ForEach(remainingChallenges, id: \.self) { challenge in
+                    Text(challenge.verb)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.vertical, 12)
+                        .padding(.horizontal, 16)
+                        .background(UIColor.systemBackground.color)
+                        .cornerRadius(12)
+                }
             }
         }
     }

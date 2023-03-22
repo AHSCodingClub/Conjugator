@@ -102,7 +102,7 @@ struct LevelView: View {
                     .ignoresSafeArea()
             }
             .overlay {
-                KeyboardView(levelViewModel: levelViewModel)
+                KeyboardView(model: model, levelViewModel: levelViewModel)
             }
     }
 }

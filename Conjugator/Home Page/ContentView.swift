@@ -22,14 +22,22 @@ struct ContentView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            VStack {
+            VStack(spacing: 8) {
                 if let selectedLevel = model.selectedLevel {
                     levelHeader(selectedLevel: selectedLevel)
                 } else {
                     homeNavigationBar
                 }
+
+                if model.showingUsernameField {
+                    TextField("Enter Your Name", text: $model.username)
+                        .foregroundColor(UIColor.label.color)
+                        .textFieldStyle(.roundedBorder)
+                        .textInputAutocapitalization(.words)
+                }
             }
             .padding(.horizontal, 20)
+            .padding(.vertical, 12)
             .frame(maxWidth: .infinity, alignment: .leading)
             .foregroundColor(.white)
             .background {
@@ -64,6 +72,34 @@ struct ContentView: View {
 }
 
 extension ContentView {
+    func levelHeader(selectedLevel: Level) -> some View {
+        HStack {
+            Button {
+                withAnimation(.spring(response: 0.3, dampingFraction: 1, blendDuration: 1)) {
+                    model.selectedLevel = nil
+                }
+            } label: {
+                Image(systemName: "chevron.backward")
+                    .font(.body.weight(.medium))
+                    .padding(.trailing, 16)
+                    .contentShape(Rectangle())
+                    .font(.title3)
+            }
+
+            Spacer()
+
+            usernameButton
+                .scaleEffect(0.9)
+        }
+        .frame(maxWidth: .infinity)
+        .overlay {
+            Text(selectedLevel.title)
+                .font(.title3)
+                .fontWeight(.semibold)
+        }
+        .foregroundColor(.white)
+    }
+
     var homeNavigationBar: some View {
         VStack(alignment: .leading, spacing: 16) {
             VStack(alignment: .leading, spacing: model.showingDetails ? 12 : 2) {
@@ -85,13 +121,6 @@ extension ContentView {
                     }
 
                     courses
-
-                    if model.showingUsernameField {
-                        TextField("Enter Your Name", text: $model.username)
-                            .foregroundColor(UIColor.label.color)
-                            .textFieldStyle(.roundedBorder)
-                            .textInputAutocapitalization(.words)
-                    }
                 }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
@@ -101,40 +130,44 @@ extension ContentView {
         .overlay(alignment: .topTrailing) {
             toolbar
         }
-        .padding(.top, 24)
-        .padding(.bottom, 16)
+        .padding(.top, 12)
+        .padding(.bottom, 8)
+    }
+
+    var usernameButton: some View {
+        Button {
+            withAnimation(.spring(response: 0.3, dampingFraction: 1, blendDuration: 1)) {
+                model.showingUsernameField.toggle()
+            }
+        } label: {
+            ZStack {
+                if model.username.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                    Image(systemName: "person.fill")
+                } else {
+                    let initials: [String] = model.username.components(separatedBy: " ")
+                        .compactMap { name in
+                            if let first = name.first {
+                                return String(first)
+                            }
+                            return nil
+                        }
+
+                    let text = initials.joined()
+                    Text(text)
+                }
+            }
+            .font(.body.weight(.medium))
+            .frame(width: 42, height: 42)
+            .background {
+                Circle()
+                    .fill(Color.white.opacity(0.1))
+            }
+        }
     }
 
     var toolbar: some View {
         HStack {
-            Button {
-                withAnimation(.spring(response: 0.3, dampingFraction: 1, blendDuration: 1)) {
-                    model.showingUsernameField.toggle()
-                }
-            } label: {
-                ZStack {
-                    if model.username.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-                        Image(systemName: "person.fill")
-                    } else {
-                        let initials: [String] = model.username.components(separatedBy: " ")
-                            .compactMap { name in
-                                if let first = name.first {
-                                    return String(first)
-                                }
-                                return nil
-                            }
-
-                        let text = initials.joined()
-                        Text(text)
-                    }
-                }
-                .font(.body.weight(.medium))
-                .frame(width: 42, height: 42)
-                .background {
-                    Circle()
-                        .fill(Color.white.opacity(0.1))
-                }
-            }
+            usernameButton
 
             Button {
                 withAnimation(.spring(response: 0.3, dampingFraction: 1, blendDuration: 1)) {
@@ -248,32 +281,6 @@ extension ContentView {
 }
 
 extension ContentView {
-    func levelHeader(selectedLevel: Level) -> some View {
-        HStack {
-            Button {
-                withAnimation(.spring(response: 0.3, dampingFraction: 1, blendDuration: 1)) {
-                    model.selectedLevel = nil
-                }
-            } label: {
-                Image(systemName: "chevron.backward")
-                    .font(.body.weight(.medium))
-                    .padding(.trailing, 16)
-                    .padding(.vertical, 16)
-                    .contentShape(Rectangle())
-                    .font(.title3)
-            }
-
-            Spacer()
-        }
-        .frame(maxWidth: .infinity)
-        .overlay {
-            Text(selectedLevel.title)
-                .font(.title3)
-                .fontWeight(.semibold)
-        }
-        .foregroundColor(.white)
-    }
-
     @ViewBuilder var content: some View {
         if let selectedLevel = model.selectedLevel {
             LevelView(model: model, level: selectedLevel)

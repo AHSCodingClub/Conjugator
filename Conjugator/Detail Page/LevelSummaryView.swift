@@ -9,6 +9,7 @@
 import SwiftUI
 
 struct LevelSummaryView: View {
+    @ObservedObject var model: ViewModel
     @ObservedObject var levelViewModel: LevelViewModel
     
     var body: some View {
@@ -22,6 +23,7 @@ struct LevelSummaryView: View {
         let numberIncorrect = levelViewModel.conversations.flatMap { $0.strikethroughChoices }.count
         
         VStack(spacing: 10) {
+            LevelSummaryRow(title: "Your Name", description: model.username)
             LevelSummaryRow(title: levelViewModel.level.timeMode.title, description: "\(timeElapsed)s Elapsed")
             LevelSummaryRow(title: "# Lives", description: levelViewModel.level.livesMode.title)
             LevelSummaryRow(title: "# Incorrect", description: numberIncorrect == 0 ? "Perfect Score" : "\(numberIncorrect)")
