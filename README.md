@@ -4,6 +4,8 @@ Conjugator is a game that helps students learn the different forms of Spanish ve
 
 It is built in Swift and SwiftUI, targeting a minimum of iOS 15.
 
+Data source: https://docs.google.com/spreadsheets/d/1t-onBgRP5BSHZ26XjvmVgi6RxZmpKO7RBI3JARYE3Bs/edit#gid=0
+
 ## Specifications
 
 ### Level Configuration
