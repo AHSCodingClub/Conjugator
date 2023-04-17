@@ -41,16 +41,16 @@ struct ContentView: View {
             .frame(maxWidth: .infinity, alignment: .leading)
             .foregroundColor(.white)
             .background {
-                let color: Color = {
+                let (color, brightness): (Color, Double) = {
                     if let selectedLevel = model.selectedLevel, let hex = selectedLevel.colorHex {
-                        return UIColor(hex: hex).getTextColor(backgroundIsDark: false).color
+                        return (UIColor(hex: hex).getTextColor(backgroundIsDark: false).color, 0)
                     } else {
-                        return Color.green
+                        return (Color.green, -0.3)
                     }
                 }()
 
                 color
-                    .brightness(-0.3)
+                    .brightness(brightness)
                     .ignoresSafeArea()
             }
 

@@ -57,6 +57,7 @@
 		3CED0F55299B51E30015A748 /* ViewModel+Download.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewModel+Download.swift"; sourceTree = "<group>"; };
 		3CED0F57299B52870015A748 /* Course.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Course.swift; sourceTree = "<group>"; };
 		3CED0F59299B5F4A0015A748 /* AddCourseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCourseView.swift; sourceTree = "<group>"; };
+		3CF1734729ED1B6F0022B899 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		3CF1F9F429BF81BA00CC2A1D /* GameReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameReviewView.swift; sourceTree = "<group>"; };
 		3CF1F9F629BF82D400CC2A1D /* GameReview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameReview.swift; sourceTree = "<group>"; };
 		3CF1F9F829BF8ED800CC2A1D /* LevelSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelSummaryView.swift; sourceTree = "<group>"; };
@@ -119,6 +120,7 @@
 		3CFBF96B28F744B7007C0CAB /* Conjugator */ = {
 			isa = PBXGroup;
 			children = (
+				3CF1734729ED1B6F0022B899 /* Info.plist */,
 				3CFBF96C28F744B7007C0CAB /* ConjugatorApp.swift */,
 				3CFBF97A28F74597007C0CAB /* ViewModel.swift */,
 				3CED0F55299B51E30015A748 /* ViewModel+Download.swift */,
@@ -393,10 +395,12 @@
 				DEVELOPMENT_TEAM = ADNA9MACRX;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Conjugator/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "Use your camera to scan a course QR code.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleLightContent;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
@@ -423,10 +427,12 @@
 				DEVELOPMENT_TEAM = ADNA9MACRX;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Conjugator/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "Use your camera to scan a course QR code.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleLightContent;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
