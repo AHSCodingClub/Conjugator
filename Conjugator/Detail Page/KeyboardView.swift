@@ -208,12 +208,13 @@ struct KeyboardView: View {
                 } else {
                     return (0.9, -0.2)
                 }
-
             } else {
                 return (1, 0)
             }
         }()
 
+        /// determine if a button was selected.
+        let aChoiceWasSelected = conversation.selectedChoice != nil
         let strikethrough = conversation.strikethroughChoices.contains(where: { $0.id == choice.id })
 
         Button {
@@ -241,6 +242,7 @@ struct KeyboardView: View {
         .opacity(opacity)
         .brightness(brightness)
         .disabled(strikethrough)
+        .disabled(aChoiceWasSelected)
     }
 }
 

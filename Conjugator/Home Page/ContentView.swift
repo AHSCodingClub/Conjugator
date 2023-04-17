@@ -96,6 +96,7 @@ extension ContentView {
             Text(selectedLevel.title)
                 .font(.title3)
                 .fontWeight(.semibold)
+                .padding(.horizontal, 64)
         }
         .foregroundColor(.white)
     }

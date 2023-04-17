@@ -13,6 +13,7 @@ class LevelViewModel: ObservableObject {
     var level: Level
     @Published var outcome = Outcome.inProgress
     @Published var keyboardMode = KeyboardMode.blank
+
     @Published var conversations = [Conversation]()
     @Published var incorrectChoicesCount = 0
     @Published var showingLevelReview = false
