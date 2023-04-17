@@ -11,6 +11,7 @@ import SwiftUI
 struct ContentView: View {
     @StateObject var model = ViewModel()
     @State var showingAddCourseView = false
+    @State var showingAboutView = false
 
     let levelColumns = [
         GridItem(.adaptive(minimum: 200))
@@ -57,6 +58,9 @@ struct ContentView: View {
             content
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .sheet(isPresented: $showingAboutView) {
+            AboutView()
+        }
         .sheet(isPresented: $showingAddCourseView) {
             AddCourseView(model: model)
         }
@@ -168,6 +172,20 @@ extension ContentView {
 
     var toolbar: some View {
         HStack {
+            Button {
+                withAnimation(.spring(response: 0.3, dampingFraction: 1, blendDuration: 1)) {
+                    showingAboutView = true
+                }
+            } label: {
+                Image(systemName: "info")
+                    .font(.body.weight(.medium))
+                    .frame(width: 42, height: 42)
+                    .background {
+                        Circle()
+                            .fill(Color.white.opacity(0.1))
+                    }
+            }
+
             usernameButton
 
             Button {
