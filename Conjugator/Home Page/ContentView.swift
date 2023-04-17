@@ -45,12 +45,12 @@ struct ContentView: View {
                     if let selectedLevel = model.selectedLevel, let hex = selectedLevel.colorHex {
                         return UIColor(hex: hex).getTextColor(backgroundIsDark: false).color
                     } else {
-                        return Color.blue
+                        return Color.green
                     }
                 }()
 
                 color
-                    .brightness(-0.2)
+                    .brightness(-0.3)
                     .ignoresSafeArea()
             }
 
