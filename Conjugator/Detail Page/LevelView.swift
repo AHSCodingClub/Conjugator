@@ -24,32 +24,31 @@ struct LevelView: View {
     }
 
     var body: some View {
-        if #available(iOS 16, *) {
-            let largeWidth = horizontalSizeClass == .regular || verticalSizeClass == .compact
-            let layout = largeWidth
-                ? AnyLayout(HStackLayout(alignment: .top, spacing: 0))
-                : AnyLayout(VStackLayout(spacing: 0))
+        VStack {
+            if #available(iOS 16, *) {
+                let largeWidth = horizontalSizeClass == .regular || verticalSizeClass == .compact
+                let layout = largeWidth
+                    ? AnyLayout(HStackLayout(alignment: .top, spacing: 0))
+                    : AnyLayout(VStackLayout(spacing: 0))
 
-            layout {
-                content(largeWidth: largeWidth)
-            }
-            .navigationBarTitleDisplayMode(.inline) /// make the top padding smaller
-            .onAppear {
-                levelViewModel.start()
-            }
-        } else {
-            VStack(spacing: 0) {
-                content(largeWidth: false)
-            }
-            .navigationBarTitleDisplayMode(.inline) /// make the top padding smaller
-            .onAppear {
-                levelViewModel.start()
+                layout {
+                    content(largeWidth: largeWidth)
+                }
+
+            } else {
+                VStack(spacing: 0) {
+                    content(largeWidth: false)
+                }
             }
         }
-//        .navigationBarTitleDisplayMode(.inline) /// make the top padding smaller
-//        .onAppear {
-//            levelViewModel.start()
-//        }
+        .navigationBarTitleDisplayMode(.inline) /// make the top padding smaller
+        .onAppear {
+            print("start'")
+            levelViewModel.start()
+        }
+        .onReceive(model.cancelSelectedLevel) { /// for some reason, `onDisappear` isn't called when a timer is active. Instead use a custom PassthroughSubject.
+            levelViewModel.stop()
+        }
     }
 
     @ViewBuilder func content(largeWidth: Bool) -> some View {

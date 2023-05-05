@@ -173,6 +173,6 @@ struct ToolbarCloseButton: View {
 
 extension View {
     func toolbarCloseButton() -> some View {
-        self.modifier(ToolbarCloseButtonModifier())
+        modifier(ToolbarCloseButtonModifier())
     }
 }

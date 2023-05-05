@@ -79,8 +79,10 @@ extension ContentView {
     func levelHeader(selectedLevel: Level) -> some View {
         HStack {
             Button {
+                model.cancelSelectedLevel.send()
                 withAnimation(.spring(response: 0.3, dampingFraction: 1, blendDuration: 1)) {
                     model.selectedLevel = nil
+                    print("Changed to nil")
                 }
             } label: {
                 Image(systemName: "chevron.backward")

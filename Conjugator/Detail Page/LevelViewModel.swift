@@ -49,6 +49,12 @@ class LevelViewModel: ObservableObject {
 }
 
 extension LevelViewModel {
+    func stop() {
+        print("stopping.")
+        timer?.invalidate()
+        timer = nil
+    }
+
     func start() {
         withAnimation {
             self.keyboardMode = .info
@@ -172,8 +178,6 @@ extension LevelViewModel {
                 let messageIndex = self.conversations[conversationIndex].messages.firstIndex(where: { $0.id == message.id })
             else { return }
 
-            
-            
             let correct = self.conversations[conversationIndex].correctText == choice.text
 
             withAnimation(.spring(response: 0.5, dampingFraction: 1, blendDuration: 1)) {

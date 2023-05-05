@@ -6,6 +6,7 @@
 //  Copyright © 2022 A. Zheng. All rights reserved.
 //
 
+import Combine
 import SwiftUI
 
 class ViewModel: ObservableObject {
@@ -18,6 +19,7 @@ class ViewModel: ObservableObject {
     @Published var courses = [Course]()
     @Published var selectedCourse: Course?
     @Published var selectedLevel: Level?
+    var cancelSelectedLevel = PassthroughSubject<Void, Never>() /// stop timers, call before setting `selectedLevel`.
 
     // MARK: - Data Persistence
 
