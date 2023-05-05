@@ -49,4 +49,9 @@ class ViewModel: ObservableObject {
             }
         }()
     }
+
+    /// version of the app, for example `2.0.3`
+    static let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "Unknown"
+
+    static let buildVersion = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "Unknown"
 }

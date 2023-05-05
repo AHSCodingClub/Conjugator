@@ -65,6 +65,8 @@ struct AboutView: View {
     var content: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 30) {
+                Text("Version \(ViewModel.appVersion)x\(ViewModel.buildVersion)")
+                
                 AboutSectionView(
                     title: "About This App",
                     description: "An app to practice conjugating Spanish verbs!"
@@ -84,8 +86,8 @@ struct AboutView: View {
                             VStack(alignment: .leading) {
                                 ForEach(officers, id: \.0) { officer in
                                     Text(officer.position)
-                                        .foregroundColor(.primary.opacity(0.75))
-                                        + Text(": ").foregroundColor(.primary.opacity(0.75))
+                                        .foregroundColor(Color.accentColor.opacity(0.75))
+                                        + Text(": ").foregroundColor(Color.accentColor.opacity(0.75))
                                         + Text(officer.name)
                                 }
                             }
