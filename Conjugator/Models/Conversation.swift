@@ -18,6 +18,16 @@ struct Conversation: Identifiable {
     var status = Status.questionAsked
     var messages = [Message]()
 
+    /// compare text, not choice.
+    var correctText: String {
+        if let choice = choices.first(where: { $0.form == correctForm }) {
+            return choice.text
+        } else {
+            print("Error getting correct text")
+            return ""
+        }
+    }
+
     var correctChoice: Choice {
         if let choice = choices.first(where: { $0.form == correctForm }) {
             return choice

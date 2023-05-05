@@ -172,7 +172,9 @@ extension LevelViewModel {
                 let messageIndex = self.conversations[conversationIndex].messages.firstIndex(where: { $0.id == message.id })
             else { return }
 
-            let correct = self.conversations[conversationIndex].correctForm == choice.form
+            
+            
+            let correct = self.conversations[conversationIndex].correctText == choice.text
 
             withAnimation(.spring(response: 0.5, dampingFraction: 1, blendDuration: 1)) {
                 self.conversations[conversationIndex].messages[messageIndex].content = .response(choice: choice, correct: correct)

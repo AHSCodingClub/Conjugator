@@ -147,12 +147,10 @@ struct KeyboardView: View {
                     .fill(color)
                     .opacity(0.1)
 
-                if let bottomProgress {
-                    RoundedRectangle(cornerRadius: 2)
-                        .fill(color)
-                        .opacity(0.3)
-                        .frame(width: bottomProgress * geometry.size.width)
-                }
+                RoundedRectangle(cornerRadius: 2)
+                    .fill(color)
+                    .opacity(0.3)
+                    .frame(width: bottomProgress * geometry.size.width)
 
                 RoundedRectangle(cornerRadius: 2)
                     .fill(color)
